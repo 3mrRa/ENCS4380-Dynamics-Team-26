@@ -98,7 +98,7 @@ footer { color: var(--faint); font-size: 13px; margin-top: 22px; }
 <div class="page">
   <header>
     <div class="kicker">ENCS4380 · Homework 1 · Module 1 · Team 26</div>
-    <h1>The sensor that lives in the past</h1>
+    <h1>Sensor reading in the past</h1>
     <p class="lede">A first-order sensor, <span class="m">τẏ + y = Kx</span>, never shows what is happening now. It shows a smoothed past, and <span class="m">τ</span> says how far behind. Guess on the plot first, then watch it play out.</p>
   </header>
 
@@ -139,7 +139,6 @@ footer { color: var(--faint); font-size: 13px; margin-top: 22px; }
           <thead><tr><th>Read off the drawn curve</th><th>Expected</th><th>Got</th><th></th></tr></thead>
           <tbody id="val"></tbody>
         </table></div>
-        <p class="note" style="margin-top:10px">Every number is read from the same 601 points the plots draw, for the sliders as they are now. Move them: all rows keep passing.</p>
       </section>
     </div>
 
@@ -163,7 +162,7 @@ footer { color: var(--faint); font-size: 13px; margin-top: 22px; }
       </section>
 
       <section class="card" id="c-eq" aria-labelledby="h-eq">
-        <h2 id="h-eq">The model, from the lecture</h2>
+        <h2 id="h-eq">The model</h2>
         <div class="eqs">
           <div><span class="m">τẏ + y = Kx</span>, &nbsp;so&nbsp; <span class="m">G(s) = K / (τs + 1)</span></div>
           <div>Step <span class="m">x = A</span>: &nbsp;<span class="m">y = KA(1 − e<sup>−t/τ</sup>)</span>, &nbsp;63.2 % at <span class="m">τ</span>, 95 % at <span class="m">3τ</span></div>
@@ -173,7 +172,6 @@ footer { color: var(--faint); font-size: 13px; margin-top: 22px; }
       </section>
     </div>
   </div>
-  <footer>ENCS4380 Interfacing Techniques · Birzeit University · Homework 1, Module 1: first-order time response</footer>
 </div>
 
 <script>
