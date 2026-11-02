@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dynamics Toolkit – Module 1: First-order time response</title>
+<style>
+:root{--bg:#eef3f1;--grid:#d9e4df;--card:#fffffe;--ink:#1d2b36;--mute:#566872;--line:#cfdad6;--out:#0a5c8f;--in:#7d8c94;--mark:#d9480f;--ok:#12794a;--bad:#b42318;--accent:#0a5c8f}
+@media (prefers-color-scheme:dark){:root{--bg:#14201f;--grid:#1d2d2b;--card:#1b2a2c;--ink:#e8f0ee;--mute:#9bb0ab;--line:#2f4442;--out:#5cc8f5;--in:#86979d;--mark:#ff9a5c;--ok:#5be39a;--bad:#ff8a80;--accent:#5cc8f5}}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font:16px/1.6 "Segoe UI","Avenir Next",system-ui,sans-serif;
+background-color:var(--bg);
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+background-size:28px 28px}
+header,main{max-width:980px;margin:0 auto;padding:18px 16px}
+header{padding-top:30px}
+h1{font-size:clamp(1.7rem,5vw,2.5rem);line-height:1.15;margin:0 0 .3em;letter-spacing:-.02em;font-weight:800;border-bottom:4px solid var(--mark);display:inline-block;padding-bottom:.15em}
+h2{font-size:1.1rem;margin:0 0 .6em;font-weight:700}
+p{margin:.4em 0}
+.sub{color:var(--mute);max-width:70ch}
+.panel{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--out);border-radius:3px;padding:16px 18px;margin-bottom:18px;box-shadow:3px 3px 0 var(--line)}
+.predict{border-left-color:var(--mark)}
+.ctl{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:700px){.ctl{grid-template-columns:repeat(2,1fr);gap:16px 28px}}
+label{display:block;font-size:.92rem;font-weight:600}
+label b{float:right;font-variant-numeric:tabular-nums;font-weight:700;color:var(--out);background:var(--bg);padding:0 8px;border-radius:3px}
+input[type=range]{width:100%;accent-color:var(--accent);height:28px}
+.seg{display:flex;margin-top:4px}
+.seg button{flex:1;padding:9px 8px;border:1.5px solid var(--out);background:transparent;color:var(--out);font:inherit;font-weight:700;cursor:pointer}
+.seg button:first-child{border-radius:3px 0 0 3px}.seg button:last-child{border-radius:0 3px 3px 0;border-left:0}
+.seg button[aria-pressed=true]{background:var(--out);color:var(--card)}
+.plot{width:100%}
+.plot svg{width:100%;height:auto;display:block;color:var(--ink);font:12px "Segoe UI",system-ui,sans-serif;background:var(--card)}
+.leg{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:.85rem;margin:8px 0;color:var(--mute)}
+.leg i{display:inline-block;width:22px;height:0;border-top:3px solid;vertical-align:middle;margin-right:6px}
+.facts{display:flex;flex-wrap:wrap;gap:6px 24px;font-size:.93rem;padding-top:8px;border-top:1px dashed var(--line)}
+.facts b{font-variant-numeric:tabular-nums;color:var(--out)}
+table{width:100%;border-collapse:collapse;font-size:.92rem;font-variant-numeric:tabular-nums}
+th{background:var(--bg);font-weight:700}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+.pass{color:var(--ok);font-weight:800}.fail{color:var(--bad);font-weight:800}
+.predict input[type=number]{width:120px;padding:7px 9px;font:inherit;background:var(--bg);color:var(--ink);border:1.5px solid var(--mark);border-radius:3px;margin-left:8px}
+.predict button,.hintbtn{padding:9px 18px;font:inherit;font-weight:700;border:0;background:var(--mark);color:#fff;border-radius:3px;cursor:pointer}
+.hintbtn{background:transparent;color:var(--out);border:1.5px solid var(--out)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+#pres{margin-top:8px}
+.tabs{overflow-x:auto}
+</style>
+</head>
+<body>
+<header>
+<h1>First-order time response</h1>
+<p class="sub">ENCS4380 · Homework 1 · Module 1. A thermometer with time constant τ never reports the present, only a smoothed past. Change τ and watch how far behind it falls.</p>
+</header>
+<main>
+
+<section class="panel predict" aria-labelledby="ph">
+<h2 id="ph">Predict, then check</h2>
+<p>Before you touch a slider: for the current τ, how many seconds until the output is within 5% of its final value (95% of the way)?</p>
+<label>Your guess (seconds) <input id="guess" type="number" min="0" step="0.1" inputmode="decimal"></label>
+<p><button id="check" type="button">Check my guess</button></p>
+<div id="pres" aria-live="polite"></div>
+</section>
+
+<section class="panel" aria-labelledby="ch">
+<h2 id="ch">Sensor and input</h2>
+<div class="ctl">
+<label>Gain K <b id="Kv"></b><input id="K" type="range" min="0.5" max="5" step="0.1" value="1"></label>
+<label>Time constant τ (s) <b id="Tv"></b><input id="T" type="range" min="0.5" max="30" step="0.5" value="10"></label>
+<label><span id="Alab">Step amplitude A</span> <b id="Av"></b><input id="A" type="range" min="1" max="100" step="1" value="60"></label>
+<div><label>Input type</label>
+<div class="seg" role="group" aria-label="Input type">
+<button id="bStep" type="button" aria-pressed="true">Step</button>
+<button id="bRamp" type="button" aria-pressed="false">Ramp</button>
+</div></div>
+</div>
+<p class="sub" id="story"></p>
+</section>
+
+<section class="panel">
+<h2 id="t1">Output y(t) against input</h2>
+<div id="plot1" class="plot" role="img" aria-label="Time response plot"></div><div id="plot1leg" class="leg"></div>
+<div class="facts" id="facts1"></div>
+</section>
+
+<section class="panel">
+<h2 id="t2"></h2>
+<div id="plot2" class="plot" role="img" aria-label="Error plot"></div><div id="plot2leg" class="leg"></div>
+<p class="sub" id="note2"></p>
+</section>
+
+<section class="panel">
+<h2>Validation check 1 (from the slides)</h2>
+<div class="tabs"><table>
+<thead><tr><th>Check</th><th>Expected</th><th>My value</th><th>Result</th></tr></thead>
+<tbody id="val"></tbody></table></div>
+<p class="sub">Computed live from the same function that draws the curve, for the current K, τ, A.</p>
+</section>
+
+<section class="panel">
+<button class="hintbtn" id="hint" type="button">Show a hint</button>
+<p id="hinttxt" class="sub" hidden>The slope of ln(error) against t is −1/τ. A bigger τ gives a flatter line: the sensor forgets its past more slowly.</p>
+</section>
+</main>
+
+<script>
+"use strict";
+var mode = "step";
+var $ = function(id){return document.getElementById(id);};
+
+// Closed-form responses of tau*y' + y = K*x
+function stepY(t,K,T,A){ return K*A*(1-Math.exp(-t/T)); }
+function rampY(t,K,T,A){ return K*A*(t-T+T*Math.exp(-t/T)); }   // input x = A*t
+
+function vals(){
+  return {K:+$("K").value, T:+$("T").value, A:+$("A").value};
+}
+function fmt(x,d){ return (+x).toFixed(d===undefined?2:d); }
+
+function niceTicks(max){
+  var raw=max/5, p=Math.pow(10,Math.floor(Math.log10(raw))), m=raw/p, st=(m<1.5?1:m<3?2:m<7?5:10)*p, r=[], v;
+  for(v=0;v<=max*1.0001;v+=st){ r.push(v); } return r;
+}
+// Dependency-free SVG plot. traces: {x,y,color,dash,width,label} lines; {px,py,text,color,label} markers
+function draw(id,traces,o){
+  var W=700,H=340,L=62,R=16,T=12,B=46,pw=W-L-R,ph=H-T-B;
+  var xmax=o.xmax, log=!!o.log, ymax=o.ymax, ymin=log?1e-3:0;
+  var fx=function(x){return L+pw*x/xmax;};
+  var fy=function(y){
+    if(log){ y=Math.max(y,ymin); return T+ph*(1-(Math.log10(y)-Math.log10(ymin))/(Math.log10(ymax)-Math.log10(ymin))); }
+    return T+ph*(1-y/ymax);
+  };
+  var g="",i,leg="";
+  niceTicks(xmax).forEach(function(v){ g+='<line x1="'+fx(v)+'" x2="'+fx(v)+'" y1="'+T+'" y2="'+(T+ph)+'" style="stroke:var(--line)"/><text x="'+fx(v)+'" y="'+(H-26)+'" text-anchor="middle" fill="currentColor">'+(+v.toFixed(1))+'</text>'; });
+  var yt=[]; if(log){ yt=[1e-3,1e-2,1e-1,1]; } else { yt=niceTicks(ymax); }
+  yt.forEach(function(v){ g+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+fy(v)+'" y2="'+fy(v)+'" style="stroke:var(--line)"/><text x="'+(L-6)+'" y="'+(fy(v)+4)+'" text-anchor="end" fill="currentColor">'+(log?v:(+v.toPrecision(3)))+'</text>'; });
+  g+='<text x="'+(L+pw/2)+'" y="'+(H-6)+'" text-anchor="middle" fill="currentColor">'+o.xl+'</text>';
+  g+='<text transform="translate(14 '+(T+ph/2)+') rotate(-90)" text-anchor="middle" fill="currentColor">'+o.yl+'</text>';
+  traces.forEach(function(t){
+    if(t.x){
+      var d=t.x.map(function(x,k){return (k?"L":"M")+fx(x).toFixed(1)+" "+fy(t.y[k]).toFixed(1);}).join("");
+      g+='<path d="'+d+'" fill="none" style="stroke:'+t.color+'" stroke-width="'+(t.width||2)+'"'+(t.dash?' stroke-dasharray="'+t.dash+'"':'')+'/>';
+      leg+='<span><i style="border-color:'+t.color+(t.dash?';border-top-style:dashed':'')+'"></i>'+t.label+'</span>';
+    } else {
+      t.px.forEach(function(x,k){
+        if(!t.nodot){ g+='<circle cx="'+fx(x)+'" cy="'+fy(t.py[k])+'" r="5.5" style="fill:'+t.color+'"/>'; }
+        if(t.text){ g+='<text x="'+(fx(x)+9)+'" y="'+(fy(t.py[k])+(t.below?16:-8))+'" fill="currentColor" font-weight="700">'+t.text[k]+'</text>'; }
+      });
+      if(t.label){ leg+='<span><i style="border-color:'+t.color+';border-top-style:dotted"></i>'+t.label+'</span>'; }
+    }
+  });
+  g+='<rect x="'+L+'" y="'+T+'" width="'+pw+'" height="'+ph+'" fill="none" style="stroke:var(--line)"/>';
+  $(id).innerHTML='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">'+g+'</svg>';
+  $(id+"leg").innerHTML=leg;
+}
+
+function linspace(a,b,n){ var r=[],i; for(i=0;i<n;i++){ r.push(a+(b-a)*i/(n-1)); } return r; }
+
+function update(){
+  var v=vals(), K=v.K,T=v.T,A=v.A;
+  $("Kv").textContent=fmt(K,1); $("Tv").textContent=fmt(T,1)+" s";
+  $("Av").textContent = mode==="step" ? fmt(A,0) : fmt(A,0)+" per s";
+  $("Alab").textContent = mode==="step" ? "Step amplitude A" : "Ramp rate A";
+  $("bStep").setAttribute("aria-pressed",mode==="step");
+  $("bRamp").setAttribute("aria-pressed",mode==="ramp");
+  $("story").textContent = mode==="step"
+    ? "Example: thermometer with τ = 10 s moved from 20 °C air into 80 °C tea (A = 60). It reads about 58 °C after 10 s."
+    : "Ramp: the input keeps rising at A per second. The sensor settles into a constant delay behind it.";
+
+  var tEnd = 6*T, t = linspace(0,tEnd,300);
+  var out="var(--out)", mark="var(--mark)", inn="var(--in)";
+  var facts="";
+
+  if(mode==="step"){
+    var y=t.map(function(s){return stepY(s,K,T,A);});
+    draw("plot1",[
+      {x:[0,tEnd],y:[A,A],color:inn,dash:"2 4",label:"Input A"},
+      {x:[0,tEnd],y:[K*A,K*A],color:inn,dash:"6 4",width:1.5,label:"Final value KA"},
+      {x:t,y:y,color:out,width:3,label:"Output y(t)"},
+      {px:[T,3*T],py:[stepY(T,K,T,A),stepY(3*T,K,T,A)],text:["63.2% at τ","95% at 3τ"],below:true,color:mark,label:"Markers"}
+    ],{xmax:tEnd,ymax:Math.max(K*A,A)*1.15,xl:"Time t (s)",yl:"Value"});
+    facts='<span>y(τ) = <b>'+fmt(stepY(T,K,T,A))+'</b> ('+fmt(100*stepY(T,K,T,A)/(K*A),1)+'% of KA)</span>'+
+          '<span>y(3τ) = <b>'+fmt(stepY(3*T,K,T,A))+'</b> ('+fmt(100*stepY(3*T,K,T,A)/(K*A),1)+'%)</span>'+
+          '<span>Final value KA = <b>'+fmt(K*A)+'</b></span>';
+    $("t1").textContent="Step response y(t) = KA(1 − e^(−t/τ))";
+    draw("plot2",[
+      {x:t,y:t.map(function(s){return Math.exp(-s/T);}),color:out,width:3,label:"Error fraction e(t) = 1 − y/(KA)"},
+      {px:[T,3*T],py:[Math.exp(-1),Math.exp(-3)],text:["36.8% at τ","5% at 3τ"],color:mark,label:"Markers"},
+      {x:[T,2*T,2*T],y:[Math.exp(-1),Math.exp(-1),Math.exp(-2)],color:mark,width:2,dash:"5 3",label:"Slope triangle: Δt = τ, ln e falls by 1"},
+      {px:[2*T],py:[Math.exp(-1.5)],text:["slope −1/τ"],nodot:true,color:mark}
+    ],{xmax:tEnd,ymax:1.3,log:true,xl:"Time t (s)",yl:"Error fraction (log axis)"});
+    $("t2").textContent="Error fraction on a log axis";
+    $("note2").innerHTML="On a log axis the error is a straight line. In natural-log terms ln(e) = −t/τ, so the slope is <b>−1/τ = "+fmt(-1/T,3)+" per s</b>. The dashed triangle shows it: moving right by τ lowers ln(e) by exactly 1. Pick any two points on the line to read τ back.";
+  } else {
+    var lagT=4*T, ideal=function(s){return K*A*s;};
+    draw("plot1",[
+      {x:[0,tEnd],y:[0,ideal(tEnd)],color:inn,dash:"2 4",label:"Ideal K·x(t)"},
+      {x:t,y:t.map(function(s){return rampY(s,K,T,A);}),color:out,width:3,label:"Output y(t)"},
+      {x:[lagT,lagT],y:[rampY(lagT,K,T,A),ideal(lagT)],color:mark,width:4,label:"Steady-state error KAτ"},
+      {x:[lagT-T,lagT],y:[rampY(lagT,K,T,A),rampY(lagT,K,T,A)],color:out,width:3,dash:"2 3",label:"Time lag = τ (horizontal gap)"},
+      {px:[lagT-T,lagT],py:[rampY(lagT,K,T,A),rampY(lagT,K,T,A)],text:["","lag = τ"],below:true,color:out}
+    ],{xmax:tEnd,ymax:ideal(tEnd)*1.05,xl:"Time t (s)",yl:"Value"});
+    facts='<span>Time lag = τ = <b>'+fmt(T,1)+' s</b></span>'+
+          '<span>Steady-state error = KAτ = <b>'+fmt(K*A*T)+'</b></span>'+
+          '<span>Output follows K·x(t−τ) once t ≫ τ</span>';
+    $("t1").textContent="Ramp response y(t) = KA(t − τ + τe^(−t/τ))";
+    draw("plot2",[
+      {x:[0,tEnd],y:[K*A*T,K*A*T],color:inn,dash:"6 4",width:1.5,label:"Limit KAτ"},
+      {x:t,y:t.map(function(s){return K*A*T*(1-Math.exp(-s/T));}),color:out,width:3,label:"Error K·x − y"}
+    ],{xmax:tEnd,ymax:K*A*T*1.15,xl:"Time t (s)",yl:"Error K·x − y"});
+    $("t2").textContent="Ramp tracking error";
+    $("note2").textContent="The error grows, then levels off at KAτ. Switch to Step to see the log-axis error plot.";
+  }
+  $("facts1").innerHTML=facts;
+  validate(K,T,A);
+}
+
+function validate(K,T,A){
+  var rows=[
+    ["y(τ) = 0.632·KA", 0.632*K*A, stepY(T,K,T,A)],
+    ["y(3τ) = 0.95·KA", 0.95*K*A, stepY(3*T,K,T,A)]
+  ], h="";
+  rows.forEach(function(r){
+    var ok=Math.abs(r[1]-r[2])<=0.001*K*A+1e-9;
+    h+="<tr><td>"+r[0]+"</td><td>"+fmt(r[1],3)+"</td><td>"+fmt(r[2],3)+"</td><td class='"+(ok?"pass":"fail")+"'>"+(ok?"Pass":"Fail")+"</td></tr>";
+  });
+  $("val").innerHTML=h;
+}
+
+function setMode(m){ mode=m; if(m==="ramp"){ $("A").max=10; if(+$("A").value>10){$("A").value=2;} $("A").step=0.5; } else { $("A").max=100; $("A").step=1; if(+$("A").value<=10){$("A").value=60;} } update(); }
+
+$("check").addEventListener("click",function(){
+  var g=parseFloat($("guess").value), T=+$("T").value, p=$("pres");
+  if(isNaN(g)){ p.textContent="Type a number of seconds first."; return; }
+  var tr=3*T, err=Math.abs(g-tr)/tr;
+  p.innerHTML="Answer: <b>3τ = "+fmt(tr,1)+" s</b>. "+(err<=0.1?"<span class='pass'>Close enough: within 10%.</span>":"Your guess was "+fmt(g,1)+" s. The response reaches 63.2% at τ and 95% at 3τ, so move the τ slider and see the time scale stretch.");
+});
+$("hint").addEventListener("click",function(){ var h=$("hinttxt"); h.hidden=!h.hidden; this.textContent=h.hidden?"Show a hint":"Hide hint"; });
+["K","T","A"].forEach(function(id){ $(id).addEventListener("input",update); });
+$("bStep").addEventListener("click",function(){setMode("step");});
+$("bRamp").addEventListener("click",function(){setMode("ramp");});
+update();
+</script>
+</body>
+</html>
