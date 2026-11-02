@@ -3,243 +3,539 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dynamics Toolkit – Module 1: First-order time response</title>
+<meta name="color-scheme" content="dark">
+<title>Module 1 · First-order time response · Team 26</title>
 <style>
-:root{--bg:#eef3f1;--grid:#d9e4df;--card:#fffffe;--ink:#1d2b36;--mute:#566872;--line:#cfdad6;--out:#0a5c8f;--in:#7d8c94;--mark:#d9480f;--ok:#12794a;--bad:#b42318;--accent:#0a5c8f}
-@media (prefers-color-scheme:dark){:root{--bg:#14201f;--grid:#1d2d2b;--card:#1b2a2c;--ink:#e8f0ee;--mute:#9bb0ab;--line:#2f4442;--out:#5cc8f5;--in:#86979d;--mark:#ff9a5c;--ok:#5be39a;--bad:#ff8a80;--accent:#5cc8f5}}
-*{box-sizing:border-box}
-body{margin:0;color:var(--ink);font:16px/1.6 "Segoe UI","Avenir Next",system-ui,sans-serif;
-background-color:var(--bg);
-background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-background-size:28px 28px}
-header,main{max-width:980px;margin:0 auto;padding:18px 16px}
-header{padding-top:30px}
-h1{font-size:clamp(1.7rem,5vw,2.5rem);line-height:1.15;margin:0 0 .3em;letter-spacing:-.02em;font-weight:800;border-bottom:4px solid var(--mark);display:inline-block;padding-bottom:.15em}
-h2{font-size:1.1rem;margin:0 0 .6em;font-weight:700}
-p{margin:.4em 0}
-.sub{color:var(--mute);max-width:70ch}
-.panel{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--out);border-radius:3px;padding:16px 18px;margin-bottom:18px;box-shadow:3px 3px 0 var(--line)}
-.predict{border-left-color:var(--mark)}
-.ctl{display:grid;grid-template-columns:1fr;gap:14px}
-@media(min-width:700px){.ctl{grid-template-columns:repeat(2,1fr);gap:16px 28px}}
-label{display:block;font-size:.92rem;font-weight:600}
-label b{float:right;font-variant-numeric:tabular-nums;font-weight:700;color:var(--out);background:var(--bg);padding:0 8px;border-radius:3px}
-input[type=range]{width:100%;accent-color:var(--accent);height:28px}
-.seg{display:flex;margin-top:4px}
-.seg button{flex:1;padding:9px 8px;border:1.5px solid var(--out);background:transparent;color:var(--out);font:inherit;font-weight:700;cursor:pointer}
-.seg button:first-child{border-radius:3px 0 0 3px}.seg button:last-child{border-radius:0 3px 3px 0;border-left:0}
-.seg button[aria-pressed=true]{background:var(--out);color:var(--card)}
-.plot{width:100%}
-.plot svg{width:100%;height:auto;display:block;color:var(--ink);font:12px "Segoe UI",system-ui,sans-serif;background:var(--card)}
-.leg{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:.85rem;margin:8px 0;color:var(--mute)}
-.leg i{display:inline-block;width:22px;height:0;border-top:3px solid;vertical-align:middle;margin-right:6px}
-.facts{display:flex;flex-wrap:wrap;gap:6px 24px;font-size:.93rem;padding-top:8px;border-top:1px dashed var(--line)}
-.facts b{font-variant-numeric:tabular-nums;color:var(--out)}
-table{width:100%;border-collapse:collapse;font-size:.92rem;font-variant-numeric:tabular-nums}
-th{background:var(--bg);font-weight:700}
-th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
-.pass{color:var(--ok);font-weight:800}.fail{color:var(--bad);font-weight:800}
-.predict input[type=number]{width:120px;padding:7px 9px;font:inherit;background:var(--bg);color:var(--ink);border:1.5px solid var(--mark);border-radius:3px;margin-left:8px}
-.predict button,.hintbtn{padding:9px 18px;font:inherit;font-weight:700;border:0;background:var(--mark);color:#fff;border-radius:3px;cursor:pointer}
-.hintbtn{background:transparent;color:var(--out);border:1.5px solid var(--out)}
-button:focus-visible,input:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
-#pres{margin-top:8px}
-.tabs{overflow-x:auto}
+:root {
+  --bg: #0e0e0f; --card: #161617; --raise: #1f1f21; --line: #29292c; --line2: #3b3b3f;
+  --ink: #ececed; --mute: #a1a1a7; --faint: #6b6b71;
+  --gap: rgba(240, 112, 112, .30); --ok: #5ad08f; --bad: #f07070;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--bg); }
+body { margin: 0; color: var(--ink); font: 15px/1.55 "Inter", "Segoe UI", system-ui, -apple-system, sans-serif; -webkit-text-size-adjust: 100%; }
+.page { max-width: 1200px; margin: 0 auto; padding: 22px 16px 48px; }
+.kicker { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); font-weight: 650; }
+h1 { font-size: clamp(26px, 4.6vw, 42px); line-height: 1.08; margin: 6px 0 8px; font-weight: 760; letter-spacing: -.02em; }
+.lede { color: var(--mute); max-width: 66ch; margin: 0; }
+.m { font-family: "Cambria Math", "Times New Roman", serif; font-style: italic; }
+
+/* phone: one column in reading order; desktop: two columns */
+.layout { display: flex; flex-direction: column; gap: 14px; margin-top: 18px; }
+.col { display: contents; }
+#c-pred { order: 1; } #c-plot { order: 2; } #c-ctl { order: 3; } #c-log { order: 4; } #c-val { order: 5; } #c-eq { order: 6; }
+@media (min-width: 960px) {
+  .layout { display: grid; grid-template-columns: 340px minmax(0, 1fr); align-items: start; }
+  .col { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+}
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; min-width: 0; }
+.card h2 { font-size: 12px; letter-spacing: .13em; text-transform: uppercase; color: var(--mute); margin: 0 0 12px; font-weight: 650; }
+
+/* predict */
+.q { font-size: 17px; font-weight: 620; margin: 0 0 6px; }
+.how { color: var(--mute); font-size: 14px; margin: 0 0 12px; }
+.yours { font-size: 14px; color: var(--mute); margin: 0 0 12px; font-variant-numeric: tabular-nums; }
+.yours b { color: var(--ink); font-size: 18px; }
+.btns { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.btn { border: 1px solid var(--ink); background: var(--ink); color: #111; font: inherit; font-weight: 700; padding: 10px 16px; border-radius: 8px; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--line2); }
+.btn.text { background: transparent; border-color: transparent; color: var(--mute); padding: 10px 6px; text-decoration: underline; text-underline-offset: 3px; }
+.btn:disabled { opacity: .35; cursor: default; }
+button:focus-visible, input:focus-visible, .plot:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.verdict { margin: 12px 0 0; }
+.verdict:empty { display: none; }
+.ok { color: var(--ok); font-weight: 700; }
+.bad { color: var(--bad); font-weight: 700; }
+.score { color: var(--faint); font-size: 13px; margin-top: 10px; }
+.score:empty { display: none; }
+
+/* controls */
+.seg { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line2); border-radius: 8px; overflow: hidden; margin-bottom: 14px; }
+.seg button { border: 0; padding: 10px; background: transparent; color: var(--mute); font: inherit; font-weight: 650; cursor: pointer; }
+.seg button[aria-pressed=true] { background: var(--ink); color: #111; }
+.slider { display: block; margin-bottom: 12px; }
+.slider .top { display: flex; justify-content: space-between; align-items: baseline; font-weight: 600; font-size: 14px; }
+.slider output { font-variant-numeric: tabular-nums; background: var(--raise); border: 1px solid var(--line2); border-radius: 6px; padding: 1px 8px; min-width: 66px; text-align: right; font-weight: 650; }
+input[type=range] { width: 100%; margin: 6px 0 0; height: 26px; accent-color: #e8e8e9; }
+.note { color: var(--mute); font-size: 13.5px; margin: 0; }
+
+/* plots */
+.plot { width: 100%; outline: none; border-radius: 8px; }
+.plot svg { display: block; width: 100%; height: auto; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.plot text { font: 12px "Inter", "Segoe UI", system-ui, sans-serif; fill: var(--mute); }
+.plot .b { fill: var(--ink); font-weight: 650; }
+.plot .f { fill: var(--faint); font-size: 11px; }
+.plot .m { font-family: "Cambria Math", "Times New Roman", serif; font-style: italic; }
+#plot { cursor: crosshair; }
+.transport { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+.transport input { flex: 1; }
+.transport .btn { padding: 8px 14px; min-width: 86px; }
+.speed { color: var(--faint); font-size: 12.5px; white-space: nowrap; }
+.read { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+@media (max-width: 560px) { .read { grid-template-columns: repeat(2, minmax(0, 1fr)); } .speed { display: none; } }
+.cell { background: var(--raise); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; min-width: 0; }
+.cell span { display: block; font-size: 12.5px; color: var(--faint); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cell b { font-size: 21px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.cell.gap b { color: var(--bad); }
+.cell small { font-size: 13px; font-weight: 600; white-space: nowrap; }
+.keys { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; font-size: 14px; color: var(--mute); }
+.keys b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* validation */
+.scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th { text-align: left; font-size: 12px; color: var(--faint); font-weight: 650; padding: 4px 8px 8px; border-bottom: 1px solid var(--line2); }
+td { padding: 8px; border-bottom: 1px solid var(--line); }
+td:last-child { text-align: right; }
+tr.req td:first-child::after { content: " · check 1"; color: var(--faint); font-size: 12px; }
+.eqs { display: grid; gap: 8px; }
+.eqs div { color: var(--mute); }
+.eqs .m { color: var(--ink); font-size: 16px; }
+footer { color: var(--faint); font-size: 13px; margin-top: 22px; }
 </style>
 </head>
 <body>
-<header>
-<h1>First-order time response</h1>
-<p class="sub">ENCS4380 · Homework 1 · Module 1. A thermometer with time constant τ never reports the present, only a smoothed past. Change τ and watch how far behind it falls.</p>
-</header>
-<main>
+<div class="page">
+  <header>
+    <div class="kicker">ENCS4380 · Homework 1 · Module 1 · Team 26</div>
+    <h1>The sensor that lives in the past</h1>
+    <p class="lede">A first-order sensor, <span class="m">τẏ + y = Kx</span>, never shows what is happening now. It shows a smoothed past, and <span class="m">τ</span> says how far behind. Guess on the plot first, then watch it play out.</p>
+  </header>
 
-<section class="panel predict" aria-labelledby="ph">
-<h2 id="ph">Predict, then check</h2>
-<p>Before you touch a slider: for the current τ, how many seconds until the output is within 5% of its final value (95% of the way)?</p>
-<label>Your guess (seconds) <input id="guess" type="number" min="0" step="0.1" inputmode="decimal"></label>
-<p><button id="check" type="button">Check my guess</button></p>
-<div id="pres" aria-live="polite"></div>
-</section>
+  <div class="layout">
+    <div class="col">
+      <section class="card" id="c-pred" aria-labelledby="h-pred">
+        <h2 id="h-pred">Predict, then check</h2>
+        <p class="q" id="q"></p>
+        <p class="how" id="how"></p>
+        <p class="yours" id="yours"></p>
+        <div class="btns">
+          <button class="btn" id="check" type="button">Check</button>
+          <button class="btn ghost" id="next" type="button">New question</button>
+          <button class="btn text" id="skip" type="button">Skip</button>
+        </div>
+        <p class="verdict" id="verdict" aria-live="polite"></p>
+        <div class="score" id="score"></div>
+      </section>
 
-<section class="panel" aria-labelledby="ch">
-<h2 id="ch">Sensor and input</h2>
-<div class="ctl">
-<label>Gain K <b id="Kv"></b><input id="K" type="range" min="0.5" max="5" step="0.1" value="1"></label>
-<label>Time constant τ (s) <b id="Tv"></b><input id="T" type="range" min="0.5" max="30" step="0.5" value="10"></label>
-<label><span id="Alab">Step amplitude A</span> <b id="Av"></b><input id="A" type="range" min="1" max="100" step="1" value="60"></label>
-<div><label>Input type</label>
-<div class="seg" role="group" aria-label="Input type">
-<button id="bStep" type="button" aria-pressed="true">Step</button>
-<button id="bRamp" type="button" aria-pressed="false">Ramp</button>
-</div></div>
+      <section class="card" id="c-ctl" aria-labelledby="h-ctl">
+        <h2 id="h-ctl">Sensor and input</h2>
+        <div class="seg" role="group" aria-label="Input">
+          <button id="mStep" type="button" aria-pressed="true">Step</button>
+          <button id="mRamp" type="button" aria-pressed="false">Ramp</button>
+        </div>
+        <label class="slider"><span class="top"><span>Gain <span class="m">K</span></span><output id="oK"></output></span>
+          <input id="K" type="range" min="0.5" max="5" step="0.1"></label>
+        <label class="slider"><span class="top"><span>Time constant <span class="m">τ</span></span><output id="oT"></output></span>
+          <input id="T" type="range" min="0.5" max="30" step="0.5"></label>
+        <label class="slider"><span class="top"><span id="lA"></span><output id="oA"></output></span>
+          <input id="A" type="range"></label>
+        <p class="note" id="story"></p>
+      </section>
+
+      <section class="card" id="c-val" aria-labelledby="h-val">
+        <h2 id="h-val">Validation</h2>
+        <div class="scroll"><table>
+          <thead><tr><th>Read off the drawn curve</th><th>Expected</th><th>Got</th><th></th></tr></thead>
+          <tbody id="val"></tbody>
+        </table></div>
+        <p class="note" style="margin-top:10px">Every number is read from the same 601 points the plots draw, for the sliders as they are now. Move them: all rows keep passing.</p>
+      </section>
+    </div>
+
+    <div class="col">
+      <section class="card" id="c-plot" aria-labelledby="h-plot">
+        <h2 id="h-plot">Watch it lag</h2>
+        <div class="plot" id="plot" tabindex="0" role="img" aria-label="Sensor output y(t) against the ideal K·x(t), with a gauge of both at the playhead. Drag to read values or to place your guess."></div>
+        <div class="transport">
+          <button class="btn ghost" id="play" type="button">Play</button>
+          <input id="scrub" type="range" min="0" max="1000" step="1" aria-label="Time">
+          <span class="speed" id="speed"></span>
+        </div>
+        <div class="read" id="read"></div>
+        <div class="keys" id="keys"></div>
+      </section>
+
+      <section class="card" id="c-log" aria-labelledby="h-log">
+        <h2 id="h-log"></h2>
+        <div class="plot" id="plot2" role="img" aria-label="Error plot"></div>
+        <p class="note" id="note2" style="margin-top:8px"></p>
+      </section>
+
+      <section class="card" id="c-eq" aria-labelledby="h-eq">
+        <h2 id="h-eq">The model, from the lecture</h2>
+        <div class="eqs">
+          <div><span class="m">τẏ + y = Kx</span>, &nbsp;so&nbsp; <span class="m">G(s) = K / (τs + 1)</span></div>
+          <div>Step <span class="m">x = A</span>: &nbsp;<span class="m">y = KA(1 − e<sup>−t/τ</sup>)</span>, &nbsp;63.2 % at <span class="m">τ</span>, 95 % at <span class="m">3τ</span></div>
+          <div>Ramp <span class="m">x = At</span>: &nbsp;<span class="m">y = KA(t − τ + τe<sup>−t/τ</sup>)</span>, &nbsp;lag <span class="m">τ</span>, steady error <span class="m">KAτ</span></div>
+          <div>Error fraction: &nbsp;<span class="m">1 − y/KA = e<sup>−t/τ</sup></span>, &nbsp;so&nbsp; <span class="m">ln(error) = −t/τ</span></div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <footer>ENCS4380 Interfacing Techniques · Birzeit University · Homework 1, Module 1: first-order time response</footer>
 </div>
-<p class="sub" id="story"></p>
-</section>
-
-<section class="panel">
-<h2 id="t1">Output y(t) against input</h2>
-<div id="plot1" class="plot" role="img" aria-label="Time response plot"></div><div id="plot1leg" class="leg"></div>
-<div class="facts" id="facts1"></div>
-</section>
-
-<section class="panel">
-<h2 id="t2"></h2>
-<div id="plot2" class="plot" role="img" aria-label="Error plot"></div><div id="plot2leg" class="leg"></div>
-<p class="sub" id="note2"></p>
-</section>
-
-<section class="panel">
-<h2>Validation check 1 (from the slides)</h2>
-<div class="tabs"><table>
-<thead><tr><th>Check</th><th>Expected</th><th>My value</th><th>Result</th></tr></thead>
-<tbody id="val"></tbody></table></div>
-<p class="sub">Computed live from the same function that draws the curve, for the current K, τ, A.</p>
-</section>
-
-<section class="panel">
-<button class="hintbtn" id="hint" type="button">Show a hint</button>
-<p id="hinttxt" class="sub" hidden>The slope of ln(error) against t is −1/τ. A bigger τ gives a flatter line: the sensor forgets its past more slowly.</p>
-</section>
-</main>
 
 <script>
 "use strict";
-var mode = "step";
-var $ = function(id){return document.getElementById(id);};
+const $ = id => document.getElementById(id);
 
-// Closed-form responses of tau*y' + y = K*x
-function stepY(t,K,T,A){ return K*A*(1-Math.exp(-t/T)); }
-function rampY(t,K,T,A){ return K*A*(t-T+T*Math.exp(-t/T)); }   // input x = A*t
+// ---------- the model from the slides ----------
+const stepY = (t, K, tau, A) => K * A * (1 - Math.exp(-t / tau));                  // x = A
+const rampY = (t, K, tau, A) => K * A * (t - tau + tau * Math.exp(-t / tau));      // x = A·t
 
-function vals(){
-  return {K:+$("K").value, T:+$("T").value, A:+$("A").value};
+const P = { mode: "step", K: 1, tau: 10, A: 60 };                // what the sliders say
+const V = { tp: 10, drawTo: Infinity, anim: null, quiz: null, right: 0, total: 0, drag: false };
+
+const tEnd = () => 6 * P.tau;
+const KA = () => P.K * P.A;
+const ideal = t => P.mode === "step" ? KA() : KA() * t;           // what a perfect sensor would read
+const sensor = t => (P.mode === "step" ? stepY : rampY)(t, P.K, P.tau, P.A);
+const N = 601;                                                    // points per curve
+const times = te => Array.from({ length: N }, (_, i) => te * i / (N - 1));
+function interp(xs, ys, x) {
+  if (x <= xs[0]) return ys[0];
+  for (let i = 1; i < xs.length; i++) if (xs[i] >= x) return ys[i - 1] + (ys[i] - ys[i - 1]) * (x - xs[i - 1]) / (xs[i] - xs[i - 1]);
+  return ys[ys.length - 1];
 }
-function fmt(x,d){ return (+x).toFixed(d===undefined?2:d); }
+const num = (x, d = 2) => (Math.abs(x) >= 1000 ? x.toFixed(0) : x.toFixed(d)).replace("-", "−");
+const pct = x => (100 * x).toFixed(1) + " %";
 
-function niceTicks(max){
-  var raw=max/5, p=Math.pow(10,Math.floor(Math.log10(raw))), m=raw/p, st=(m<1.5?1:m<3?2:m<7?5:10)*p, r=[], v;
-  for(v=0;v<=max*1.0001;v+=st){ r.push(v); } return r;
-}
-// Dependency-free SVG plot. traces: {x,y,color,dash,width,label} lines; {px,py,text,color,label} markers
-function draw(id,traces,o){
-  var W=700,H=340,L=62,R=16,T=12,B=46,pw=W-L-R,ph=H-T-B;
-  var xmax=o.xmax, log=!!o.log, ymax=o.ymax, ymin=log?1e-3:0;
-  var fx=function(x){return L+pw*x/xmax;};
-  var fy=function(y){
-    if(log){ y=Math.max(y,ymin); return T+ph*(1-(Math.log10(y)-Math.log10(ymin))/(Math.log10(ymax)-Math.log10(ymin))); }
-    return T+ph*(1-y/ymax);
-  };
-  var g="",i,leg="";
-  niceTicks(xmax).forEach(function(v){ g+='<line x1="'+fx(v)+'" x2="'+fx(v)+'" y1="'+T+'" y2="'+(T+ph)+'" style="stroke:var(--line)"/><text x="'+fx(v)+'" y="'+(H-26)+'" text-anchor="middle" fill="currentColor">'+(+v.toFixed(1))+'</text>'; });
-  var yt=[]; if(log){ yt=[1e-3,1e-2,1e-1,1]; } else { yt=niceTicks(ymax); }
-  yt.forEach(function(v){ g+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+fy(v)+'" y2="'+fy(v)+'" style="stroke:var(--line)"/><text x="'+(L-6)+'" y="'+(fy(v)+4)+'" text-anchor="end" fill="currentColor">'+(log?v:(+v.toPrecision(3)))+'</text>'; });
-  g+='<text x="'+(L+pw/2)+'" y="'+(H-6)+'" text-anchor="middle" fill="currentColor">'+o.xl+'</text>';
-  g+='<text transform="translate(14 '+(T+ph/2)+') rotate(-90)" text-anchor="middle" fill="currentColor">'+o.yl+'</text>';
-  traces.forEach(function(t){
-    if(t.x){
-      var d=t.x.map(function(x,k){return (k?"L":"M")+fx(x).toFixed(1)+" "+fy(t.y[k]).toFixed(1);}).join("");
-      g+='<path d="'+d+'" fill="none" style="stroke:'+t.color+'" stroke-width="'+(t.width||2)+'"'+(t.dash?' stroke-dasharray="'+t.dash+'"':'')+'/>';
-      leg+='<span><i style="border-color:'+t.color+(t.dash?';border-top-style:dashed':'')+'"></i>'+t.label+'</span>';
-    } else {
-      t.px.forEach(function(x,k){
-        if(!t.nodot){ g+='<circle cx="'+fx(x)+'" cy="'+fy(t.py[k])+'" r="5.5" style="fill:'+t.color+'"/>'; }
-        if(t.text){ g+='<text x="'+(fx(x)+9)+'" y="'+(fy(t.py[k])+(t.below?16:-8))+'" fill="currentColor" font-weight="700">'+t.text[k]+'</text>'; }
-      });
-      if(t.label){ leg+='<span><i style="border-color:'+t.color+';border-top-style:dotted"></i>'+t.label+'</span>'; }
-    }
-  });
-  g+='<rect x="'+L+'" y="'+T+'" width="'+pw+'" height="'+ph+'" fill="none" style="stroke:var(--line)"/>';
-  $(id).innerHTML='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">'+g+'</svg>';
-  $(id+"leg").innerHTML=leg;
-}
-
-function linspace(a,b,n){ var r=[],i; for(i=0;i<n;i++){ r.push(a+(b-a)*i/(n-1)); } return r; }
-
-function update(){
-  var v=vals(), K=v.K,T=v.T,A=v.A;
-  $("Kv").textContent=fmt(K,1); $("Tv").textContent=fmt(T,1)+" s";
-  $("Av").textContent = mode==="step" ? fmt(A,0) : fmt(A,0)+" per s";
-  $("Alab").textContent = mode==="step" ? "Step amplitude A" : "Ramp rate A";
-  $("bStep").setAttribute("aria-pressed",mode==="step");
-  $("bRamp").setAttribute("aria-pressed",mode==="ramp");
-  $("story").textContent = mode==="step"
-    ? "Example: thermometer with τ = 10 s moved from 20 °C air into 80 °C tea (A = 60). It reads about 58 °C after 10 s."
-    : "Ramp: the input keeps rising at A per second. The sensor settles into a constant delay behind it.";
-
-  var tEnd = 6*T, t = linspace(0,tEnd,300);
-  var out="var(--out)", mark="var(--mark)", inn="var(--in)";
-  var facts="";
-
-  if(mode==="step"){
-    var y=t.map(function(s){return stepY(s,K,T,A);});
-    draw("plot1",[
-      {x:[0,tEnd],y:[A,A],color:inn,dash:"2 4",label:"Input A"},
-      {x:[0,tEnd],y:[K*A,K*A],color:inn,dash:"6 4",width:1.5,label:"Final value KA"},
-      {x:t,y:y,color:out,width:3,label:"Output y(t)"},
-      {px:[T,3*T],py:[stepY(T,K,T,A),stepY(3*T,K,T,A)],text:["63.2% at τ","95% at 3τ"],below:true,color:mark,label:"Markers"}
-    ],{xmax:tEnd,ymax:Math.max(K*A,A)*1.15,xl:"Time t (s)",yl:"Value"});
-    facts='<span>y(τ) = <b>'+fmt(stepY(T,K,T,A))+'</b> ('+fmt(100*stepY(T,K,T,A)/(K*A),1)+'% of KA)</span>'+
-          '<span>y(3τ) = <b>'+fmt(stepY(3*T,K,T,A))+'</b> ('+fmt(100*stepY(3*T,K,T,A)/(K*A),1)+'%)</span>'+
-          '<span>Final value KA = <b>'+fmt(K*A)+'</b></span>';
-    $("t1").textContent="Step response y(t) = KA(1 − e^(−t/τ))";
-    draw("plot2",[
-      {x:t,y:t.map(function(s){return Math.exp(-s/T);}),color:out,width:3,label:"Error fraction e(t) = 1 − y/(KA)"},
-      {px:[T,3*T],py:[Math.exp(-1),Math.exp(-3)],text:["36.8% at τ","5% at 3τ"],color:mark,label:"Markers"},
-      {x:[T,2*T,2*T],y:[Math.exp(-1),Math.exp(-1),Math.exp(-2)],color:mark,width:2,dash:"5 3",label:"Slope triangle: Δt = τ, ln e falls by 1"},
-      {px:[2*T],py:[Math.exp(-1.5)],text:["slope −1/τ"],nodot:true,color:mark}
-    ],{xmax:tEnd,ymax:1.3,log:true,xl:"Time t (s)",yl:"Error fraction (log axis)"});
-    $("t2").textContent="Error fraction on a log axis";
-    $("note2").innerHTML="On a log axis the error is a straight line. In natural-log terms ln(e) = −t/τ, so the slope is <b>−1/τ = "+fmt(-1/T,3)+" per s</b>. The dashed triangle shows it: moving right by τ lowers ln(e) by exactly 1. Pick any two points on the line to read τ back.";
-  } else {
-    var lagT=4*T, ideal=function(s){return K*A*s;};
-    draw("plot1",[
-      {x:[0,tEnd],y:[0,ideal(tEnd)],color:inn,dash:"2 4",label:"Ideal K·x(t)"},
-      {x:t,y:t.map(function(s){return rampY(s,K,T,A);}),color:out,width:3,label:"Output y(t)"},
-      {x:[lagT,lagT],y:[rampY(lagT,K,T,A),ideal(lagT)],color:mark,width:4,label:"Steady-state error KAτ"},
-      {x:[lagT-T,lagT],y:[rampY(lagT,K,T,A),rampY(lagT,K,T,A)],color:out,width:3,dash:"2 3",label:"Time lag = τ (horizontal gap)"},
-      {px:[lagT-T,lagT],py:[rampY(lagT,K,T,A),rampY(lagT,K,T,A)],text:["","lag = τ"],below:true,color:out}
-    ],{xmax:tEnd,ymax:ideal(tEnd)*1.05,xl:"Time t (s)",yl:"Value"});
-    facts='<span>Time lag = τ = <b>'+fmt(T,1)+' s</b></span>'+
-          '<span>Steady-state error = KAτ = <b>'+fmt(K*A*T)+'</b></span>'+
-          '<span>Output follows K·x(t−τ) once t ≫ τ</span>';
-    $("t1").textContent="Ramp response y(t) = KA(t − τ + τe^(−t/τ))";
-    draw("plot2",[
-      {x:[0,tEnd],y:[K*A*T,K*A*T],color:inn,dash:"6 4",width:1.5,label:"Limit KAτ"},
-      {x:t,y:t.map(function(s){return K*A*T*(1-Math.exp(-s/T));}),color:out,width:3,label:"Error K·x − y"}
-    ],{xmax:tEnd,ymax:K*A*T*1.15,xl:"Time t (s)",yl:"Error K·x − y"});
-    $("t2").textContent="Ramp tracking error";
-    $("note2").textContent="The error grows, then levels off at KAτ. Switch to Step to see the log-axis error plot.";
+// ---------- a tiny SVG chart, drawn at its real on-screen width ----------
+function chart(el, o) {
+  const W = Math.round(Math.min(820, Math.max(320, el.clientWidth || 820))), narrow = W < 560;
+  const H = o.h(W, narrow), l = narrow ? 44 : 58, r = o.r ? o.r(narrow) : (narrow ? 12 : 18), mt = 14, mb = 50;
+  const pw = W - l - r, ph = H - mt - mb;
+  const x = v => l + pw * v / o.xmax;
+  const y = o.log
+    ? v => mt + ph * (Math.log(o.ymax) - Math.log(Math.max(v, o.ymin))) / (Math.log(o.ymax) - Math.log(o.ymin))
+    : v => mt + ph * (o.ymax - v) / (o.ymax - o.ymin);
+  const s = [];
+  for (const k of o.xt) {
+    s.push(`<line x1="${x(k.v)}" x2="${x(k.v)}" y1="${mt}" y2="${mt + ph}" stroke="var(--line)"/>`,
+      `<text x="${x(k.v)}" y="${mt + ph + 17}" text-anchor="middle" class="m">${k.label}</text>`,
+      `<text x="${x(k.v)}" y="${mt + ph + 31}" text-anchor="middle" class="f">${k.sub}</text>`);
   }
-  $("facts1").innerHTML=facts;
-  validate(K,T,A);
+  for (const k of o.yt) {
+    s.push(`<line x1="${l}" x2="${l + pw}" y1="${y(k.v)}" y2="${y(k.v)}" stroke="var(--line)"/>`,
+      `<text x="${l - 7}" y="${y(k.v) + 4}" text-anchor="end">${k.label}</text>`);
+  }
+  s.push(`<rect x="${l}" y="${mt}" width="${pw}" height="${ph}" fill="none" stroke="var(--line2)"/>`,
+    `<text x="${l + pw / 2}" y="${H - 4}" text-anchor="middle">time t (s)</text>`);
+  const c = { el, W, H, l, r, mt, mb, pw, ph, x, y, narrow, s, o };
+  c.line = (x1, y1, x2, y2, st) => s.push(`<line x1="${x(x1)}" y1="${y(y1)}" x2="${x(x2)}" y2="${y(y2)}" ${st}/>`);
+  c.curve = (xs, ys, st) => s.push(`<polyline points="${xs.map((v, i) => x(v).toFixed(1) + "," + y(ys[i]).toFixed(1)).join(" ")}" fill="none" stroke-linejoin="round" ${st}/>`);
+  c.dot = (xv, yv, rad, st) => s.push(`<circle cx="${x(xv)}" cy="${y(yv)}" r="${rad}" ${st}/>`);
+  c.text = (px, py, str, cls = "b", anchor = "start") => s.push(`<text x="${px}" y="${py}" text-anchor="${anchor}" class="${cls}">${str}</text>`);
+  c.flush = () => { el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">${s.join("")}</svg>`; el._c = c; };
+  return c;
+}
+function tauTicks() {
+  const d = Number.isInteger(P.tau) ? 0 : 1;
+  return [0, 1, 2, 3, 4, 5, 6].map(k => ({ v: k * P.tau, label: k ? (k === 1 ? "τ" : k + "τ") : "0", sub: num(k * P.tau, d) + " s" }));
+}
+function niceTicks(max, n) {
+  const raw = max / n, p = Math.pow(10, Math.floor(Math.log10(raw))), m = raw / p;
+  const st = (m < 1.5 ? 1 : m < 3 ? 2 : m < 7 ? 5 : 10) * p, out = [];
+  for (let v = 0; v <= max * 1.0001; v += st) out.push({ v, label: +v.toFixed(6) });
+  return out;
 }
 
-function validate(K,T,A){
-  var rows=[
-    ["y(τ) = 0.632·KA", 0.632*K*A, stepY(T,K,T,A)],
-    ["y(3τ) = 0.95·KA", 0.95*K*A, stepY(3*T,K,T,A)]
-  ], h="";
-  rows.forEach(function(r){
-    var ok=Math.abs(r[1]-r[2])<=0.001*K*A+1e-9;
-    h+="<tr><td>"+r[0]+"</td><td>"+fmt(r[1],3)+"</td><td>"+fmt(r[2],3)+"</td><td class='"+(ok?"pass":"fail")+"'>"+(ok?"Pass":"Fail")+"</td></tr>";
-  });
-  $("val").innerHTML=h;
+// ---------- the main plot, with a gauge beside it ----------
+function drawMain() {
+  const q = V.quiz, hidden = q && !q.done, te = tEnd(), step = P.mode === "step";
+  const ymax = step ? KA() * 1.15 : KA() * te * 1.04;
+  const c = chart($("plot"), { xmax: te, ymin: 0, ymax, xt: tauTicks(), yt: niceTicks(ymax, 5),
+    h: (W, n) => n ? Math.round(W * 0.84) : 410, r: n => n ? 76 : 122 });
+  const ts = times(te), ys = ts.map(sensor);
+  const tp = Math.min(V.tp, te);
+
+  // ideal K·x(t)
+  if (step) { c.line(0, KA(), te, KA(), 'stroke="var(--mute)" stroke-width="2" stroke-dasharray="4 5"'); c.text(c.x(te) - 6, c.y(KA()) - 8, "ideal K·x", "b", "end"); }
+  else { c.line(0, 0, te, KA() * te, 'stroke="var(--mute)" stroke-width="2" stroke-dasharray="4 5"'); c.text(c.x(te * 0.55) - 8, c.y(KA() * te * 0.55) - 6, "ideal K·x", "b", "end"); }
+
+  if (!hidden) {
+    const upTo = Math.min(V.drawTo, te), k = Math.max(2, Math.round((N - 1) * upTo / te) + 1);
+    c.curve(ts.slice(0, k), ys.slice(0, k), 'stroke="var(--ink)" stroke-width="3"');
+    if (step) {
+      for (const [n, label] of [[1, "63.2 % at τ"], [3, "95 % at 3τ"]]) {
+        if (upTo < n * P.tau) continue;
+        const v = sensor(n * P.tau);
+        c.line(n * P.tau, 0, n * P.tau, v, 'stroke="var(--line2)" stroke-dasharray="2 4"');
+        c.dot(n * P.tau, v, 5.5, 'fill="var(--ink)" stroke="var(--bg)" stroke-width="2"');
+        c.text(c.x(n * P.tau) + 9, c.y(v) + 18, label);
+      }
+    } else if (upTo >= 4.5 * P.tau) {
+      const tc = 4.5 * P.tau, yc = sensor(tc), tl = yc / KA();   // tl: when the ideal line was at yc
+      c.line(tl, yc, tc, yc, 'stroke="var(--ink)" stroke-width="2"');
+      c.line(tc, yc, tc, KA() * tc, 'stroke="var(--bad)" stroke-width="3"');
+      c.dot(tl, yc, 4, 'fill="var(--ink)"'); c.dot(tc, yc, 4, 'fill="var(--ink)"');
+      c.text((c.x(tl) + c.x(tc)) / 2, c.y(yc) + 18, "lag = τ", "b", "middle");
+      c.text(c.x(tc) + 8, (c.y(yc) + c.y(KA() * tc)) / 2 + 4, "error KAτ");
+    }
+  }
+
+  // your guess
+  if (q) {
+    const col = !q.done ? "var(--ink)" : q.good ? "var(--ok)" : "var(--bad)";
+    if (q.kind === "value") {
+      c.line(q.t, 0, q.t, ymax, 'stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="6 5"');
+      c.dot(q.t, q.g, 11, `fill="none" stroke="${col}" stroke-width="3"`);
+      c.dot(q.t, q.g, 3, `fill="${col}"`);
+      c.text(c.x(q.t) - 16, c.y(q.g) + 4, q.done ? "you" : "drag me", "b", "end");
+      if (q.done) c.dot(q.t, q.truth, 5.5, 'fill="var(--ink)" stroke="var(--bg)" stroke-width="2"');
+    } else {
+      const lv = q.level * KA();
+      c.line(0, lv, te, lv, 'stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="6 5"');
+      c.text(c.l + 6, c.y(lv) - 6, `${pct(q.level)} of KA`, "f");
+      c.line(q.g, 0, q.g, ymax, `stroke="${col}" stroke-width="3"`);
+      c.dot(q.g, lv, 9, `fill="var(--bg)" stroke="${col}" stroke-width="3"`);
+      c.text(c.x(q.g) + 14, c.mt + 16, q.done ? "you" : "drag me");
+    }
+  }
+
+  // playhead and gauge
+  const gx = c.l + c.pw, gw = c.r * 0.27, b1 = gx + c.r * 0.2, b2 = gx + c.r * 0.58, y0 = c.y(0);
+  const iv = ideal(tp), sv = sensor(tp);
+  c.s.push(`<rect x="${b1}" y="${c.y(iv)}" width="${gw}" height="${y0 - c.y(iv)}" fill="none" stroke="var(--mute)" stroke-width="1.5" stroke-dasharray="4 3"/>`);
+  c.text(b1 + gw / 2, y0 + 17, "K·x", "m", "middle");
+  c.text(b2 + gw / 2, y0 + 17, "y", "m", "middle");
+  if (!hidden) {
+    c.line(tp, 0, tp, ymax, 'stroke="var(--mute)" stroke-width="1"');
+    c.s.push(`<line x1="${c.x(tp)}" y1="${c.y(sv)}" x2="${b2 + gw}" y2="${c.y(sv)}" stroke="var(--mute)" stroke-dasharray="2 4"/>`);
+    c.s.push(`<rect x="${b2}" y="${c.y(sv)}" width="${gw}" height="${y0 - c.y(sv)}" fill="var(--ink)"/>`);
+    if (iv - sv > ymax * 0.005) c.s.push(`<rect x="${b2}" y="${c.y(iv)}" width="${gw}" height="${c.y(sv) - c.y(iv)}" fill="var(--gap)"/>`);
+    c.dot(tp, sv, 6, 'fill="var(--bg)" stroke="var(--ink)" stroke-width="2.5"');
+  } else {
+    c.text(b2 + gw / 2, (c.mt + y0) / 2, "?", "b", "middle");
+  }
+  c.flush();
 }
 
-function setMode(m){ mode=m; if(m==="ramp"){ $("A").max=10; if(+$("A").value>10){$("A").value=2;} $("A").step=0.5; } else { $("A").max=100; $("A").step=1; if(+$("A").value<=10){$("A").value=60;} } update(); }
+// ---------- the error plot ----------
+function drawError() {
+  const hidden = V.quiz && !V.quiz.done, te = tEnd(), ts = times(te);
+  let c;
+  if (P.mode === "step") {
+    const ymin = Math.exp(-6.4), sup = ["", "⁻¹", "⁻²", "⁻³", "⁻⁴", "⁻⁵", "⁻⁶"], tau = P.tau;
+    c = chart($("plot2"), { xmax: te, ymin, ymax: 1.15, log: true, xt: tauTicks(),
+      yt: sup.map((s, k) => ({ v: Math.exp(-k), label: k ? "e" + s : "1" })), h: (W, n) => n ? Math.round(W * 0.8) : 330 });
+    for (let k = 1; k <= 6; k++) c.text(c.l + 6, c.y(Math.exp(-k)) - 5, Math.exp(-k).toFixed(3), "f");
+    if (!hidden) {
+      c.curve(ts, ts.map(t => Math.max(1 - sensor(t) / KA(), ymin)), 'stroke="var(--ink)" stroke-width="3"');
+      for (let k = 0; k <= 6; k++) c.dot(k * tau, Math.exp(-k), 4.5, 'fill="var(--ink)" stroke="var(--bg)" stroke-width="2"');
+      c.line(tau, Math.exp(-1), 2 * tau, Math.exp(-1), 'stroke="var(--mute)" stroke-width="2" stroke-dasharray="5 4"');
+      c.line(2 * tau, Math.exp(-1), 2 * tau, Math.exp(-2), 'stroke="var(--mute)" stroke-width="2" stroke-dasharray="5 4"');
+      c.text(c.x(1.5 * tau), c.y(Math.exp(-1)) - 8, "Δt = τ", "b", "middle");
+      c.s.push(`<text x="${c.x(2 * tau) + 8}" y="${c.y(Math.exp(-1.5)) + 4}" class="b"><tspan class="m">ln</tspan>(error) −1</text>`);
+      c.text(c.x(4.2 * tau) - 10, c.y(Math.exp(-4.2)) + 20, `slope −1/τ = ${num(-1 / tau, 3)} /s`, "b", "end");
+    }
+    $("h-log").textContent = "Error fraction on a log axis";
+    $("note2").innerHTML = "Each grid line down is the error shrinking by another factor of <i>e</i>, and the curve crosses one line every <span class='m'>τ</span>. That makes <span class='m'>ln(error)</span> a straight line with slope <span class='m'>−1/τ</span>. Take any measured curve, pick two points on this line, and you get <span class='m'>τ</span> back.";
+  } else {
+    const ymax = KA() * P.tau * 1.25;
+    c = chart($("plot2"), { xmax: te, ymin: 0, ymax, xt: tauTicks(), yt: niceTicks(ymax, 4), h: (W, n) => n ? Math.round(W * 0.7) : 290 });
+    c.line(0, KA() * P.tau, te, KA() * P.tau, 'stroke="var(--mute)" stroke-width="1.5" stroke-dasharray="7 5"');
+    c.text(c.x(te) - 6, c.y(KA() * P.tau) - 8, `levels off at KAτ = ${num(KA() * P.tau)}`, "b", "end");
+    if (!hidden) c.curve(ts, ts.map(t => ideal(t) - sensor(t)), 'stroke="var(--bad)" stroke-width="3"');
+    $("h-log").textContent = "Ramp tracking error  K·x − y";
+    $("note2").innerHTML = "The error grows, then stops growing at <span class='m'>KAτ</span>: from then on the sensor runs parallel to the ideal line, exactly <span class='m'>τ</span> late. A slower sensor or a faster ramp makes the gap bigger.";
+  }
+  if (hidden) c.text(c.l + c.pw / 2, c.mt + c.ph / 2, "Hidden until you answer", "b", "middle");
+  c.flush();
+}
 
-$("check").addEventListener("click",function(){
-  var g=parseFloat($("guess").value), T=+$("T").value, p=$("pres");
-  if(isNaN(g)){ p.textContent="Type a number of seconds first."; return; }
-  var tr=3*T, err=Math.abs(g-tr)/tr;
-  p.innerHTML="Answer: <b>3τ = "+fmt(tr,1)+" s</b>. "+(err<=0.1?"<span class='pass'>Close enough: within 10%.</span>":"Your guess was "+fmt(g,1)+" s. The response reaches 63.2% at τ and 95% at 3τ, so move the τ slider and see the time scale stretch.");
+// ---------- readouts ----------
+function drawReadouts() {
+  const hidden = V.quiz && !V.quiz.done, tp = Math.min(V.tp, tEnd()), iv = ideal(tp), sv = sensor(tp);
+  const cell = (name, val, secret, cls = "") => `<div class="cell ${cls}"><span>${name}</span><b>${hidden && secret ? "?" : val}</b></div>`;
+  $("read").innerHTML = cell("time", num(tp, 1) + " s", false) + cell("should read K·x", num(iv), false) + cell("reads y", num(sv), true)
+    + cell("behind by", num(iv - sv) + (P.mode === "step" ? ` <small>${pct(1 - sv / iv)}</small>` : ""), true, "gap");
+  $("keys").innerHTML = hidden ? "" : P.mode === "step"
+    ? `<span>63.2 % at <b>τ = ${num(P.tau, 1)} s</b></span><span>95 % at <b>3τ = ${num(3 * P.tau, 1)} s</b></span><span>final value <b>KA = ${num(KA())}</b></span>`
+    : `<span>time lag <b>τ = ${num(P.tau, 1)} s</b></span><span>steady-state error <b>KAτ = ${num(KA() * P.tau)}</b></span><span>it reads <b>K·x(t − τ)</b> once settled</span>`;
+  $("scrub").value = Math.round(1000 * tp / tEnd());
+  $("speed").textContent = `plays 6τ (${num(tEnd(), 0)} s) in 4 s`;
+}
+
+// ---------- validation: read off the sampled curves ----------
+function validate() {
+  const { K, tau, A } = P, ka = K * A, te = 6 * tau, ts = times(te);
+  const ys = ts.map(t => stepY(t, K, tau, A)), yr = ts.map(t => rampY(t, K, tau, A));
+  const r1 = interp(ts, ys, tau) / ka, r3 = interp(ts, ys, 3 * tau) / ka;
+  const lag = te - yr[N - 1] / ka, err = ka * te - yr[N - 1];
+  const slope = (Math.log(1 - r3) - Math.log(1 - r1)) / (2 * tau);
+  const rows = [
+    [true, "y(τ) / KA", "0.632", num(r1, 4), Math.abs(r1 - 0.632) <= 0.001],
+    [true, "y(3τ) / KA", "0.950", num(r3, 4), Math.abs(r3 - 0.95) <= 0.001],
+    [false, "Ramp lag at 6τ", num(tau, 2) + " s", num(lag, 3) + " s", Math.abs(lag / tau - 1) <= 0.01],
+    [false, "Ramp error at 6τ", num(ka * tau), num(err), Math.abs(err / (ka * tau) - 1) <= 0.01],
+    [false, "Slope of ln(error)", num(-1 / tau, 4), num(slope, 4), Math.abs(slope * tau + 1) <= 0.001],
+  ];
+  $("val").innerHTML = rows.map(([req, name, exp, got, ok]) =>
+    `<tr class="${req ? "req" : ""}"><td>${name}</td><td>${exp}</td><td>${got}</td><td class="${ok ? "ok" : "bad"}">${ok ? "Pass" : "Fail"}</td></tr>`).join("");
+}
+
+// ---------- controls ----------
+function syncControls() {
+  const ramp = P.mode === "ramp";
+  $("mStep").setAttribute("aria-pressed", !ramp); $("mRamp").setAttribute("aria-pressed", ramp);
+  $("K").value = P.K; $("T").value = P.tau;
+  Object.assign($("A"), ramp ? { min: 0.5, max: 10, step: 0.5 } : { min: 1, max: 100, step: 1 });
+  $("A").value = P.A;
+  $("lA").textContent = ramp ? "Ramp rate A (per s)" : "Step size A";
+}
+function render() {
+  $("oK").textContent = num(P.K, 1); $("oT").textContent = num(P.tau, 1) + " s";
+  $("oA").textContent = P.mode === "step" ? num(P.A, 0) : num(P.A, 1) + " /s";
+  $("story").textContent = P.mode === "step"
+    ? `Tea example: τ = 10 s, dropped into tea 60 °C hotter. After 10 s it has risen only ${num(stepY(10, 1, 10, 60), 1)} °C, so it reads about 58 °C instead of 80 °C.`
+    : "The input never stops rising, so the sensor never catches up. It settles one τ behind, at a fixed gap of KAτ.";
+  drawMain(); drawError(); drawReadouts(); validate();
+}
+
+// ---------- predict, then check ----------
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const QUIZ = [
+  () => { const tau = pick([4, 6, 8, 10, 12]);
+    return { set: { mode: "step", K: 1, tau, A: 60 }, kind: "value", t: tau,
+      text: `A thermometer with τ = ${tau} s goes into tea 60 °C hotter than the air. How far has it risen after ${tau} s?` }; },
+  () => { const tau = pick([2, 5, 8]), n = pick([0.5, 2, 3]);
+    return { set: { mode: "step", K: 2, tau, A: 20 }, kind: "value", t: n * tau,
+      text: `K = 2, a step of 20, τ = ${tau} s. Where is the output at t = ${num(n * tau, 1)} s?` }; },
+  () => { const tau = pick([3, 6, 9]);
+    return { set: { mode: "step", K: 1, tau, A: 50 }, kind: "time", level: 0.95,
+      text: `τ = ${tau} s. When is the output within 5 % of its final value?` }; },
+  () => { const tau = pick([4, 7, 10]);
+    return { set: { mode: "step", K: 1.5, tau, A: 40 }, kind: "time", level: 0.632,
+      text: `τ = ${tau} s. When does the output reach 63.2 % of its final value?` }; },
+  () => { const tau = pick([3, 5, 8]), A = pick([1, 2, 4]);
+    return { set: { mode: "ramp", K: 1, tau, A }, kind: "value", t: 4 * tau,
+      text: `The input climbs ${A} per second and τ = ${tau} s. Where is the output at t = ${4 * tau} s?` }; },
+];
+const order = [0, 1, 2, 3, 4];
+let qn = 0;
+function ask(i) {
+  stopAnim();
+  const q = QUIZ[i]();
+  Object.assign(P, q.set); syncControls();
+  q.truth = q.kind === "value" ? sensor(q.t) : -P.tau * Math.log(1 - q.level);
+  q.g = q.kind === "value" ? 0.35 * ideal(q.t) : 0.3 * P.tau;                // where the handle starts
+  V.quiz = q; V.drawTo = Infinity; V.tp = q.kind === "value" ? q.t : P.tau;
+  $("q").textContent = q.text;
+  $("how").textContent = q.kind === "value" ? "Drag the white handle up or down on the plot to your answer, then press Check."
+    : "Drag the white line left or right on the plot to your answer, then press Check.";
+  $("verdict").textContent = ""; $("check").disabled = false; $("skip").hidden = false;
+  showGuess(); render();
+}
+function showGuess() {
+  const q = V.quiz;
+  $("yours").innerHTML = q ? `Your guess: <b>${num(q.g, 1)}${q.kind === "time" ? " s" : ""}</b>` : "";
+}
+function check(skipped) {
+  const q = V.quiz;
+  if (!q || q.done) return;
+  q.done = true;
+  if (!skipped) {
+    q.good = Math.abs(q.g - q.truth) <= 0.1 * Math.abs(q.truth);
+    V.total++; if (q.good) V.right++;
+    const n = q.kind === "value" ? q.t / P.tau : q.truth / P.tau;
+    const why = q.kind === "time"
+      ? `1 − e<sup>−t/τ</sup> = ${q.level} gives t = −τ·ln(${num(1 - q.level, 3)}) = ${num(q.truth, 1)} s, about ${q.level > 0.9 ? "3τ" : "τ"}.`
+      : P.mode === "step"
+        ? `t = ${num(n, 1)}τ, so it has covered 1 − e<sup>−${num(n, 1)}</sup> = ${pct(1 - Math.exp(-n))} of the jump: ${num(q.truth, 1)} of ${num(KA(), 1)}.`
+        : `On a ramp the sensor runs τ late, so at 4τ it shows roughly what the ideal showed at 3τ: ${num(q.truth, 1)} against an ideal ${num(ideal(q.t), 1)}.`;
+    $("verdict").innerHTML = `<span class="${q.good ? "ok" : "bad"}">${q.good ? "Within 10 %." : "Not within 10 %."}</span> You said ${num(q.g, 1)}, the answer is ${num(q.truth, 1)}${q.kind === "time" ? " s" : ""}. ${why}`;
+  } else {
+    q.good = false;
+    $("verdict").textContent = "Here is the answer. Read it off the curve, then try a new question.";
+  }
+  $("check").disabled = true; $("skip").hidden = true;
+  $("score").textContent = V.total ? `This session: ${V.right} of ${V.total} within 10 %` : "";
+  V.tp = 0; V.drawTo = 0;                                   // draw the true curve in, live
+  startAnim(2200, true, () => { V.tp = q.kind === "value" ? q.t : q.truth; });
+}
+
+// ---------- one animation loop, for Play and for the reveal ----------
+function startAnim(ms, reveal, done) {
+  stopAnim();
+  const te = tEnd(), from = V.tp >= te * 0.999 ? 0 : V.tp, t0 = performance.now(), dur = ms * (1 - from / te);
+  V.anim = { reveal, done };
+  $("play").textContent = "Pause";
+  const tick = now => {
+    if (!V.anim) return;
+    const u = Math.min(1, (now - t0) / dur);
+    V.tp = from + (te - from) * u;
+    if (reveal) V.drawTo = V.tp;
+    if (u < 1) { render(); V.anim.raf = requestAnimationFrame(tick); }
+    else { const d = V.anim.done; stopAnim(); if (d) d(); render(); }
+  };
+  V.anim.raf = requestAnimationFrame(tick);
+}
+function stopAnim() {
+  if (V.anim) cancelAnimationFrame(V.anim.raf);
+  V.anim = null; V.drawTo = Infinity;
+  $("play").textContent = "Play";
+}
+
+// ---------- input ----------
+function sliderMoved() {
+  if (V.quiz && !V.quiz.done) {
+    check(true); stopAnim();
+    $("verdict").textContent = "You moved a slider, so the curve is shown. Press New question to guess again.";
+  } else if (V.quiz) {                                     // the old guess no longer matches the sliders
+    V.quiz = null;
+    $("q").textContent = "Free play. Press New question for another guess.";
+    $("how").textContent = ""; $("yours").textContent = ""; $("verdict").textContent = "";
+  }
+  render();
+}
+for (const [id, key] of [["K", "K"], ["T", "tau"], ["A", "A"]])
+  $(id).addEventListener("input", e => { stopAnim(); P[key] = +e.target.value; if (key === "tau") V.tp = P.tau; sliderMoved(); });
+for (const [id, mode] of [["mStep", "step"], ["mRamp", "ramp"]])
+  $(id).addEventListener("click", () => { if (P.mode === mode) return; stopAnim(); P.mode = mode; P.A = mode === "ramp" ? 2 : 60; syncControls(); sliderMoved(); });
+$("scrub").addEventListener("input", e => { if (V.quiz && !V.quiz.done) return; stopAnim(); V.tp = tEnd() * e.target.value / 1000; render(); });
+$("play").addEventListener("click", () => {
+  if (V.anim) { stopAnim(); render(); return; }
+  if (V.quiz && !V.quiz.done) return;
+  startAnim(4000, false);
 });
-$("hint").addEventListener("click",function(){ var h=$("hinttxt"); h.hidden=!h.hidden; this.textContent=h.hidden?"Show a hint":"Hide hint"; });
-["K","T","A"].forEach(function(id){ $(id).addEventListener("input",update); });
-$("bStep").addEventListener("click",function(){setMode("step");});
-$("bRamp").addEventListener("click",function(){setMode("ramp");});
-update();
+$("check").addEventListener("click", () => check(false));
+$("skip").addEventListener("click", () => check(true));
+$("next").addEventListener("click", () => { qn++; if (qn % order.length === 0) order.sort(() => Math.random() - 0.5); ask(order[qn % order.length]); });
+
+// drag on the main plot: moves your guess while a question is open, the playhead otherwise
+function pointAt(e) {
+  const c = $("plot")._c, svg = $("plot").querySelector("svg");
+  const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+  const p = pt.matrixTransform(svg.getScreenCTM().inverse());
+  const u = Math.min(Math.max((p.x - c.l) / c.pw, 0), 1), w = Math.min(Math.max((c.mt + c.ph - p.y) / c.ph, 0), 1);
+  return { t: u * c.o.xmax, v: c.o.ymin + w * (c.o.ymax - c.o.ymin) };
+}
+function dragTo(e) {
+  const p = pointAt(e), q = V.quiz;
+  if (q && !q.done) { if (q.kind === "value") q.g = p.v; else q.g = p.t; showGuess(); }
+  else { stopAnim(); V.tp = p.t; }
+  render();
+}
+$("plot").addEventListener("pointerdown", e => { V.drag = true; $("plot").setPointerCapture(e.pointerId); dragTo(e); });
+$("plot").addEventListener("pointermove", e => { if (V.drag) dragTo(e); });
+$("plot").addEventListener("pointerup", () => { V.drag = false; });
+$("plot").addEventListener("pointercancel", () => { V.drag = false; });
+$("plot").addEventListener("keydown", e => {          // arrow keys move the guess, or the playhead
+  const q = V.quiz, open = q && !q.done, k = e.key;
+  if (!["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(k)) return;
+  e.preventDefault();
+  const c = $("plot")._c, dv = (c.o.ymax - c.o.ymin) / 100, dt = tEnd() / 120, s = k === "ArrowUp" || k === "ArrowRight" ? 1 : -1;
+  if (open && q.kind === "value") q.g = Math.min(Math.max(q.g + s * dv, 0), c.o.ymax);
+  else if (open) q.g = Math.min(Math.max(q.g + s * dt, 0), tEnd());
+  else { stopAnim(); V.tp = Math.min(Math.max(V.tp + s * dt, 0), tEnd()); }
+  showGuess(); render();
+});
+let rz;
+window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(render, 80); });
+
+ask(0);
 </script>
 </body>
 </html>
