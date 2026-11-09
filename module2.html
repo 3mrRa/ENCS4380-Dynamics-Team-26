@@ -6,7 +6,7 @@
 <style>
 :root{--bg:#0e0e0f;--card:#161617;--raise:#202023;--line:#303034;--line2:#45454b;--ink:#ededf0;--mute:#a3a3aa;--faint:#707078;--ok:#5ad08f;--bad:#f07070;--accent:#d8d8df}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,"Segoe UI",system-ui,sans-serif}.page{max-width:1240px;margin:auto;padding:22px 16px 48px}.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700}h1{font-size:clamp(27px,4vw,40px);line-height:1.12;margin:7px 0}.lede{color:var(--mute);max-width:75ch;margin:0}.math{font-family:"Cambria Math","Times New Roman",serif;font-style:italic}.nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.nav a{color:var(--mute);text-decoration:none;border:1px solid var(--line2);padding:7px 11px;border-radius:8px;font-size:13px}.nav a.active{background:var(--ink);color:#111;border-color:var(--ink)}.layout{display:grid;gap:14px;margin-top:14px}.col{display:grid;gap:14px;align-content:start;min-width:0}@media(min-width:980px){.layout{grid-template-columns:340px minmax(0,1fr)}}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}.card h2{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:0 0 12px;font-weight:700}.note{font-size:13.5px;color:var(--mute);margin:9px 0 0}.slider{display:block;margin:12px 0}.top{display:flex;justify-content:space-between;gap:12px;align-items:baseline;font-weight:650;font-size:14px}.top output{background:var(--raise);border:1px solid var(--line2);border-radius:6px;padding:1px 8px;min-width:86px;text-align:right;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:#e8e8ec;margin:7px 0 0;height:24px}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.metric{background:var(--raise);border:1px solid var(--line);border-radius:9px;padding:10px}.metric small{display:block;color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.08em}.metric strong{display:block;font-size:20px;font-variant-numeric:tabular-nums;margin-top:3px}.plot svg{display:block;width:100%;height:auto}.plot text{font:12px Inter,"Segoe UI",sans-serif;fill:var(--mute)}.plot .label{fill:var(--ink);font-weight:700}.plot .faint{fill:var(--faint);font-size:10px}.legend{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--mute);font-size:13px;margin-top:9px}.swatch{display:inline-block;width:19px;height:3px;vertical-align:middle;margin-right:6px;background:var(--ink)}.swatch.output{background:#a5a5ad}.swatch.cut{height:0;border-top:2px dashed var(--ok);background:none}.quizq{font-size:16px;font-weight:650;margin:0 0 10px}.options{display:grid;gap:7px}.option{border:1px solid var(--line2);background:var(--raise);color:var(--ink);padding:9px 11px;text-align:left;border-radius:8px;font:inherit;cursor:pointer}.option:disabled{opacity:.5}.option.good{border-color:var(--ok);color:var(--ok);opacity:1}.option.wrong{border-color:var(--bad);color:var(--bad);opacity:1}.feedback{color:var(--mute);font-size:13px;margin:10px 0 0}.btn{border:1px solid var(--ink);background:var(--ink);color:#111;font-weight:700;border-radius:8px;padding:8px 13px;cursor:pointer}.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px}.muted{color:var(--faint);font-size:12px}table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}th{text-align:left;color:var(--faint);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:7px 5px;border-bottom:1px solid var(--line2)}td{padding:9px 5px;border-bottom:1px solid var(--line)}td:last-child,th:last-child{text-align:right}.pass{color:var(--ok);font-weight:800}.fail{color:var(--bad);font-weight:800}.formula{padding:10px;background:var(--raise);border-radius:8px;margin:7px 0;color:var(--mute);overflow-wrap:anywhere}.formula b{color:var(--ink)}footer{color:var(--faint);font-size:12px;margin-top:22px}
-</style>
+.calc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.calc-field label{display:block;color:var(--mute);font-size:12px;margin-bottom:5px}.calc-field input{width:100%;background:var(--raise);border:1px solid var(--line2);border-radius:7px;color:var(--ink);padding:9px;font:inherit}.calc-result{margin-top:10px}.calc-result strong{font-size:19px}.calc-help{font-size:12px;color:var(--mute);margin:9px 0 0}.calc-error{color:var(--bad);font-size:13px;min-height:20px;margin:8px 0 0}.btn:disabled{opacity:.45;cursor:not-allowed}</style>
 </head>
 <body><main class="page">
 <header><div class="kicker">ENCS4380 · Homework 1 · Module 2 · Team 26</div><h1>First-order frequency response</h1><p class="lede">Explore how a first-order sensor changes the amplitude and phase of a sinusoidal input. Move the live controls and compare the time response with the Bode diagram.</p></header>
@@ -22,6 +22,20 @@
 </section>
 <section class="card"><h2>Check 2 · Given sinusoidal input</h2><p class="note">Set <span class="math">τ = 0.2 s</span> and <span class="math">ω = 2 rad/s</span>. Expected output amplitude ratio is approximately 0.93 and phase lag is approximately 21.8°.</p><button class="btn" id="loadCheck2">Load Check 2 values</button></section>
 <section class="card"><h2>Check 3 · 5% dynamic-error limit</h2><p class="note">For signals up to 100 Hz, calculate the largest time constant that keeps the magnitude error within 5%. The phase at 50 Hz is checked using that same time constant.</p><button class="btn" id="loadCheck3">Load Check 3 values</button></section>
+<section class="card"><h2>Dynamic-error calculator · δ = M − 1</h2>
+<p class="note">Find the largest sensor time constant that keeps the magnitude error within your chosen limit, up to a maximum input frequency.</p>
+<div class="calc-grid">
+<div class="calc-field"><label for="calcF">Maximum frequency f<sub>max</sub> (Hz)</label><input id="calcF" type="number" value="100" min="0.1" step="any" inputmode="decimal"></div>
+<div class="calc-field"><label for="calcErr">Maximum allowed |δ| (%)</label><input id="calcErr" type="number" value="5" min="0.1" max="90" step="any" inputmode="decimal"></div>
+</div>
+<div class="metrics calc-result">
+<div class="metric"><small>Required maximum τ</small><strong id="calcTauMax">—</strong></div>
+<div class="metric"><small>Phase lag at f<sub>max</sub>/2</small><strong id="calcPhaseHalf">—</strong></div>
+</div>
+<div class="row"><span class="muted">Apply τ<sub>max</sub> and f<sub>max</sub>/2 to the live controls.</span><button class="btn" id="applyCalc" disabled>Apply to sliders</button></div>
+<p class="calc-error" id="calcError" role="alert" aria-live="polite"></p>
+<div class="formula"><span class="math">τmax = √(1/(1 − e)² − 1) / (2πfmax)</span>, where <span class="math">e = |δ|max/100</span>.</div>
+</section>
 </div>
 <div class="col">
 <section class="card"><h2>Time-domain sinusoidal response</h2><div class="plot" id="timePlot"></div><div class="legend"><span><i class="swatch"></i>Input x(t) = sin(ωt)</span><span><i class="swatch output"></i>Output y(t) = M sin(ωt + φ)</span></div><p class="note" id="timeCaption"></p></section>
@@ -67,6 +81,33 @@ function drawBode(){
  const ph=svgPlot($("phasePlot"),{xmin:lo,xmax:hi,logX:true,ymin:-95,ymax:5,xticks:xt,yticks:[0,-22.5,-45,-67.5,-90].map(v=>({v,label:v+"°"})),height:260});
  ph.path(freq.map(w=>[w,radToDeg(response(tau,w).phase)]),"var(--ink)",2.6);ph.line(wc,-95,wc,5,"var(--ok)","5 4");ph.dot(wc,-45,"var(--ok)");ph.label(ph.X(wc)+7,ph.Y(-45)-9,"Cutoff −45°");ph.render();
 }
+
+function calculateDynamicError(){
+ const f=Number($("calcF").value),err=Number($("calcErr").value),errorEl=$("calcError"),apply=$("applyCalc");
+ errorEl.textContent="";apply.disabled=true;
+ if(!Number.isFinite(f)||f<=0){errorEl.textContent="Enter a maximum frequency greater than 0 Hz.";return}
+ if(!Number.isFinite(err)||err<=0||err>=100){errorEl.textContent="Enter an allowed error greater than 0% and less than 100%.";return}
+ const e=err/100;
+ const tauMax=Math.sqrt(1/Math.pow(1-e,2)-1)/(2*Math.PI*f);
+ const omegaHalf=2*Math.PI*(f/2);
+ const phaseHalf=radToDeg(Math.atan(omegaHalf*tauMax));
+ if(!Number.isFinite(tauMax)||!Number.isFinite(phaseHalf)||tauMax<=0){errorEl.textContent="These values are outside the supported calculation range.";return}
+ $("calcTauMax").textContent=tauMax<.001?fmt(tauMax*1000,3)+" ms":fmt(tauMax,6)+" s";
+ $("calcPhaseHalf").textContent=fmt(phaseHalf,2)+"°";
+ apply.disabled=false;
+ apply.dataset.tau=String(tauMax);apply.dataset.omega=String(omegaHalf);
+}
+$("calcF").addEventListener("input",calculateDynamicError);
+$("calcErr").addEventListener("input",calculateDynamicError);
+$("applyCalc").addEventListener("click",()=>{
+ const tau=Number($("applyCalc").dataset.tau),omega=Number($("applyCalc").dataset.omega);
+ if(!Number.isFinite(tau)||!Number.isFinite(omega)||tau<=0||omega<=0)return;
+ state.tau=tau;state.omega=omega;
+ $("tau").min=Math.min(.0001,tau);$("tau").max=Math.max(.05,tau*1.05);$("tau").step=Math.max(.000001,tau/1000);
+ $("omega").min=Math.min(.1,omega);$("omega").max=Math.max(1000,omega*1.05);$("omega").step=Math.max(.01,omega/1000);
+ render();
+});
+
 function validate(){
  const c2=response(.2,2),tl=tauLimit(),phase50=Math.abs(radToDeg(response(tl,2*Math.PI*50).phase));
  const checks=[
@@ -100,5 +141,5 @@ function ask(){const q=quiz[qi];$("question").textContent=q.q;$("options").inner
 $("options").addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(!b||b.disabled)return;const q=quiz[qi],ok=+b.dataset.i===q.a;Array.from($("options").children).forEach((el,i)=>{el.disabled=true;if(i===q.a)el.classList.add("good")});if(!ok)b.classList.add("wrong");$("feedback").innerHTML='<b class="'+(ok?'pass':'fail')+'">'+(ok?'Correct.':'Try again next time.')+'</b> '+q.f});
 $("nextQ").addEventListener("click",()=>{qi=(qi+1)%quiz.length;ask()});
 window.addEventListener("resize",()=>{clearTimeout(window._rz);window._rz=setTimeout(render,100)});
-render();ask();
+calculateDynamicError();render();ask();
 </script></body></html>
