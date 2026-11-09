@@ -95,8 +95,8 @@ function drawPhase(z,wn,mt){
  c.curve(pts,"var(--ink)",2.5);c.dot(pts[0][0],pts[0][1],"var(--blue)",5);c.dot(1/P.k,0,"var(--ok)",5);c.render();
 }
 function validation(eigs){
- const over=.5<1?100*Math.exp(-.5*Math.PI/Math.sqrt(1-.25)):0;
- const crit=1<1?100*Math.exp(-Math.PI/Math.sqrt(1-1)):0;
+ const over=metrics(.5,2).overshoot;
+ const crit=metrics(1,2).overshoot;
  const check6=Math.abs(eigs[0].re+1)<1e-9&&Math.abs(Math.abs(eigs[0].im)-Math.sqrt(3))<1e-9&&Math.abs(eigs[1].re+1)<1e-9&&Math.abs(Math.abs(eigs[1].im)-Math.sqrt(3))<1e-9;
  const rows=[
  ["Check 4 · ζ = 0.5","16.3% ± 0.1%",fmt(over,3)+"%",Math.abs(over-16.3)<.1],
