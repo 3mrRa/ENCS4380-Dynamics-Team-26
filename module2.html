@@ -68,7 +68,7 @@ function drawTime(M,phi){
  const el=$("timePlot"),w=state.omega,period=2*Math.PI/w,tmax=2*period;
  const c=svgPlot(el,{xmin:0,xmax:tmax,ymin:-1.15,ymax:1.15,xticks:Array.from({length:5},(_,i)=>({v:tmax*i/4,label:fmt(tmax*i/4,2)})),yticks:[-1,0,1].map(v=>({v,label:String(v)})),height:300});
  const input=[],output=[];for(let i=0;i<=360;i++){const t=tmax*i/360;input.push([t,Math.sin(w*t)]);output.push([t,M*Math.sin(w*t+phi)])}
- c.path(input,"var(--ink)",2.5);c.path(output,"#a5a5ad",2.5);c.render();
+ c.path(input,"var(--ink)",2.5);c.path(output,"#a5a5ad",2.5);c.label(c.l+c.pw/2,c.H-4,"time t (s)","middle");c.render();
  $("timeCaption").textContent="Output amplitude is "+fmt(M,4)+" of the input and its phase is "+fmt(radToDeg(phi),2)+"°. The time delay is "+fmt(-phi/w,5)+" s.";
 }
 function drawBode(){
