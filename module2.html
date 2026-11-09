@@ -5,7 +5,7 @@
 <title>Module 2 · First-order frequency response · Team 26</title>
 <style>
 :root{--bg:#0e0e0f;--card:#161617;--raise:#202023;--line:#303034;--line2:#45454b;--ink:#ededf0;--mute:#a3a3aa;--faint:#707078;--ok:#5ad08f;--bad:#f07070;--accent:#d8d8df}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,"Segoe UI",system-ui,sans-serif}.page{max-width:1240px;margin:auto;padding:22px 16px 48px}.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700}h1{font-size:clamp(27px,4vw,40px);line-height:1.12;margin:7px 0}.lede{color:var(--mute);max-width:75ch;margin:0}.math{font-family:"Cambria Math","Times New Roman",serif;font-style:italic}.nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.nav a{color:var(--mute);text-decoration:none;border:1px solid var(--line2);padding:7px 11px;border-radius:8px;font-size:13px}.nav a.active{background:var(--ink);color:#111;border-color:var(--ink)}.layout{display:grid;gap:14px;margin-top:14px}.col{display:grid;gap:14px;align-content:start;min-width:0}@media(min-width:980px){.layout{grid-template-columns:340px minmax(0,1fr)}}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}.card h2{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:0 0 12px;font-weight:700}.note{font-size:13.5px;color:var(--mute);margin:9px 0 0}.slider{display:block;margin:12px 0}.top{display:flex;justify-content:space-between;gap:12px;align-items:baseline;font-weight:650;font-size:14px}.top output{background:var(--raise);border:1px solid var(--line2);border-radius:6px;padding:1px 8px;min-width:86px;text-align:right;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:#e8e8ec;margin:7px 0 0;height:24px}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.metric{background:var(--raise);border:1px solid var(--line);border-radius:9px;padding:10px}.metric small{display:block;color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.08em}.metric strong{display:block;font-size:20px;font-variant-numeric:tabular-nums;margin-top:3px}.plot svg{display:block;width:100%;height:auto}.plot text{font:12px Inter,"Segoe UI",sans-serif;fill:var(--mute)}.plot .label{fill:var(--ink);font-weight:700}.plot .faint{fill:var(--faint);font-size:10px}.legend{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--mute);font-size:13px;margin-top:9px}.swatch{display:inline-block;width:19px;height:3px;vertical-align:middle;margin-right:6px;background:var(--ink)}.swatch.output{background:#a5a5ad}.swatch.cut{height:0;border-top:2px dashed var(--ok);background:none}.quizq{font-size:16px;font-weight:650;margin:0 0 10px}.options{display:grid;gap:7px}.option{border:1px solid var(--line2);background:var(--raise);color:var(--ink);padding:9px 11px;text-align:left;border-radius:8px;font:inherit;cursor:pointer}.option:disabled{opacity:.5}.option.good{border-color:var(--ok);color:var(--ok);opacity:1}.option.wrong{border-color:var(--bad);color:var(--bad);opacity:1}.feedback{color:var(--mute);font-size:13px;margin:10px 0 0}.btn{border:1px solid var(--ink);background:var(--ink);color:#111;font-weight:700;border-radius:8px;padding:8px 13px;cursor:pointer}.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px}.muted{color:var(--faint);font-size:12px}table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}th{text-align:left;color:var(--faint);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:7px 5px;border-bottom:1px solid var(--line2)}td{padding:9px 5px;border-bottom:1px solid var(--line)}td:last-child,th:last-child{text-align:right}.pass{color:var(--ok);font-weight:800}.fail{color:var(--bad);font-weight:800}.formula{padding:10px;background:var(--raise);border-radius:8px;margin:7px 0;color:var(--mute);overflow-wrap:anywhere}.formula b{color:var(--ink)}footer{color:var(--faint);font-size:12px;margin-top:22px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,"Segoe UI",system-ui,sans-serif}.page{max-width:1240px;margin:auto;padding:22px 16px 48px}.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700}h1{font-size:clamp(27px,4vw,40px);line-height:1.12;margin:7px 0}.lede{color:var(--mute);max-width:75ch;margin:0}.math{font-family:"Cambria Math","Times New Roman",serif;font-style:italic}.nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.nav a{color:var(--mute);text-decoration:none;border:1px solid var(--line2);padding:7px 11px;border-radius:8px;font-size:13px}.nav a.active{background:var(--ink);color:#111;border-color:var(--ink)}.layout{display:grid;gap:14px;margin-top:14px}.col{display:grid;gap:14px;align-content:start;min-width:0}@media(min-width:980px){.layout{grid-template-columns:340px minmax(0,1fr)}}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}.card h2{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:0 0 12px;font-weight:700}.note{font-size:13.5px;color:var(--mute);margin:9px 0 0}.slider{display:block;margin:12px 0}.top{display:flex;justify-content:space-between;gap:12px;align-items:baseline;font-weight:650;font-size:14px}.top output{background:var(--raise);border:1px solid var(--line2);border-radius:6px;padding:1px 8px;min-width:86px;text-align:right;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:#e8e8ec;margin:7px 0 0;height:24px}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.metric{background:var(--raise);border:1px solid var(--line);border-radius:9px;padding:10px}.metric small{display:block;color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.08em}.metric strong{display:block;font-size:20px;font-variant-numeric:tabular-nums;margin-top:3px}.plot svg{display:block;width:100%;height:auto}.plot text{font:12px Inter,"Segoe UI",sans-serif;fill:var(--mute)}.plot .label{fill:var(--ink);font-weight:700}.plot .faint{fill:var(--faint);font-size:10px}.legend{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--mute);font-size:13px;margin-top:9px}.swatch{display:inline-block;width:19px;height:3px;vertical-align:middle;margin-right:6px;background:var(--ink)}.swatch.output{background:#a5a5ad}.swatch.cut{height:0;border-top:2px dashed var(--ok);background:none}.swatch.now{height:0;border-top:2px dashed var(--bad);background:none}.quizq{font-size:16px;font-weight:650;margin:0 0 10px}.options{display:grid;gap:7px}.option{border:1px solid var(--line2);background:var(--raise);color:var(--ink);padding:9px 11px;text-align:left;border-radius:8px;font:inherit;cursor:pointer}.option:disabled{opacity:.5}.option.good{border-color:var(--ok);color:var(--ok);opacity:1}.option.wrong{border-color:var(--bad);color:var(--bad);opacity:1}.feedback{color:var(--mute);font-size:13px;margin:10px 0 0}.btn{border:1px solid var(--ink);background:var(--ink);color:#111;font-weight:700;border-radius:8px;padding:8px 13px;cursor:pointer}.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px}.muted{color:var(--faint);font-size:12px}table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}th{text-align:left;color:var(--faint);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:7px 5px;border-bottom:1px solid var(--line2)}td{padding:9px 5px;border-bottom:1px solid var(--line)}td:last-child,th:last-child{text-align:right}.pass{color:var(--ok);font-weight:800}.fail{color:var(--bad);font-weight:800}.formula{padding:10px;background:var(--raise);border-radius:8px;margin:7px 0;color:var(--mute);overflow-wrap:anywhere}.formula b{color:var(--ink)}footer{color:var(--faint);font-size:12px;margin-top:22px}.sym{text-transform:none;letter-spacing:0}
 .calc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.calc-field label{display:block;color:var(--mute);font-size:12px;margin-bottom:5px}.calc-field input{width:100%;background:var(--raise);border:1px solid var(--line2);border-radius:7px;color:var(--ink);padding:9px;font:inherit}.calc-result{margin-top:10px}.calc-result strong{font-size:19px}.calc-help{font-size:12px;color:var(--mute);margin:9px 0 0}.calc-error{color:var(--bad);font-size:13px;min-height:20px;margin:8px 0 0}.btn:disabled{opacity:.45;cursor:not-allowed}</style>
 </head>
 <body><main class="page">
@@ -15,22 +15,22 @@
 <div class="col">
 <section class="card"><h2>Predict, then check</h2><p class="quizq" id="question"></p><div class="options" id="options"></div><p class="feedback" id="feedback" aria-live="polite"></p><div class="row"><span class="muted" id="qcount"></span><button class="btn" id="nextQ">Next question</button></div><p class="note">Make your prediction first. Then move the sliders and observe whether the response behaves as expected.</p></section>
 <section class="card"><h2>Live controls</h2>
-<label class="slider"><span class="top">Time constant <span class="math">τ</span><output id="tauOut"></output></span><input id="tau" type="range" min="-4" max="-0.5" step="0.001" value="-2"></label>
-<label class="slider"><span class="top">Input angular frequency <span class="math">ω</span><output id="omegaOut"></output></span><input id="omega" type="range" min="0.1" max="1000" step="0.1" value="20"></label>
-<div class="metrics"><div class="metric"><small>Amplitude ratio M</small><strong id="M">—</strong></div><div class="metric"><small>Phase lag φ</small><strong id="phase">—</strong></div><div class="metric"><small>Cutoff ωc</small><strong id="wc">—</strong></div><div class="metric"><small>Dynamic error δ</small><strong id="delta">—</strong></div></div>
+<label class="slider"><span class="top"><span>Time constant <span class="math">τ</span></span><output id="tauOut"></output></span><input id="tau" type="range" min="-4" max="-0.5" step="0.001" value="-2"></label>
+<label class="slider"><span class="top"><span>Input angular frequency <span class="math">ω</span></span><output id="omegaOut"></output></span><input id="omega" type="range" min="-1" max="3" step="0.001" value="1.301"></label>
+<div class="metrics"><div class="metric"><small>Amplitude ratio M</small><strong id="M">—</strong></div><div class="metric"><small>Phase lag <span class="sym">φ</span></small><strong id="phase">—</strong></div><div class="metric"><small>Cutoff <span class="sym">ωc</span></small><strong id="wc">—</strong></div><div class="metric"><small>Dynamic error <span class="sym">δ</span></small><strong id="delta">—</strong></div></div>
 <div class="formula"><span class="math">M = 1 / √(1 + (ωτ)²)</span></div><div class="formula"><span class="math">φ = −tan⁻¹(ωτ)</span></div><div class="formula"><span class="math">δ = M − 1</span> &nbsp; · &nbsp; <span class="math">ωc = 1/τ</span></div>
 </section>
 <section class="card"><h2>Check 2 · Given sinusoidal input</h2><p class="note">Set <span class="math">τ = 0.2 s</span> and <span class="math">ω = 2 rad/s</span>. Expected output amplitude ratio is approximately 0.93 and phase lag is approximately 21.8°.</p><button class="btn" id="loadCheck2">Load Check 2 values</button></section>
 <section class="card"><h2>Check 3 · 5% dynamic-error limit</h2><p class="note">For signals up to 100 Hz, calculate the largest time constant that keeps the magnitude error within 5%. The phase at 50 Hz is checked using that same time constant.</p><button class="btn" id="loadCheck3">Load Check 3 values</button></section>
-<section class="card"><h2>Dynamic-error calculator · δ = M − 1</h2>
+<section class="card"><h2>Dynamic-error calculator · <span class="sym">δ = M − 1</span></h2>
 <p class="note">Find the largest sensor time constant that keeps the magnitude error within your chosen limit, up to a maximum input frequency.</p>
 <div class="calc-grid">
 <div class="calc-field"><label for="calcF">Maximum frequency f<sub>max</sub> (Hz)</label><input id="calcF" type="number" value="100" min="0.1" step="any" inputmode="decimal"></div>
 <div class="calc-field"><label for="calcErr">Maximum allowed |δ| (%)</label><input id="calcErr" type="number" value="5" min="0.1" max="90" step="any" inputmode="decimal"></div>
 </div>
 <div class="metrics calc-result">
-<div class="metric"><small>Required maximum τ</small><strong id="calcTauMax">—</strong></div>
-<div class="metric"><small>Phase lag at f<sub>max</sub>/2</small><strong id="calcPhaseHalf">—</strong></div>
+<div class="metric"><small>Required maximum <span class="sym">τ</span></small><strong id="calcTauMax">—</strong></div>
+<div class="metric"><small>Phase lag at <span class="sym">f<sub>max</sub>/2</span></small><strong id="calcPhaseHalf">—</strong></div>
 </div>
 <div class="row"><span class="muted">Apply τ<sub>max</sub> and f<sub>max</sub>/2 to the live controls.</span><button class="btn" id="applyCalc" disabled>Apply to sliders</button></div>
 <p class="calc-error" id="calcError" role="alert" aria-live="polite"></p>
@@ -41,7 +41,7 @@
 <section class="card"><h2>Time-domain sinusoidal response</h2><div class="plot" id="timePlot"></div><div class="legend"><span><i class="swatch"></i>Input x(t) = sin(ωt)</span><span><i class="swatch output"></i>Output y(t) = M sin(ωt + φ)</span></div><p class="note" id="timeCaption"></p></section>
 <section class="card"><h2>Bode magnitude</h2><div class="plot" id="magPlot"></div><div class="legend"><span><i class="swatch"></i>Magnitude · 20 log₁₀(M)</span><span><i class="swatch cut"></i>Cutoff frequency</span><span><i class="swatch now"></i>Current input frequency</span></div></section>
 <section class="card"><h2>Bode phase</h2><div class="plot" id="phasePlot"></div><div class="legend"><span><i class="swatch"></i>Phase · degrees</span><span><i class="swatch cut"></i>Cutoff frequency</span><span><i class="swatch now"></i>Current input frequency</span></div></section>
-<section class="card"><h2>Validation checks</h2><table><thead><tr><th>Check</th><th>Expected</th><th>Your value</th><th>Status</th></tr></thead><tbody id="validation"></tbody></table><p class="note">The checks below are calculated from the same JavaScript equations used by the live plots. Values are compared with explicit tolerances.</p></section>
+<section class="card"><h2>Validation checks</h2><table><thead><tr><th>Check</th><th>Expected</th><th>Computed</th><th>Status</th></tr></thead><tbody id="validation"></tbody></table><p class="note">These checks are calculated from the same JavaScript equations used by the live plots. Values are compared with explicit tolerances.</p></section>
 </div></div><footer>ENCS4380 Interfacing Techniques · Birzeit University · Team 26</footer></main>
 <script>
 "use strict";
@@ -51,22 +51,25 @@ const radToDeg=r=>r*180/Math.PI;
 const response=(tau,omega)=>{const q=omega*tau;return{M:1/Math.sqrt(1+q*q),phase:-Math.atan(q)}};
 const fmt=(v,d=3)=>Number(v).toFixed(d).replace("-","−");
 const tauLimit=()=>Math.sqrt(1/(.95*.95)-1)/(2*Math.PI*100);
-function svgPlot(el,{xmax,xmin=0,ymin,ymax,xticks,yticks,logX=false,height=300}){
+const fmtFreq=v=>v>=1e6?(v/1e6)+"M":v>=1e3?(v/1e3)+"k":String(+v.toPrecision(1));
+function svgPlot(el,{xmax,xmin=0,ymin,ymax,xticks,yticks,logX=false,height=300,title=""}){
  const W=Math.max(320,Math.min(850,el.clientWidth||760)),small=W<500,H=height,l=small?43:58,r=14,t=14,b=43,pw=W-l-r,ph=H-t-b;
  const X=v=>l+pw*(logX?(Math.log10(v)-Math.log10(xmin))/(Math.log10(xmax)-Math.log10(xmin)):(v-xmin)/(xmax-xmin));
  const Y=v=>t+ph*(ymax-v)/(ymax-ymin);let s=[];
- xticks.forEach(o=>{const xx=X(o.v);s.push('<line x1="'+xx+'" x2="'+xx+'" y1="'+t+'" y2="'+(t+ph)+'" stroke="var(--line)"/><text x="'+xx+'" y="'+(t+ph+17)+'" text-anchor="middle">'+o.label+'</text>')});
+ xticks.forEach(o=>{const xx=X(o.v);s.push('<line x1="'+xx+'" x2="'+xx+'" y1="'+t+'" y2="'+(t+ph)+'" stroke="var(--line)"/><text x="'+xx+'" y="'+(t+ph+17)+'" text-anchor="'+(xx>l+pw-24?'end':'middle')+'">'+o.label+'</text>')});
  yticks.forEach(o=>{const yy=Y(o.v);s.push('<line x1="'+l+'" x2="'+(l+pw)+'" y1="'+yy+'" y2="'+yy+'" stroke="var(--line)"/><text x="'+(l-7)+'" y="'+(yy+4)+'" text-anchor="end">'+o.label+'</text>')});
  s.push('<rect x="'+l+'" y="'+t+'" width="'+pw+'" height="'+ph+'" fill="none" stroke="var(--line2)"/>');
- const path=(points,color,width=2,dash="")=>{s.push('<polyline points="'+points.map(p=>X(p[0]).toFixed(1)+','+Y(p[1]).toFixed(1)).join(' ')+'" fill="none" stroke="'+color+'" stroke-width="'+width+'" stroke-linejoin="round" '+(dash?'stroke-dasharray="'+dash+'"':'')+'/>')};
+ const clip=el.id+"-clip",inY=v=>Math.max(ymin,Math.min(ymax,v));
+ s.unshift('<defs><clipPath id="'+clip+'"><rect x="'+l+'" y="'+t+'" width="'+pw+'" height="'+ph+'"/></clipPath></defs>');
+ const path=(points,color,width=2,dash="")=>{s.push('<polyline clip-path="url(#'+clip+')" points="'+points.map(p=>X(p[0]).toFixed(1)+','+Y(p[1]).toFixed(1)).join(' ')+'" fill="none" stroke="'+color+'" stroke-width="'+width+'" stroke-linejoin="round" '+(dash?'stroke-dasharray="'+dash+'"':'')+'/>')};
  const line=(x1,y1,x2,y2,color,dash="")=>s.push('<line x1="'+X(x1)+'" y1="'+Y(y1)+'" x2="'+X(x2)+'" y2="'+Y(y2)+'" stroke="'+color+'" stroke-width="1.6" '+(dash?'stroke-dasharray="'+dash+'"':'')+'/>');
- const dot=(x,y,color)=>s.push('<circle cx="'+X(x)+'" cy="'+Y(y)+'" r="4.5" fill="'+color+'"/>');
+ const dot=(x,y,color)=>s.push('<circle cx="'+X(x)+'" cy="'+Y(inY(y))+'" r="4.5" fill="'+color+'"/>');
  const label=(x,y,txt,anchor="start")=>s.push('<text class="label" x="'+x+'" y="'+y+'" text-anchor="'+anchor+'">'+txt+'</text>');
- return{W,H,l,t,pw,ph,X,Y,path,line,dot,label,render:()=>el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img">'+s.join('')+'</svg>'};
+ return{W,H,l,t,pw,ph,X,Y,inY,path,line,dot,label,render:()=>el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+title+'">'+s.join('')+'</svg>'};
 }
 function drawTime(M,phi){
  const el=$("timePlot"),w=state.omega,period=2*Math.PI/w,tmax=2*period;
- const c=svgPlot(el,{xmin:0,xmax:tmax,ymin:-1.15,ymax:1.15,xticks:Array.from({length:5},(_,i)=>({v:tmax*i/4,label:fmt(tmax*i/4,2)})),yticks:[-1,0,1].map(v=>({v,label:String(v)})),height:300});
+ const dp=Math.max(2,Math.ceil(-Math.log10(tmax/4))+1),c=svgPlot(el,{xmin:0,xmax:tmax,ymin:-1.15,ymax:1.15,xticks:Array.from({length:5},(_,i)=>({v:tmax*i/4,label:fmt(tmax*i/4,dp)})),yticks:[-1,0,1].map(v=>({v,label:String(v)})),height:300,title:"Input and output sine waves over two periods"});
  const input=[],output=[];for(let i=0;i<=360;i++){const t=tmax*i/360;input.push([t,Math.sin(w*t)]);output.push([t,M*Math.sin(w*t+phi)])}
  c.path(input,"var(--ink)",2.5);c.path(output,"#a5a5ad",2.5);c.label(c.l+c.pw/2,c.H-4,"time t (s)","middle");c.render();
  $("timeCaption").textContent="Output amplitude is "+fmt(M,4)+" of the input and its phase is "+fmt(radToDeg(phi),2)+"°. The time delay is "+fmt(-phi/w,5)+" s.";
@@ -75,15 +78,25 @@ function drawBode(){
  const tau=state.tau,wc=1/tau;
  const lo=Math.max(1e-9,Math.min(wc/1000,state.omega/10)),hi=Math.max(wc*1000,state.omega*10);
  const freq=Array.from({length:241},(_,i)=>lo*Math.pow(hi/lo,i/240));
- const xt=[{v:lo,label:"low"},{v:wc,label:"ωc"},{v:hi,label:"high"}];
- const mag=svgPlot($("magPlot"),{xmin:lo,xmax:hi,logX:true,ymin:-40,ymax:2,xticks:xt,yticks:[-40,-30,-20,-10,0].map(v=>({v,label:v+" dB"})),height:260});
+ const xt=[];for(let k=Math.ceil(Math.log10(lo)-1e-9);k<=Math.floor(Math.log10(hi)+1e-9);k++)xt.push({v:Math.pow(10,k),label:fmtFreq(Math.pow(10,k))});
+ const marks=(c,cy,cutY,cutTxt,nowY)=>{
+  const xc=c.X(wc),xn=c.X(state.omega),edge=c.l+c.pw,near=Math.abs(xn-xc)<120;
+  const side=(x,y,txt,right)=>right?c.label(x+9,y,txt):c.label(x-9,y,txt,"end");
+  const fits=(x,txt)=>x+9+txt.length*7<=edge;
+  const nowRight=near?xn>xc:fits(xn,"Current ω"),cutRight=near?!nowRight:fits(xc,cutTxt);
+  side(xc,c.Y(cutY)-9,cutTxt,cutRight);side(xn,c.Y(c.inY(nowY))-9,"Current ω",nowRight);
+  c.label(c.l+c.pw/2,c.H-4,"angular frequency ω (rad/s)","middle");c.render();
+ };
+ const mag=svgPlot($("magPlot"),{xmin:lo,xmax:hi,logX:true,ymin:-62,ymax:2,xticks:xt,yticks:[-60,-40,-20,0].map(v=>({v,label:v+" dB"})),height:260,title:"Bode magnitude in decibels against angular frequency"});
  const currentMag=20*Math.log10(response(tau,state.omega).M);
- mag.path(freq.map(w=>[w,20*Math.log10(response(tau,w).M)]),"var(--ink)",2.6);mag.line(wc,-40,wc,2,"var(--ok)","5 4");mag.dot(wc,-3.0103,"var(--ok)");mag.label(mag.X(wc)+7,mag.Y(-3.0103)-9,"Cutoff −3.01 dB");
- mag.line(state.omega,-40,state.omega,2,"var(--bad)","3 4");mag.dot(state.omega,currentMag,"var(--bad)");mag.label(mag.X(state.omega)+7,mag.Y(currentMag)-9,"Current ω");mag.render();
- const ph=svgPlot($("phasePlot"),{xmin:lo,xmax:hi,logX:true,ymin:-95,ymax:5,xticks:xt,yticks:[0,-22.5,-45,-67.5,-90].map(v=>({v,label:v+"°"})),height:260});
+ mag.path(freq.map(w=>[w,20*Math.log10(response(tau,w).M)]),"var(--ink)",2.6);mag.line(wc,-62,wc,2,"var(--ok)","5 4");mag.dot(wc,-3.0103,"var(--ok)");
+ mag.line(state.omega,-62,state.omega,2,"var(--bad)","3 4");mag.dot(state.omega,currentMag,"var(--bad)");
+ marks(mag,null,-3.0103,"Cutoff −3.01 dB",currentMag);
+ const ph=svgPlot($("phasePlot"),{xmin:lo,xmax:hi,logX:true,ymin:-95,ymax:5,xticks:xt,yticks:[0,-22.5,-45,-67.5,-90].map(v=>({v,label:v+"°"})),height:260,title:"Bode phase in degrees against angular frequency"});
  const currentPhase=radToDeg(response(tau,state.omega).phase);
- ph.path(freq.map(w=>[w,radToDeg(response(tau,w).phase)]),"var(--ink)",2.6);ph.line(wc,-95,wc,5,"var(--ok)","5 4");ph.dot(wc,-45,"var(--ok)");ph.label(ph.X(wc)+7,ph.Y(-45)-9,"Cutoff −45°");
- ph.line(state.omega,-95,state.omega,5,"var(--bad)","3 4");ph.dot(state.omega,currentPhase,"var(--bad)");ph.label(ph.X(state.omega)+7,ph.Y(currentPhase)-9,"Current ω");ph.render();
+ ph.path(freq.map(w=>[w,radToDeg(response(tau,w).phase)]),"var(--ink)",2.6);ph.line(wc,-95,wc,5,"var(--ok)","5 4");ph.dot(wc,-45,"var(--ok)");
+ ph.line(state.omega,-95,state.omega,5,"var(--bad)","3 4");ph.dot(state.omega,currentPhase,"var(--bad)");
+ marks(ph,null,-45,"Cutoff −45°",currentPhase);
 }
 
 function calculateDynamicError(){
@@ -123,7 +136,7 @@ function validate(){
 }
 function render(){
  const r=response(state.tau,state.omega);
- $("tau").value=Math.log10(state.tau);$("omega").value=state.omega;
+ $("tau").value=Math.log10(state.tau);$("omega").value=Math.log10(state.omega);
  $("tauOut").textContent=state.tau<.001?fmt(state.tau*1000,3)+" ms":fmt(state.tau,4)+" s";
  $("omegaOut").textContent=fmt(state.omega,2)+" rad/s";
  $("M").textContent=fmt(r.M,4);$("phase").textContent=fmt(radToDeg(r.phase),2)+"°";
@@ -137,11 +150,12 @@ function syncTauSlider(){
  $("tau").value=String(logTau);
 }
 function syncOmegaSlider(){
- $("omega").min=String(Math.min(.1,state.omega/1.05));$("omega").max=String(Math.max(1000,state.omega*1.05));
- $("omega").step=String(Math.max(.001,state.omega/1000));
+ const lw=Math.log10(state.omega);
+ $("omega").min=String(Math.min(-1,Math.floor((lw-.5)*1000)/1000));$("omega").max=String(Math.max(3,Math.ceil((lw+.5)*1000)/1000));
+ $("omega").value=String(lw);
 }
 $("tau").addEventListener("input",e=>{state.tau=Math.pow(10,+e.target.value);render()});
-$("omega").addEventListener("input",e=>{state.omega=+e.target.value;render()});
+$("omega").addEventListener("input",e=>{state.omega=Math.pow(10,+e.target.value);render()});
 $("loadCheck2").addEventListener("click",()=>{state.tau=.2;state.omega=2;syncTauSlider();syncOmegaSlider();render()});
 $("loadCheck3").addEventListener("click",()=>{state.tau=tauLimit();state.omega=2*Math.PI*50;syncTauSlider();syncOmegaSlider();render()});
 const quiz=[
