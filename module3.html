@@ -90,7 +90,7 @@ function drawPoles(eigs){
 function drawPhase(z,wn,mt){
  const el=$("phasePlot"),n=900,pts=[];let maxX=1/P.k,maxV=wn/P.k;
  for(let i=0;i<=n;i++){const t=mt.tEnd*i/n;pts.push([unitStep(t,z,wn)/P.k,unitVelocity(t,z,wn)/P.k]);}
- const minX=Math.min(0,...pts.map(p=>p[0]))-.05*maxX,maxXX=Math.max(maxX*1.1,...pts.map(p=>p[0])*1.08),minV=Math.min(0,...pts.map(p=>p[1]))-maxV*.12,maxVV=Math.max(maxV*.25,...pts.map(p=>p[1]))+maxV*.12;
+ const minX=Math.min(0,...pts.map(p=>p[0]))-.05*maxX,maxXX=Math.max(maxX*1.1,...pts.map(p=>p[0]).map(v=>v*1.08)),minV=Math.min(0,...pts.map(p=>p[1]))-maxV*.12,maxVV=Math.max(maxV*.25,...pts.map(p=>p[1]))+maxV*.12;
  const c=plot(el,{xmin:minX,xmax:maxXX,ymin:minV,ymax:maxVV,xt:[minX,0,maxX,maxXX].filter((v,i,a)=>a.indexOf(v)===i).map(v=>({v,label:fmt(v,3)})),yt:[minV,0,maxVV].filter((v,i,a)=>a.indexOf(v)===i).map(v=>({v,label:fmt(v,3)})),height:300});
  c.curve(pts,"var(--ink)",2.5);c.dot(pts[0][0],pts[0][1],"var(--blue)",5);c.dot(1/P.k,0,"var(--ok)",5);c.render();
 }
