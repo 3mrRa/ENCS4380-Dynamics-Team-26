@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark">
+<title>Module 4 · Guess the sensor · Team 26</title>
+<style>
+:root{--bg:#0e0e0f;--card:#161617;--raise:#202023;--line:#303034;--line2:#45454b;--ink:#ededf0;--mute:#a3a3aa;--faint:#707078;--ok:#5ad08f;--bad:#f07070;--blue:#9da9bd}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,"Segoe UI",system-ui,sans-serif}.page{max-width:1280px;margin:auto;padding:22px 16px 48px}.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700}h1{font-size:clamp(27px,4vw,40px);line-height:1.12;margin:7px 0}.lede{color:var(--mute);max-width:80ch;margin:0}.nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.nav a{color:var(--mute);text-decoration:none;border:1px solid var(--line2);padding:7px 11px;border-radius:8px;font-size:13px}.nav a.active{background:var(--ink);color:#111;border-color:var(--ink)}.layout{display:grid;gap:14px;margin-top:14px}.col{display:grid;gap:14px;align-content:start;min-width:0}@media(min-width:980px){.layout{grid-template-columns:340px minmax(0,1fr)}}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}.card h2{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:0 0 12px;font-weight:700}.note{font-size:13.5px;color:var(--mute);margin:9px 0 0}.math{font-family:"Cambria Math","Times New Roman",serif;font-style:italic}.slider{display:block;margin:12px 0}.top{display:flex;justify-content:space-between;gap:12px;align-items:baseline;font-weight:650;font-size:14px}.top output{background:var(--raise);border:1px solid var(--line2);border-radius:6px;padding:1px 8px;min-width:86px;text-align:right;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:#e8e8ec;margin:7px 0 0;height:24px}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.metric{background:var(--raise);border:1px solid var(--line);border-radius:9px;padding:10px}.metric small{display:block;color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.07em}.metric strong{display:block;font-size:19px;font-variant-numeric:tabular-nums;margin-top:3px}.plot svg{display:block;width:100%;height:auto}.plot text{font:12px Inter,"Segoe UI",sans-serif;fill:var(--mute)}.plot .label{fill:var(--ink);font-weight:700}.plot .faint{fill:var(--faint);font-size:10px}.legend{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--mute);font-size:13px;margin-top:8px}.swatch{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:6px;background:var(--ink)}.swatch.alt{background:var(--blue)}.quizq{font-size:16px;font-weight:650;margin:0 0 10px}.options{display:grid;gap:7px}.option{border:1px solid var(--line2);background:var(--raise);color:var(--ink);padding:9px 11px;text-align:left;border-radius:8px;font:inherit;cursor:pointer}.option:disabled{opacity:.5}.option.good{border-color:var(--ok);color:var(--ok);opacity:1}.option.wrong{border-color:var(--bad);color:var(--bad);opacity:1}.feedback{color:var(--mute);font-size:13px;margin:10px 0 0}.btn{border:1px solid var(--ink);background:var(--ink);color:#111;font-weight:700;border-radius:8px;padding:8px 13px;cursor:pointer}.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px}.presets{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.muted{color:var(--faint);font-size:12px}table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}th{text-align:left;color:var(--faint);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:7px 5px;border-bottom:1px solid var(--line2)}td{padding:9px 5px;border-bottom:1px solid var(--line)}td:last-child,th:last-child{text-align:right}.pass{color:var(--ok);font-weight:800}.fail{color:var(--bad);font-weight:800}.matrix{display:grid;grid-template-columns:1fr 1fr;gap:10px}.matrixbox{background:var(--raise);border:1px solid var(--line);border-radius:9px;padding:12px;overflow:auto}.matrixbox h3{font-size:12px;color:var(--mute);margin:0 0 8px;text-transform:uppercase;letter-spacing:.1em}.matrixbox pre{font:14px/1.7 ui-monospace,Consolas,monospace;margin:0;color:var(--ink)}.poles{display:grid;gap:5px;font:13px ui-monospace,Consolas,monospace;color:var(--ink)}.formula{padding:10px;background:var(--raise);border-radius:8px;margin:7px 0;color:var(--mute);overflow-wrap:anywhere}.formula b{color:var(--ink)}footer{color:var(--faint);font-size:12px;margin-top:22px}
+.calc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.calc-field label{display:block;color:var(--mute);font-size:12px;margin-bottom:5px}.calc-field input{width:100%;background:var(--raise);border:1px solid var(--line2);border-radius:7px;color:var(--ink);padding:9px;font:inherit}.btn:disabled{opacity:.4;cursor:default}#stepPlot{cursor:crosshair;touch-action:pan-y}.readout{color:var(--mute);font-size:14px;margin-top:8px;font-variant-numeric:tabular-nums}.readout b{color:var(--ink)}
+</style>
+</head>
+<body><main class="page">
+<header><div class="kicker">ENCS4380 · Homework 1 · Module 4 · Team 26</div><h1>Guess the sensor</h1><p class="lede">A hidden sensor responds to a unit step, with some measurement noise. Read the curve, estimate its parameters with the methods from Modules 1 and 3, then reveal the true values.</p></header>
+<nav class="nav"><a href="index.html">Module 1 · Time response</a><a href="module2.html">Module 2 · Frequency response</a><a href="module3.html">Module 3 · Second order & State-Space</a><a class="active" href="module4.html">Module 4 · Guess the sensor</a></nav>
+<div class="layout">
+<div class="col">
+<section class="card"><h2>Predict, then check</h2><p class="quizq" id="question"></p><div class="options" id="options"></div><p class="feedback" id="feedback" aria-live="polite"></p><div class="row"><span class="muted" id="qcount"></span><button class="btn" id="nextQ">Next question</button></div><p class="note">Answer before you start guessing: these are the ideas you need to read the curve.</p></section>
+<section class="card"><h2>Your estimate</h2>
+<p class="quizq" id="sensorType"></p>
+<div class="calc-grid">
+<div class="calc-field"><label for="g1" id="l1"></label><input id="g1" type="number" step="any" min="0" inputmode="decimal"></div>
+<div class="calc-field"><label for="g2" id="l2"></label><input id="g2" type="number" step="any" min="0" inputmode="decimal"></div>
+</div>
+<div class="presets"><button class="btn" id="checkBtn" type="button">Check my guess</button><button class="btn" id="hintBtn" type="button">Hint</button><button class="btn" id="newBtn" type="button">New sensor</button></div>
+<p class="feedback" id="hint" aria-live="polite"></p></section>
+<section class="card"><h2>Score</h2><div class="metrics"><div class="metric"><small>This round</small><strong id="roundScore">—</strong></div><div class="metric"><small>Session total</small><strong id="totalScore">0 / 0</strong></div></div><p class="note">Each parameter is worth 50 points: full marks within 10% of the true value, falling to 0 at 50% error.</p></section>
+</div>
+<div class="col">
+<section class="card" id="plotBox"><h2>Hidden sensor · step response</h2><div class="plot" id="stepPlot"></div><div class="legend" id="legend"></div><p class="readout" id="readout">Hover or touch the plot to read t and y.</p></section>
+<section class="card"><h2>Result</h2><table><thead><tr><th>Parameter</th><th>Your guess</th><th>True value</th><th>Error</th></tr></thead><tbody id="result"></tbody></table></section>
+<section class="card"><h2>How to estimate</h2>
+<div class="formula"><b>First order</b> · y = K(1 − e<sup>−t/τ</sup>) · Final value = K (unit step). τ = time where y = 0.632·K.</div>
+<div class="formula"><b>Second order</b> · OS = (y<sub>peak</sub> − 1) / 1 · ζ = −ln(OS) / √(π² + ln²OS) · ωn = π / (t<sub>p</sub>·√(1 − ζ²))</div>
+<p class="note">The noise makes single points unreliable: read the final value from the flat part of the curve, not from one sample.</p></section>
+</div>
+</div>
+<footer>ENCS4380 Interfacing Techniques · Birzeit University · Team 26</footer></main>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const fmt=(v,d=3)=>Number(v).toFixed(d).replace("-","−");
+
+// ---------- 1. Random numbers ----------
+// A random number between lo and hi, rounded to "step" (e.g. 0.1)
+const rand=(lo,hi,step)=>Number((Math.round((lo+Math.random()*(hi-lo))/step)*step).toFixed(2));
+// Gaussian noise (Box–Muller): mean 0, standard deviation 1
+const gauss=()=>Math.sqrt(-2*Math.log(1-Math.random()))*Math.cos(2*Math.PI*Math.random());
+
+// ---------- 2. Sensor models (same equations as Modules 1 and 3) ----------
+// First order, unit step input: y = K(1 − e^(−t/τ))
+const firstOrder=(t,K,tau)=>K*(1-Math.exp(-t/tau));
+// Second order, unit step input, unit DC gain (same function as Module 3)
+function unitStep(t,z,wn){
+ if(Math.abs(z-1)<1e-7)return 1-Math.exp(-wn*t)*(1+wn*t);
+ if(z<1){const wd=wn*Math.sqrt(1-z*z);return 1-Math.exp(-z*wn*t)*(Math.cos(wd*t)+(z/Math.sqrt(1-z*z))*Math.sin(wd*t))}
+ const d=Math.sqrt(z*z-1),r1=-wn*(z-d),r2=-wn*(z+d);
+ return 1+(r2*Math.exp(r1*t)-r1*Math.exp(r2*t))/(r1-r2);
+}
+// Output of a sensor "s" at time t
+function model(s,t){return s.type==="first"?firstOrder(t,s.p1,s.p2):unitStep(t,s.p1,s.p2)}
+
+// ---------- 3. Game state ----------
+let S=null;          // the hidden sensor of this round
+let data=[];         // noisy samples shown to the user: [t, y]
+let guess=null;      // the user's guess after "Check"
+let cursor=null;     // time under the mouse, for the readout
+let rounds=0,points=0,hintNo=0;
+
+const NAMES={first:["Gain K","Time constant τ (s)"],second:["Damping ratio ζ","Natural frequency ωn (rad/s)"]};
+const HINTS={
+ first:["With a unit step, the curve settles at K. Read the final value.","τ is the time at which the curve reaches 63.2% of its final value.","Check yourself: at 3τ the curve should be at about 95% of its final value."],
+ second:["Overshoot depends only on ζ.","OS = (peak − final) / final, then ζ = −ln(OS) / √(π² + ln²OS).","Read the peak time tp, then ωn = π / (tp·√(1 − ζ²))."]
+};
+
+// ---------- 4. New round: pick a hidden sensor and make noisy data ----------
+function newSensor(){
+ if(Math.random()<.5){
+  // First order: K between 0.5 and 5, τ between 0.5 s and 10 s
+  S={type:"first",p1:rand(.5,5,.1),p2:rand(.5,10,.1)};
+  S.tEnd=6*S.p2;                     // after 6τ the curve has settled
+  S.final=S.p1;
+ }else{
+  // Second order: ζ between 0.1 and 0.8 (it must overshoot, so ζ < 1), ωn between 0.5 and 6 rad/s
+  S={type:"second",p1:rand(.1,.8,.01),p2:rand(.5,6,.1)};
+  const tp=Math.PI/(S.p2*Math.sqrt(1-S.p1*S.p1));
+  S.tEnd=Math.max(5/(S.p1*S.p2),2.5*tp); // long enough to see the peak and the settling
+  S.final=1;
+ }
+ // 160 samples with noise of 1.5% of the final value
+ data=[];
+ for(let i=0;i<=160;i++){const t=S.tEnd*i/160;data.push([t,model(S,t)+.015*S.final*gauss()])}
+ guess=null;cursor=null;hintNo=0;
+ $("sensorType").textContent=S.type==="first"
+  ?"First-order sensor (thermometer). Input: unit step. Estimate K and τ."
+  :"Second-order sensor (spring). Input: unit step, unit gain. Estimate ζ and ωn.";
+ $("l1").textContent=NAMES[S.type][0];$("l2").textContent=NAMES[S.type][1];
+ $("g1").value="";$("g2").value="";
+ $("hint").textContent="";$("checkBtn").disabled=false;
+ $("roundScore").textContent="—";
+ $("result").innerHTML='<tr><td colspan="4" style="text-align:left">Make a guess first.</td></tr>';
+ render();
+}
+
+// ---------- 5. Check the guess and score it ----------
+// Full marks within 10% error, then down to 0 at 50% error. Each parameter is worth 50 points.
+const score=errPct=>errPct<=10?50:Math.max(0,50*(50-errPct)/40);
+
+function checkGuess(){
+ const g1=Number($("g1").value),g2=Number($("g2").value);
+ if(!(g1>0)||!(g2>0)){$("hint").textContent="Enter two positive numbers first.";return}
+ guess={p1:g1,p2:g2};
+ const rows=[[NAMES[S.type][0],g1,S.p1],[NAMES[S.type][1],g2,S.p2]];
+ let round=0;
+ $("result").innerHTML=rows.map(([name,g,truth])=>{
+  const err=100*Math.abs(g-truth)/truth,pts=score(err);round+=pts;
+  return '<tr><td>'+name+'</td><td>'+fmt(g,3)+'</td><td>'+fmt(truth,3)+'</td><td class="'+(err<=10?'pass':'fail')+'">'+fmt(err,1)+'%</td></tr>';
+ }).join("");
+ rounds++;points+=round;
+ $("roundScore").textContent=Math.round(round)+" / 100";
+ $("totalScore").textContent=Math.round(points)+" / "+rounds*100;
+ $("checkBtn").disabled=true;      // one guess per sensor
+ $("hint").textContent="True curve (green) and your guess (blue) are now drawn on the plot. Press New sensor for another round.";
+ render();
+}
+
+// ---------- 6. Draw ----------
+// Same SVG plot helper used in Module 3
+function plot(el,{xmin,xmax,ymin,ymax,xt,yt,height=300}){
+ const W=Math.max(320,Math.min(850,el.clientWidth||760)),small=W<500,H=height,l=small?43:58,r=14,t=14,b=42,pw=W-l-r,ph=H-t-b,X=v=>l+pw*(v-xmin)/(xmax-xmin),Y=v=>t+ph*(ymax-v)/(ymax-ymin),s=[];
+ xt.forEach(o=>{const x=X(o.v);s.push('<line x1="'+x+'" x2="'+x+'" y1="'+t+'" y2="'+(t+ph)+'" stroke="var(--line)"/><text x="'+x+'" y="'+(t+ph+17)+'" text-anchor="middle">'+o.label+'</text>')});
+ yt.forEach(o=>{const y=Y(o.v);s.push('<line x1="'+l+'" x2="'+(l+pw)+'" y1="'+y+'" y2="'+y+'" stroke="var(--line)"/><text x="'+(l-7)+'" y="'+(y+4)+'" text-anchor="end">'+o.label+'</text>')});
+ s.push('<rect x="'+l+'" y="'+t+'" width="'+pw+'" height="'+ph+'" fill="none" stroke="var(--line2)"/>');
+ const line=(x1,y1,x2,y2,color,dash="")=>s.push('<line x1="'+X(x1)+'" y1="'+Y(y1)+'" x2="'+X(x2)+'" y2="'+Y(y2)+'" stroke="'+color+'" stroke-width="1.5" '+(dash?'stroke-dasharray="'+dash+'"':'')+'/>');
+ const curve=(pts,color,width=2)=>s.push('<polyline points="'+pts.map(p=>X(p[0]).toFixed(1)+','+Y(p[1]).toFixed(1)).join(' ')+'" fill="none" stroke="'+color+'" stroke-width="'+width+'" stroke-linejoin="round" stroke-linecap="round"/>');
+ const dot=(x,y,color,r=4)=>s.push('<circle cx="'+X(x)+'" cy="'+Y(y)+'" r="'+r+'" fill="'+color+'"/>');
+ const label=(x,y,txt,anchor="start")=>s.push('<text class="label" x="'+x+'" y="'+y+'" text-anchor="'+anchor+'">'+txt+'</text>');
+ return{W,H,l,t,pw,ph,X,Y,line,curve,dot,label,render:()=>el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img">'+s.join('')+'</svg>'};
+}
+
+function render(){
+ const end=S.tEnd;
+ const ymax=Math.max(...data.map(p=>p[1]))*1.1;
+ const c=plot($("stepPlot"),{xmin:0,xmax:end,ymin:0,ymax,
+  xt:niceTicks(end,6),yt:niceTicks(ymax,5),height:330});
+ c.curve(data,"var(--ink)",1.6);                 // the noisy measurement
+ if(guess){
+  const N=400,truth=[],mine=[];
+  for(let i=0;i<=N;i++){const t=end*i/N;truth.push([t,model(S,t)]);mine.push([t,model({type:S.type,p1:guess.p1,p2:guess.p2},t)])}
+  c.curve(truth,"var(--ok)",2.6);
+  // keep the guess inside the plot box, even if it is far off
+  c.curve(mine.map(p=>[p[0],Math.min(Math.max(p[1],0),ymax)]),"var(--blue)",2.2);
+ }
+ if(cursor!==null){const y=nearest(cursor);c.line(cursor,0,cursor,ymax,"var(--mute)");c.dot(cursor,y,"var(--ink)",5)}
+ c.label(c.l+c.pw/2,c.H-4,"time t (s)","middle");
+ c.render();
+ $("plotBox")._c=c;
+ $("legend").innerHTML='<span><span class="swatch"></span>Measured (noisy)</span>'+(guess?'<span><span class="swatch" style="background:var(--ok)"></span>True sensor</span><span><span class="swatch alt"></span>Your guess</span>':'');
+}
+// Round grid lines (1, 2, 5, 10 …) so values are easy to read (same idea as Module 1)
+function niceTicks(max,n){
+ const raw=max/n,p=Math.pow(10,Math.floor(Math.log10(raw))),m=raw/p;
+ const st=(m<1.5?1:m<3?2:m<7?5:10)*p,out=[];
+ for(let v=0;v<=max*1.0001;v+=st)out.push({v,label:+v.toFixed(6)});
+ return out;
+}
+// Value of the noisy data closest to time t
+function nearest(t){let best=data[0];for(const p of data)if(Math.abs(p[0]-t)<Math.abs(best[0]-t))best=p;return best[1]}
+
+// ---------- 7. Readout under the mouse / finger ----------
+function readAt(e){
+ const c=$("plotBox")._c,box=$("stepPlot").getBoundingClientRect();
+ const x=(e.clientX-box.left)*c.W/box.width;
+ cursor=Math.min(Math.max((x-c.l)/c.pw,0),1)*S.tEnd;
+ render();
+ $("readout").innerHTML="t = <b>"+fmt(cursor,2)+" s</b> · y = <b>"+fmt(nearest(cursor),3)+"</b>";
+}
+$("stepPlot").addEventListener("pointermove",readAt);
+$("stepPlot").addEventListener("pointerdown",readAt);
+
+// ---------- 8. Buttons ----------
+$("newBtn").addEventListener("click",newSensor);
+$("checkBtn").addEventListener("click",checkGuess);
+$("hintBtn").addEventListener("click",()=>{const h=HINTS[S.type];$("hint").textContent="Hint "+(hintNo+1)+": "+h[hintNo%h.length];hintNo++});
+
+// ---------- 9. Predict, then check (same pattern as Modules 1–3) ----------
+const quiz=[
+{q:"A first-order step response reaches 63.2% of its final value at t = 5 s. What is τ?",a:0,o:["5 s","3.16 s","15 s"],f:"By definition the response reaches 63.2% at t = τ, so τ = 5 s. 15 s would be the 95% point (3τ)."},
+{q:"A second-order sensor shows 16% overshoot. You make it faster (bigger ωn) without changing ζ. The overshoot will…",a:2,o:["increase","decrease","stay the same"],f:"Overshoot depends only on ζ. A bigger ωn only squeezes the curve in time: the peak comes earlier, but at the same height."},
+{q:"Two second-order sensors have the same overshoot. Sensor A peaks at 2 s, sensor B at 1 s. Which has the larger ωn?",a:1,o:["A","B","They are equal"],f:"Same overshoot means same ζ. tp = π/(ωn√(1−ζ²)), so the earlier peak (B) has the larger ωn: twice as large."}
+];let qi=0;
+function ask(){const q=quiz[qi];$("question").textContent=q.q;$("options").innerHTML=q.o.map((v,i)=>'<button class="option" data-i="'+i+'">'+v+'</button>').join("");$("feedback").textContent="";$("qcount").textContent=(qi+1)+" / "+quiz.length}
+$("options").addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(!b||b.disabled)return;const q=quiz[qi],ok=+b.dataset.i===q.a;Array.from($("options").children).forEach((el,i)=>{el.disabled=true;if(i===q.a)el.classList.add("good")});if(!ok)b.classList.add("wrong");$("feedback").innerHTML='<b class="'+(ok?'pass':'fail')+'">'+(ok?'Correct.':'Not quite.')+'</b> '+q.f});
+$("nextQ").addEventListener("click",()=>{qi=(qi+1)%quiz.length;ask()});
+window.addEventListener("resize",()=>{clearTimeout(window._rz);window._rz=setTimeout(render,100)});
+newSensor();ask();
+
+</script>
+</body>
+</html>
