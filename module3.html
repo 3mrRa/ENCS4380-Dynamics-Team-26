@@ -97,11 +97,13 @@ function drawPhase(z,wn,mt){
 function validation(eigs){
  const over=metrics(.5,2).overshoot;
  const crit=metrics(1,2).overshoot;
- const check6=Math.abs(eigs[0].re+1)<1e-9&&Math.abs(Math.abs(eigs[0].im)-Math.sqrt(3))<1e-9&&Math.abs(eigs[1].re+1)<1e-9&&Math.abs(Math.abs(eigs[1].im)-Math.sqrt(3))<1e-9;
+ const check6Roots=roots(1,2,4);
+ const check6=Math.abs(check6Roots[0].re+1)<1e-9&&Math.abs(Math.abs(check6Roots[0].im)-Math.sqrt(3))<1e-9&&Math.abs(check6Roots[1].re+1)<1e-9&&Math.abs(Math.abs(check6Roots[1].im)-Math.sqrt(3))<1e-9;
+ const check6Value=fmt(check6Roots[0].re,3)+" ± j"+fmt(Math.abs(check6Roots[0].im),3);
  const rows=[
  ["Check 4 · ζ = 0.5","16.3% ± 0.1%",fmt(over,3)+"%",Math.abs(over-16.3)<.1],
  ["Check 5 · ζ = 1","0% overshoot",fmt(crit,3)+"%",crit===0],
- ["Check 6 · m=1, b=2, k=4","−1 ± j1.732","−1 ± j"+fmt(Math.sqrt(3),3),check6]
+ ["Check 6 · m=1, b=2, k=4","−1 ± j1.732",check6Value,check6]
  ];
  $("validation").innerHTML=rows.map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td class="'+(r[3]?'pass':'fail')+'">'+(r[3]?'PASS':'FAIL')+'</td></tr>').join("");
 }
