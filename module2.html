@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark">
+<title>Module 2 · First-order frequency response · Team 26</title>
+<style>
+:root{--bg:#0e0e0f;--card:#161617;--raise:#202023;--line:#303034;--line2:#45454b;--ink:#ededf0;--mute:#a3a3aa;--faint:#707078;--ok:#5ad08f;--bad:#f07070;--accent:#d8d8df}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,"Segoe UI",system-ui,sans-serif}.page{max-width:1240px;margin:auto;padding:22px 16px 48px}.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700}h1{font-size:clamp(27px,4vw,40px);line-height:1.12;margin:7px 0}.lede{color:var(--mute);max-width:75ch;margin:0}.math{font-family:"Cambria Math","Times New Roman",serif;font-style:italic}.nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.nav a{color:var(--mute);text-decoration:none;border:1px solid var(--line2);padding:7px 11px;border-radius:8px;font-size:13px}.nav a.active{background:var(--ink);color:#111;border-color:var(--ink)}.layout{display:grid;gap:14px;margin-top:14px}.col{display:grid;gap:14px;align-content:start;min-width:0}@media(min-width:980px){.layout{grid-template-columns:340px minmax(0,1fr)}}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}.card h2{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:0 0 12px;font-weight:700}.note{font-size:13.5px;color:var(--mute);margin:9px 0 0}.slider{display:block;margin:12px 0}.top{display:flex;justify-content:space-between;gap:12px;align-items:baseline;font-weight:650;font-size:14px}.top output{background:var(--raise);border:1px solid var(--line2);border-radius:6px;padding:1px 8px;min-width:86px;text-align:right;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:#e8e8ec;margin:7px 0 0;height:24px}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.metric{background:var(--raise);border:1px solid var(--line);border-radius:9px;padding:10px}.metric small{display:block;color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.08em}.metric strong{display:block;font-size:20px;font-variant-numeric:tabular-nums;margin-top:3px}.plot svg{display:block;width:100%;height:auto}.plot text{font:12px Inter,"Segoe UI",sans-serif;fill:var(--mute)}.plot .label{fill:var(--ink);font-weight:700}.plot .faint{fill:var(--faint);font-size:10px}.legend{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--mute);font-size:13px;margin-top:9px}.swatch{display:inline-block;width:19px;height:3px;vertical-align:middle;margin-right:6px;background:var(--ink)}.swatch.output{background:#a5a5ad}.swatch.cut{height:0;border-top:2px dashed var(--ok);background:none}.quizq{font-size:16px;font-weight:650;margin:0 0 10px}.options{display:grid;gap:7px}.option{border:1px solid var(--line2);background:var(--raise);color:var(--ink);padding:9px 11px;text-align:left;border-radius:8px;font:inherit;cursor:pointer}.option:disabled{opacity:.5}.option.good{border-color:var(--ok);color:var(--ok);opacity:1}.option.wrong{border-color:var(--bad);color:var(--bad);opacity:1}.feedback{color:var(--mute);font-size:13px;margin:10px 0 0}.btn{border:1px solid var(--ink);background:var(--ink);color:#111;font-weight:700;border-radius:8px;padding:8px 13px;cursor:pointer}.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px}.muted{color:var(--faint);font-size:12px}table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}th{text-align:left;color:var(--faint);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:7px 5px;border-bottom:1px solid var(--line2)}td{padding:9px 5px;border-bottom:1px solid var(--line)}td:last-child,th:last-child{text-align:right}.pass{color:var(--ok);font-weight:800}.fail{color:var(--bad);font-weight:800}.formula{padding:10px;background:var(--raise);border-radius:8px;margin:7px 0;color:var(--mute);overflow-wrap:anywhere}.formula b{color:var(--ink)}footer{color:var(--faint);font-size:12px;margin-top:22px}
+</style>
+</head>
+<body><main class="page">
+<header><div class="kicker">ENCS4380 · Homework 1 · Module 2 · Team 26</div><h1>First-order frequency response</h1><p class="lede">Explore how a first-order sensor changes the amplitude and phase of a sinusoidal input. Move the live controls and compare the time response with the Bode diagram.</p></header>
+<nav class="nav"><a href="index.html">Module 1 · Time response</a><a class="active" href="module2.html">Module 2 · Frequency response</a><a href="module3.html">Module 3 · Second order & State-Space</a></nav>
+<div class="layout">
+<div class="col">
+<section class="card"><h2>Predict, then check</h2><p class="quizq" id="question"></p><div class="options" id="options"></div><p class="feedback" id="feedback" aria-live="polite"></p><div class="row"><span class="muted" id="qcount"></span><button class="btn" id="nextQ">Next question</button></div><p class="note">Make your prediction first. Then move the sliders and observe whether the response behaves as expected.</p></section>
+<section class="card"><h2>Live controls</h2>
+<label class="slider"><span class="top">Time constant <span class="math">τ</span><output id="tauOut"></output></span><input id="tau" type="range" min="0.0001" max="0.05" step="0.0001" value="0.01"></label>
+<label class="slider"><span class="top">Input angular frequency <span class="math">ω</span><output id="omegaOut"></output></span><input id="omega" type="range" min="0.1" max="1000" step="0.1" value="20"></label>
+<div class="metrics"><div class="metric"><small>Amplitude ratio M</small><strong id="M">—</strong></div><div class="metric"><small>Phase lag φ</small><strong id="phase">—</strong></div><div class="metric"><small>Cutoff ωc</small><strong id="wc">—</strong></div><div class="metric"><small>Dynamic error δ</small><strong id="delta">—</strong></div></div>
+<div class="formula"><span class="math">M = 1 / √(1 + (ωτ)²)</span></div><div class="formula"><span class="math">φ = −tan⁻¹(ωτ)</span></div><div class="formula"><span class="math">δ = M − 1</span> &nbsp; · &nbsp; <span class="math">ωc = 1/τ</span></div>
+</section>
+<section class="card"><h2>Check 2 · Given sinusoidal input</h2><p class="note">Set <span class="math">τ = 0.2 s</span> and <span class="math">ω = 2 rad/s</span>. Expected output amplitude ratio is approximately 0.93 and phase lag is approximately 21.8°.</p><button class="btn" id="loadCheck2">Load Check 2 values</button></section>
+<section class="card"><h2>Check 3 · 5% dynamic-error limit</h2><p class="note">For signals up to 100 Hz, calculate the largest time constant that keeps the magnitude error within 5%. The phase at 50 Hz is checked using that same time constant.</p><button class="btn" id="loadCheck3">Load Check 3 values</button></section>
+</div>
+<div class="col">
+<section class="card"><h2>Time-domain sinusoidal response</h2><div class="plot" id="timePlot"></div><div class="legend"><span><i class="swatch"></i>Input x(t) = sin(ωt)</span><span><i class="swatch output"></i>Output y(t) = M sin(ωt + φ)</span></div><p class="note" id="timeCaption"></p></section>
+<section class="card"><h2>Bode magnitude</h2><div class="plot" id="magPlot"></div><div class="legend"><span><i class="swatch"></i>Magnitude · 20 log₁₀(M)</span><span><i class="swatch cut"></i>Cutoff frequency</span></div></section>
+<section class="card"><h2>Bode phase</h2><div class="plot" id="phasePlot"></div><div class="legend"><span><i class="swatch"></i>Phase · degrees</span><span><i class="swatch cut"></i>Cutoff frequency</span></div></section>
+<section class="card"><h2>Validation checks</h2><table><thead><tr><th>Check</th><th>Expected</th><th>Your value</th><th>Status</th></tr></thead><tbody id="validation"></tbody></table><p class="note">The checks below are calculated from the same JavaScript equations used by the live plots. Values are compared with explicit tolerances.</p></section>
+</div></div><footer>ENCS4380 Interfacing Techniques · Birzeit University · Team 26</footer></main>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const state={tau:.01,omega:20};
+const radToDeg=r=>r*180/Math.PI;
+const response=(tau,omega)=>{const q=omega*tau;return{M:1/Math.sqrt(1+q*q),phase:-Math.atan(q)}};
+const fmt=(v,d=3)=>Number(v).toFixed(d).replace("-","−");
+const tauLimit=()=>Math.sqrt(1/(.95*.95)-1)/(2*Math.PI*100);
+function svgPlot(el,{xmax,xmin=0,ymin,ymax,xticks,yticks,logX=false,height=300}){
+ const W=Math.max(320,Math.min(850,el.clientWidth||760)),small=W<500,H=height,l=small?43:58,r=14,t=14,b=43,pw=W-l-r,ph=H-t-b;
+ const X=v=>l+pw*(logX?(Math.log10(v)-Math.log10(xmin))/(Math.log10(xmax)-Math.log10(xmin)):(v-xmin)/(xmax-xmin));
+ const Y=v=>t+ph*(ymax-v)/(ymax-ymin);let s=[];
+ xticks.forEach(o=>{const xx=X(o.v);s.push('<line x1="'+xx+'" x2="'+xx+'" y1="'+t+'" y2="'+(t+ph)+'" stroke="var(--line)"/><text x="'+xx+'" y="'+(t+ph+17)+'" text-anchor="middle">'+o.label+'</text>')});
+ yticks.forEach(o=>{const yy=Y(o.v);s.push('<line x1="'+l+'" x2="'+(l+pw)+'" y1="'+yy+'" y2="'+yy+'" stroke="var(--line)"/><text x="'+(l-7)+'" y="'+(yy+4)+'" text-anchor="end">'+o.label+'</text>')});
+ s.push('<rect x="'+l+'" y="'+t+'" width="'+pw+'" height="'+ph+'" fill="none" stroke="var(--line2)"/>');
+ const path=(points,color,width=2,dash="")=>{s.push('<polyline points="'+points.map(p=>X(p[0]).toFixed(1)+','+Y(p[1]).toFixed(1)).join(' ')+'" fill="none" stroke="'+color+'" stroke-width="'+width+'" stroke-linejoin="round" '+(dash?'stroke-dasharray="'+dash+'"':'')+'/>')};
+ const line=(x1,y1,x2,y2,color,dash="")=>s.push('<line x1="'+X(x1)+'" y1="'+Y(y1)+'" x2="'+X(x2)+'" y2="'+Y(y2)+'" stroke="'+color+'" stroke-width="1.6" '+(dash?'stroke-dasharray="'+dash+'"':'')+'/>');
+ const dot=(x,y,color)=>s.push('<circle cx="'+X(x)+'" cy="'+Y(y)+'" r="4.5" fill="'+color+'"/>');
+ const label=(x,y,txt,anchor="start")=>s.push('<text class="label" x="'+x+'" y="'+y+'" text-anchor="'+anchor+'">'+txt+'</text>');
+ return{W,H,l,t,pw,ph,X,Y,path,line,dot,label,render:()=>el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img">'+s.join('')+'</svg>'};
+}
+function drawTime(M,phi){
+ const el=$("timePlot"),w=state.omega,period=2*Math.PI/w,tmax=2*period;
+ const c=svgPlot(el,{xmin:0,xmax:tmax,ymin:-1.15,ymax:1.15,xticks:Array.from({length:5},(_,i)=>({v:tmax*i/4,label:fmt(tmax*i/4,2)})),yticks:[-1,0,1].map(v=>({v,label:String(v)})),height:300});
+ const input=[],output=[];for(let i=0;i<=360;i++){const t=tmax*i/360;input.push([t,Math.sin(w*t)]);output.push([t,M*Math.sin(w*t+phi)])}
+ c.path(input,"var(--ink)",2.5);c.path(output,"#a5a5ad",2.5);c.render();
+ $("timeCaption").textContent="Output amplitude is "+fmt(M,4)+" of the input and its phase is "+fmt(radToDeg(phi),2)+"°. The time delay is "+fmt(-phi/w,5)+" s.";
+}
+function drawBode(){
+ const tau=state.tau,wc=1/tau;
+ const lo=Math.max(.01,wc/1000),hi=wc*1000;
+ const freq=Array.from({length:241},(_,i)=>lo*Math.pow(hi/lo,i/240));
+ const xt=[{v:lo,label:"ωc/1000"},{v:wc,label:"ωc"},{v:hi,label:"1000ωc"}];
+ const mag=svgPlot($("magPlot"),{xmin:lo,xmax:hi,logX:true,ymin:-40,ymax:2,xticks:xt,yticks:[-40,-30,-20,-10,0].map(v=>({v,label:v+" dB"})),height:260});
+ mag.path(freq.map(w=>[w,20*Math.log10(response(tau,w).M)]),"var(--ink)",2.6);mag.line(wc,-40,wc,2,"var(--ok)","5 4");mag.dot(wc,-3.0103,"var(--ok)");mag.label(mag.X(wc)+7,mag.Y(-3.0103)-9,"Cutoff −3.01 dB");mag.render();
+ const ph=svgPlot($("phasePlot"),{xmin:lo,xmax:hi,logX:true,ymin:-95,ymax:5,xticks:xt,yticks:[0,-22.5,-45,-67.5,-90].map(v=>({v,label:v+"°"})),height:260});
+ ph.path(freq.map(w=>[w,radToDeg(response(tau,w).phase)]),"var(--ink)",2.6);ph.line(wc,-95,wc,5,"var(--ok)","5 4");ph.dot(wc,-45,"var(--ok)");ph.label(ph.X(wc)+7,ph.Y(-45)-9,"Cutoff −45°");ph.render();
+}
+function validate(){
+ const c2=response(.2,2),tl=tauLimit(),phase50=Math.abs(radToDeg(response(tl,2*Math.PI*50).phase));
+ const checks=[
+ ["Check 2 · M","0.9285 ± 0.001",fmt(c2.M,4),Math.abs(c2.M-.92847669)<.001],
+ ["Check 2 · phase","−21.80° ± 0.1°",fmt(radToDeg(c2.phase),2)+"°",Math.abs(radToDeg(c2.phase)+21.8014)<.1],
+ ["Check 3 · τ max","0.523 ms ± 0.002",fmt(tl*1000,3)+" ms",Math.abs(tl*1000-.523)<.002],
+ ["Check 3 · phase at 50 Hz","9.3° ± 0.2°",fmt(phase50,2)+"°",Math.abs(phase50-9.3)<.2]
+ ];
+ $("validation").innerHTML=checks.map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td class="'+(r[3]?'pass':'fail')+'">'+(r[3]?'PASS':'FAIL')+'</td></tr>').join('');
+}
+function render(){
+ const r=response(state.tau,state.omega);
+ $("tau").value=state.tau;$("omega").value=state.omega;
+ $("tauOut").textContent=state.tau<.001?fmt(state.tau*1000,3)+" ms":fmt(state.tau,4)+" s";
+ $("omegaOut").textContent=fmt(state.omega,2)+" rad/s";
+ $("M").textContent=fmt(r.M,4);$("phase").textContent=fmt(radToDeg(r.phase),2)+"°";
+ $("wc").textContent=fmt(1/state.tau,2)+" rad/s";
+ $("delta").textContent=fmt((r.M-1)*100,2)+"%";
+ drawTime(r.M,r.phase);drawBode();validate();
+}
+$("tau").addEventListener("input",e=>{state.tau=+e.target.value;render()});
+$("omega").addEventListener("input",e=>{state.omega=+e.target.value;render()});
+$("loadCheck2").addEventListener("click",()=>{state.tau=.2;state.omega=2;$("tau").min=.0001;$("tau").max=.3;$("tau").step=.0001;render()});
+$("loadCheck3").addEventListener("click",()=>{state.tau=tauLimit();state.omega=2*Math.PI*50;$("tau").min=.0001;$("tau").max=.05;$("tau").step=.0001;render()});
+const quiz=[
+{q:"If the input frequency ω increases while τ stays fixed, what happens to the output amplitude ratio M?",a:1,o:["It increases toward 1","It decreases toward 0","It stays constant"],f:"As ωτ increases, M = 1/√(1+(ωτ)²) decreases. Move the frequency slider and check."},
+{q:"At the cutoff frequency ωc = 1/τ, what is the phase lag?",a:2,o:["0°","−90°","−45°"],f:"At ωτ = 1, φ = −tan⁻¹(1) = −45°. Check the Bode phase marker."},
+{q:"If τ is doubled at a fixed input frequency, what happens to the magnitude ratio?",a:1,o:["It increases","It decreases","It is unchanged"],f:"Doubling τ increases ωτ, so the sensor attenuates the signal more and the phase lag grows."}
+];let qi=0;
+function ask(){const q=quiz[qi];$("question").textContent=q.q;$("options").innerHTML=q.o.map((v,i)=>'<button class="option" data-i="'+i+'">'+v+'</button>').join('');$("feedback").textContent="";$("qcount").textContent=(qi+1)+" / "+quiz.length}
+$("options").addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(!b||b.disabled)return;const q=quiz[qi],ok=+b.dataset.i===q.a;Array.from($("options").children).forEach((el,i)=>{el.disabled=true;if(i===q.a)el.classList.add("good")});if(!ok)b.classList.add("wrong");$("feedback").innerHTML='<b class="'+(ok?'pass':'fail')+'">'+(ok?'Correct.':'Try again next time.')+'</b> '+q.f});
+$("nextQ").addEventListener("click",()=>{qi=(qi+1)%quiz.length;ask()});
+window.addEventListener("resize",()=>{clearTimeout(window._rz);window._rz=setTimeout(render,100)});
+render();ask();
+</script></body></html>
