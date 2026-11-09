@@ -95,7 +95,7 @@ function calculateDynamicError(){
  const tauMax=Math.sqrt(1/Math.pow(1-e,2)-1)/(2*Math.PI*f);
  const omegaHalf=2*Math.PI*(f/2);
  const phaseHalf=radToDeg(Math.atan(omegaHalf*tauMax));
- if(!Number.isFinite(tauMax)||!Number.isFinite(phaseHalf)||tauMax<=0){errorEl.textContent="These values are outside the supported calculation range.";return}
+ if(!Number.isFinite(tauMax)||!Number.isFinite(phaseHalf)||!Number.isFinite(omegaHalf)||!Number.isFinite(omegaHalf*10)||!Number.isFinite((1/tauMax)*1000)||tauMax<=0){errorEl.textContent="These values are outside the supported calculation range. Try a smaller maximum frequency.";return}
  $("calcTauMax").textContent=tauMax<.001?fmt(tauMax*1000,3)+" ms":fmt(tauMax,6)+" s";
  $("calcPhaseHalf").textContent=fmt(phaseHalf,2)+"°";
  apply.disabled=false;
