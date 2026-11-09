@@ -124,7 +124,7 @@ footer { color: var(--faint); font-size: 13px; margin-top: 22px; }
       <section class="card" aria-labelledby="h-log">
         <h2 id="h-log">Error fraction on a log axis</h2>
         <div class="plot" id="plot2" role="img" aria-label="Step error fraction 1 − y/KA on a log axis"></div>
-        <p class="note">For a step, the error fraction is <span class="m">1 − y/KA = e<sup>−t/τ</sup></span>. Every grid line down is the error shrinking by a factor of <i>e</i>, and the curve crosses one line every <span class="m">τ</span>, so it is a straight line with slope <span class="m">−1/τ</span>.</p>
+        <p class="note"><b>This plot is always for a step input</b>, even when Ramp is selected. For a step, the error fraction is <span class="m">1 − y/KA = e<sup>−t/τ</sup></span>. Every grid line down is the error shrinking by a factor of <i>e</i>, and the curve crosses one line every <span class="m">τ</span>, so it is a straight line with slope <span class="m">−1/τ</span>.</p>
       </section>
 
       <section class="card" aria-labelledby="h-val">
@@ -133,7 +133,7 @@ footer { color: var(--faint); font-size: 13px; margin-top: 22px; }
           <thead><tr><th></th><th>Expected</th><th>Your value</th><th></th></tr></thead>
           <tbody id="val"></tbody>
         </table>
-        <p class="note">Read off the plotted step response for the current <span class="m">K</span>, <span class="m">τ</span> and <span class="m">A</span>.</p>
+        <p class="note">Computed from the same closed-form step equation used for the plot, evaluated directly at t = τ and t = 3τ, for the current <span class="m">K</span>, <span class="m">τ</span> and <span class="m">A</span>.</p>
       </section>
 
       <section class="card" aria-labelledby="h-eq">
@@ -261,11 +261,15 @@ function drawError() {
 }
 
 function validate() {
-  const { K, tau, A } = P, ka = K * A, ys = times().map(t => stepY(t, K, tau, A));
-  const rows = [["y(τ)", 0.632, ys[100]], ["y(3τ)", 0.95, ys[300]]];
-  $("val").innerHTML = rows.map(([name, f, got]) => {
-    const ok = Math.abs(got / ka - f) <= 0.001;
-    return `<tr><td class="m">${name}</td><td>${f.toFixed(3)} KA = ${num(f * ka)}</td><td>${num(got)}</td><td class="${ok ? "ok" : "bad"}">${ok ? "Pass" : "Fail"}</td></tr>`;
+  const { K, tau, A } = P, ka = K * A;
+  const rows = [
+    ["y(τ)", 1 - Math.exp(-1), stepY(tau, K, tau, A)],
+    ["y(3τ)", 1 - Math.exp(-3), stepY(3 * tau, K, tau, A)]
+  ];
+  $("val").innerHTML = rows.map(([name, fraction, got]) => {
+    const expected = fraction * ka;
+    const ok = Math.abs(got - expected) <= 1e-9 * Math.max(1, Math.abs(expected));
+    return `<tr><td class="m">${name}</td><td>${fraction.toFixed(3)} KA = ${num(expected)}</td><td>${num(got)}</td><td class="${ok ? "ok" : "bad"}">${ok ? "Pass" : "Fail"}</td></tr>`;
   }).join("");
 }
 
