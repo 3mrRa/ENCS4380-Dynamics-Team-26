@@ -15,7 +15,7 @@
 <div class="col">
 <section class="card"><h2>Predict, then check</h2><p class="quizq" id="question"></p><div class="options" id="options"></div><p class="feedback" id="feedback" aria-live="polite"></p><div class="row"><span class="muted" id="qcount"></span><button class="btn" id="nextQ">Next question</button></div><p class="note">Make your prediction first. Then move the sliders and observe whether the response behaves as expected.</p></section>
 <section class="card"><h2>Live controls</h2>
-<label class="slider"><span class="top">Time constant <span class="math">τ</span><output id="tauOut"></output></span><input id="tau" type="range" min="0.0001" max="0.05" step="0.0001" value="0.01"></label>
+<label class="slider"><span class="top">Time constant <span class="math">τ</span><output id="tauOut"></output></span><input id="tau" type="range" min="-4" max="-0.5" step="0.001" value="-2"></label>
 <label class="slider"><span class="top">Input angular frequency <span class="math">ω</span><output id="omegaOut"></output></span><input id="omega" type="range" min="0.1" max="1000" step="0.1" value="20"></label>
 <div class="metrics"><div class="metric"><small>Amplitude ratio M</small><strong id="M">—</strong></div><div class="metric"><small>Phase lag φ</small><strong id="phase">—</strong></div><div class="metric"><small>Cutoff ωc</small><strong id="wc">—</strong></div><div class="metric"><small>Dynamic error δ</small><strong id="delta">—</strong></div></div>
 <div class="formula"><span class="math">M = 1 / √(1 + (ωτ)²)</span></div><div class="formula"><span class="math">φ = −tan⁻¹(ωτ)</span></div><div class="formula"><span class="math">δ = M − 1</span> &nbsp; · &nbsp; <span class="math">ωc = 1/τ</span></div>
@@ -39,8 +39,8 @@
 </div>
 <div class="col">
 <section class="card"><h2>Time-domain sinusoidal response</h2><div class="plot" id="timePlot"></div><div class="legend"><span><i class="swatch"></i>Input x(t) = sin(ωt)</span><span><i class="swatch output"></i>Output y(t) = M sin(ωt + φ)</span></div><p class="note" id="timeCaption"></p></section>
-<section class="card"><h2>Bode magnitude</h2><div class="plot" id="magPlot"></div><div class="legend"><span><i class="swatch"></i>Magnitude · 20 log₁₀(M)</span><span><i class="swatch cut"></i>Cutoff frequency</span></div></section>
-<section class="card"><h2>Bode phase</h2><div class="plot" id="phasePlot"></div><div class="legend"><span><i class="swatch"></i>Phase · degrees</span><span><i class="swatch cut"></i>Cutoff frequency</span></div></section>
+<section class="card"><h2>Bode magnitude</h2><div class="plot" id="magPlot"></div><div class="legend"><span><i class="swatch"></i>Magnitude · 20 log₁₀(M)</span><span><i class="swatch cut"></i>Cutoff frequency</span><span><i class="swatch now"></i>Current input frequency</span></div></section>
+<section class="card"><h2>Bode phase</h2><div class="plot" id="phasePlot"></div><div class="legend"><span><i class="swatch"></i>Phase · degrees</span><span><i class="swatch cut"></i>Cutoff frequency</span><span><i class="swatch now"></i>Current input frequency</span></div></section>
 <section class="card"><h2>Validation checks</h2><table><thead><tr><th>Check</th><th>Expected</th><th>Your value</th><th>Status</th></tr></thead><tbody id="validation"></tbody></table><p class="note">The checks below are calculated from the same JavaScript equations used by the live plots. Values are compared with explicit tolerances.</p></section>
 </div></div><footer>ENCS4380 Interfacing Techniques · Birzeit University · Team 26</footer></main>
 <script>
@@ -73,13 +73,17 @@ function drawTime(M,phi){
 }
 function drawBode(){
  const tau=state.tau,wc=1/tau;
- const lo=Math.max(.01,wc/1000),hi=wc*1000;
+ const lo=Math.max(1e-9,Math.min(wc/1000,state.omega/10)),hi=Math.max(wc*1000,state.omega*10);
  const freq=Array.from({length:241},(_,i)=>lo*Math.pow(hi/lo,i/240));
- const xt=[{v:lo,label:"ωc/1000"},{v:wc,label:"ωc"},{v:hi,label:"1000ωc"}];
+ const xt=[{v:lo,label:"low"},{v:wc,label:"ωc"},{v:hi,label:"high"}];
  const mag=svgPlot($("magPlot"),{xmin:lo,xmax:hi,logX:true,ymin:-40,ymax:2,xticks:xt,yticks:[-40,-30,-20,-10,0].map(v=>({v,label:v+" dB"})),height:260});
- mag.path(freq.map(w=>[w,20*Math.log10(response(tau,w).M)]),"var(--ink)",2.6);mag.line(wc,-40,wc,2,"var(--ok)","5 4");mag.dot(wc,-3.0103,"var(--ok)");mag.label(mag.X(wc)+7,mag.Y(-3.0103)-9,"Cutoff −3.01 dB");mag.render();
+ const currentMag=20*Math.log10(response(tau,state.omega).M);
+ mag.path(freq.map(w=>[w,20*Math.log10(response(tau,w).M)]),"var(--ink)",2.6);mag.line(wc,-40,wc,2,"var(--ok)","5 4");mag.dot(wc,-3.0103,"var(--ok)");mag.label(mag.X(wc)+7,mag.Y(-3.0103)-9,"Cutoff −3.01 dB");
+ mag.line(state.omega,-40,state.omega,2,"var(--bad)","3 4");mag.dot(state.omega,currentMag,"var(--bad)");mag.label(mag.X(state.omega)+7,mag.Y(currentMag)-9,"Current ω");mag.render();
  const ph=svgPlot($("phasePlot"),{xmin:lo,xmax:hi,logX:true,ymin:-95,ymax:5,xticks:xt,yticks:[0,-22.5,-45,-67.5,-90].map(v=>({v,label:v+"°"})),height:260});
- ph.path(freq.map(w=>[w,radToDeg(response(tau,w).phase)]),"var(--ink)",2.6);ph.line(wc,-95,wc,5,"var(--ok)","5 4");ph.dot(wc,-45,"var(--ok)");ph.label(ph.X(wc)+7,ph.Y(-45)-9,"Cutoff −45°");ph.render();
+ const currentPhase=radToDeg(response(tau,state.omega).phase);
+ ph.path(freq.map(w=>[w,radToDeg(response(tau,w).phase)]),"var(--ink)",2.6);ph.line(wc,-95,wc,5,"var(--ok)","5 4");ph.dot(wc,-45,"var(--ok)");ph.label(ph.X(wc)+7,ph.Y(-45)-9,"Cutoff −45°");
+ ph.line(state.omega,-95,state.omega,5,"var(--bad)","3 4");ph.dot(state.omega,currentPhase,"var(--bad)");ph.label(ph.X(state.omega)+7,ph.Y(currentPhase)-9,"Current ω");ph.render();
 }
 
 function calculateDynamicError(){
@@ -103,8 +107,7 @@ $("applyCalc").addEventListener("click",()=>{
  const tau=Number($("applyCalc").dataset.tau),omega=Number($("applyCalc").dataset.omega);
  if(!Number.isFinite(tau)||!Number.isFinite(omega)||tau<=0||omega<=0)return;
  state.tau=tau;state.omega=omega;
- $("tau").min=Math.min(.0001,tau);$("tau").max=Math.max(.05,tau*1.05);$("tau").step=Math.max(.000001,tau/1000);
- $("omega").min=Math.min(.1,omega);$("omega").max=Math.max(1000,omega*1.05);$("omega").step=Math.max(.01,omega/1000);
+ syncTauSlider();syncOmegaSlider();
  render();
 });
 
@@ -120,7 +123,7 @@ function validate(){
 }
 function render(){
  const r=response(state.tau,state.omega);
- $("tau").value=state.tau;$("omega").value=state.omega;
+ $("tau").value=Math.log10(state.tau);$("omega").value=state.omega;
  $("tauOut").textContent=state.tau<.001?fmt(state.tau*1000,3)+" ms":fmt(state.tau,4)+" s";
  $("omegaOut").textContent=fmt(state.omega,2)+" rad/s";
  $("M").textContent=fmt(r.M,4);$("phase").textContent=fmt(radToDeg(r.phase),2)+"°";
@@ -128,10 +131,19 @@ function render(){
  $("delta").textContent=fmt((r.M-1)*100,2)+"%";
  drawTime(r.M,r.phase);drawBode();validate();
 }
-$("tau").addEventListener("input",e=>{state.tau=+e.target.value;render()});
+function syncTauSlider(){
+ const logTau=Math.log10(state.tau),min=Math.min(-4,Math.floor((logTau-.5)*1000)/1000),max=Math.max(-.5,Math.ceil((logTau+.5)*1000)/1000);
+ $("tau").min=String(min);$("tau").max=String(max);$("tau").step="0.001";
+ $("tau").value=String(logTau);
+}
+function syncOmegaSlider(){
+ $("omega").min=String(Math.min(.1,state.omega/1.05));$("omega").max=String(Math.max(1000,state.omega*1.05));
+ $("omega").step=String(Math.max(.001,state.omega/1000));
+}
+$("tau").addEventListener("input",e=>{state.tau=Math.pow(10,+e.target.value);render()});
 $("omega").addEventListener("input",e=>{state.omega=+e.target.value;render()});
-$("loadCheck2").addEventListener("click",()=>{state.tau=.2;state.omega=2;$("tau").min=.0001;$("tau").max=.3;$("tau").step=.0001;render()});
-$("loadCheck3").addEventListener("click",()=>{state.tau=tauLimit();state.omega=2*Math.PI*50;$("tau").min=.0001;$("tau").max=.05;$("tau").step=.0001;render()});
+$("loadCheck2").addEventListener("click",()=>{state.tau=.2;state.omega=2;syncTauSlider();syncOmegaSlider();render()});
+$("loadCheck3").addEventListener("click",()=>{state.tau=tauLimit();state.omega=2*Math.PI*50;syncTauSlider();syncOmegaSlider();render()});
 const quiz=[
 {q:"If the input frequency ω increases while τ stays fixed, what happens to the output amplitude ratio M?",a:1,o:["It increases toward 1","It decreases toward 0","It stays constant"],f:"As ωτ increases, M = 1/√(1+(ωτ)²) decreases. Move the frequency slider and check."},
 {q:"At the cutoff frequency ωc = 1/τ, what is the phase lag?",a:2,o:["0°","−90°","−45°"],f:"At ωτ = 1, φ = −tan⁻¹(1) = −45°. Check the Bode phase marker."},
@@ -141,5 +153,5 @@ function ask(){const q=quiz[qi];$("question").textContent=q.q;$("options").inner
 $("options").addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(!b||b.disabled)return;const q=quiz[qi],ok=+b.dataset.i===q.a;Array.from($("options").children).forEach((el,i)=>{el.disabled=true;if(i===q.a)el.classList.add("good")});if(!ok)b.classList.add("wrong");$("feedback").innerHTML='<b class="'+(ok?'pass':'fail')+'">'+(ok?'Correct.':'Try again next time.')+'</b> '+q.f});
 $("nextQ").addEventListener("click",()=>{qi=(qi+1)%quiz.length;ask()});
 window.addEventListener("resize",()=>{clearTimeout(window._rz);window._rz=setTimeout(render,100)});
-calculateDynamicError();render();ask();
+syncTauSlider();syncOmegaSlider();calculateDynamicError();render();ask();
 </script></body></html>
