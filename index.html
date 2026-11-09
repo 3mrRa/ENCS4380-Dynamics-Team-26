@@ -76,6 +76,16 @@ footer { color: var(--faint); font-size: 13px; margin-top: 22px; }
     <h1>First-order time response</h1>
     <p class="lede">A first-order sensor, like a thermometer, follows <span class="m">τẏ + y = Kx</span>. Pick the input, move <span class="m">K</span> and <span class="m">τ</span>, and see how far its reading lags behind.</p>
   </header>
+  <style>
+    .module-nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+    .module-nav a{color:var(--mute);text-decoration:none;border:1px solid var(--line2);padding:7px 11px;border-radius:8px;font-size:13px}
+    .module-nav a.active{background:var(--ink);color:#111;border-color:var(--ink)}
+  </style>
+  <nav class="module-nav" aria-label="Project modules">
+    <a class="active" href="index.html">Module 1 · Time response</a>
+    <a href="module2.html">Module 2 · Frequency response</a>
+    <a href="module3.html">Module 3 · Second order &amp; State-Space</a>
+  </nav>
 
   <div class="layout">
     <div class="col">
