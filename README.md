@@ -83,10 +83,6 @@ Interactive browser-based demonstrations for first-order and second-order dynami
 
 The project uses plain HTML, CSS, and JavaScript with SVG plots. No external charting libraries or build step are required. Open the html file locally, or use the GitHub Pages deployment configured for this repository.
 
-## Team
-
-ENCS4380 · Interfacing Techniques · Team 26
-
 ## AI use
 
-Module 1-4 was written with help from an AI assistant, which explained the estimation methods and helped write the page code. 
+Module 1-4 were written with help from an AI assistant, which explained the estimation methods and helped write the page code. 
