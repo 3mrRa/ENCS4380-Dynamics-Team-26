@@ -22,9 +22,9 @@ Interactive browser-based demonstrations for first-order and second-order dynami
 
 | Member | GitHub | Built |
 |---|---|---|
-| Omar Takhman | [@omarta5man](https://github.com/omarta5man) | Modules 1, 2 and 3 |
 | Omar Rabieh | [@3mrRa](https://github.com/3mrRa) | Modules 1, 2 and 3 |
-| Baraa Halaseh | [@BraaHalaseh](https://github.com/BraaHalaseh) | Module 4 |
+| Omar Takhman | [@omarta5man](https://github.com/omarta5man) | Modules 1, 2 and 3 |
+| Baraa Halaseh | [@BraaHalaseh](https://github.com/BraaHalaseh) | Module 3 and 4 |
 | Anas | [@Anas-MAD-h](https://github.com/Anas-MAD-h) | — |
 
 ## Screenshots
@@ -81,7 +81,7 @@ Interactive browser-based demonstrations for first-order and second-order dynami
 
 ## Implementation
 
-The project uses plain HTML, CSS, and JavaScript with SVG plots. No external charting libraries or build step are required. Open `index.html` locally, or use the GitHub Pages deployment configured for this repository.
+The project uses plain HTML, CSS, and JavaScript with SVG plots. No external charting libraries or build step are required. Open the html file locally, or use the GitHub Pages deployment configured for this repository.
 
 ## Team
 
@@ -89,4 +89,4 @@ ENCS4380 · Interfacing Techniques · Team 26
 
 ## AI use
 
-Module 4 was written with help from an AI assistant (Claude), which explained the estimation methods (63.2 % point, overshoot and peak time) and helped write the page code. The code reuses the team's plot and step-response functions from Module 3 and was reviewed and tested by the module owner.
+Module 1-4 was written with help from an AI assistant, which explained the estimation methods and helped write the page code. 
