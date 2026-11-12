@@ -4,16 +4,11 @@ Interactive browser-based demonstrations for first-order and second-order dynami
 
 ## Live project
 
-- [Module 1 — First-order time response](module1.html)
-- [Module 2 — First-order frequency response](module2.html)
-- [Module 3 — Second-order response & State-Space](module3.html)
-- [Module 4 — Guess the sensor](module4.html)
-
-## Live project
+**Live site:** https://3mrra.github.io/ENCS4380-Dynamics-Team-26/
 
 | Module | Live page |
 |---|---|
-| Module 1 — First-order time response | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/module1.html |
+| Module 1 — First-order time response | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/ |
 | Module 2 — First-order frequency response | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/module2.html |
 | Module 3 — Second-order response & State-Space | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/module3.html |
 | Module 4 — Guess the sensor | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/module4.html |
@@ -22,10 +17,10 @@ Interactive browser-based demonstrations for first-order and second-order dynami
 
 | Member | GitHub | Built |
 |---|---|---|
-| Omar Rabieh | [@3mrRa](https://github.com/3mrRa) | Modules 1, 2 and 3 |
-| Omar Takhman | [@omarta5man](https://github.com/omarta5man) | Modules 1, 2 and 3 |
-| Baraa Halaseh | [@BraaHalaseh](https://github.com/BraaHalaseh) | Module 3 and 4 |
-| Anas | [@Anas-MAD-h](https://github.com/Anas-MAD-h) | — |
+| Omar Takhman | [@omarta5man](https://github.com/omarta5man) | Module 1 — First-order time response |
+| Omar Rabieh | [@3mrRa](https://github.com/3mrRa) | Module 2 — First-order frequency response, Module 3 — Second-order & State-Space |
+| Baraa Halaseh | [@BraaHalaseh](https://github.com/BraaHalaseh) | Module 4 — Guess the sensor |
+| Anas | [@Anas-MAD-h](https://github.com/Anas-MAD-h) | README / project progress |
 
 ## Screenshots
 
