@@ -17,10 +17,10 @@ Interactive browser-based demonstrations for first-order and second-order dynami
 
 | Member | GitHub | Built |
 |---|---|---|
-| Omar Takhman | [@omarta5man](https://github.com/omarta5man) | Module 1 — First-order time response |
-| Omar Rabieh | [@3mrRa](https://github.com/3mrRa) | Module 2 — First-order frequency response, Module 3 — Second-order & State-Space |
-| Baraa Halaseh | [@BraaHalaseh](https://github.com/BraaHalaseh) | Module 4 — Guess the sensor |
-| Anas | [@Anas-MAD-h](https://github.com/Anas-MAD-h) | README / project progress |
+| Omar Rabieh | [@3mrRa](https://github.com/3mrRa) | Module 1 (with Omar Takhman and Anas), Module 2 (with Omar Takhman), Module 3 (with Omar Takhman) |
+| Omar Takhman | [@omarta5man](https://github.com/omarta5man) | Module 1 (with Omar Rabieh and Anas), Module 2 (with Omar Rabieh), Module 3 (with Omar Rabieh) |
+| Anas | [@Anas-MAD-h](https://github.com/Anas-MAD-h) | Module 1 (with Omar Rabieh and Omar Takhman) |
+| Baraa Halaseh | [@BraaHalaseh](https://github.com/BraaHalaseh) | Module 4 |
 
 ## Screenshots
 
