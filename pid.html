@@ -7,7 +7,7 @@
 <title>P1 · PID Playground · Team 26</title>
 <style>
 :root{--bg:#0e0e0f;--card:#161617;--raise:#202023;--line:#303034;--line2:#45454b;--ink:#ededf0;--mute:#a3a3aa;--faint:#707078;--ok:#5ad08f;--bad:#f07070;--blue:#9da9bd;--gold:#e5bd72}
-*{box-sizing:border-box}html,body{background:var(--bg)}body{margin:0;color:var(--ink);font:15px/1.55 Inter,"Segoe UI",system-ui,sans-serif}.page{max-width:1280px;margin:auto;padding:22px 16px 48px}.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700}h1{font-size:clamp(27px,4vw,40px);line-height:1.12;margin:7px 0}.lede{color:var(--mute);max-width:82ch;margin:0}.nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.nav a{color:var(--mute);text-decoration:none;border:1px solid var(--line2);padding:7px 11px;border-radius:8px;font-size:13px}.nav a.active{background:var(--ink);color:#111;border-color:var(--ink)}.layout{display:grid;gap:14px;margin-top:14px}.col{display:grid;gap:14px;align-content:start;min-width:0}@media(min-width:980px){.layout{grid-template-columns:340px minmax(0,1fr);align-items:start}}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}.card h2{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:0 0 12px;font-weight:700}.note{font-size:13px;color:var(--mute);margin:9px 0 0}.field{display:block;margin:13px 0}.top{display:flex;justify-content:space-between;gap:10px;align-items:baseline;font-size:14px;font-weight:650}.top output{background:var(--raise);border:1px solid var(--line2);border-radius:6px;padding:1px 8px;min-width:70px;text-align:right;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:#ededf0;margin:7px 0 0;height:23px}.seg{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line2);border-radius:8px;overflow:hidden;margin-bottom:12px}.seg button{border:0;padding:9px;background:transparent;color:var(--mute);font:inherit;font-weight:650;cursor:pointer}.seg button[aria-pressed=true]{background:var(--ink);color:#111}.btn{border:1px solid var(--ink);background:var(--ink);color:#111;font:inherit;font-weight:700;padding:8px 13px;border-radius:8px;cursor:pointer}.btn.secondary{background:transparent;color:var(--ink);border-color:var(--line2)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.metric{background:var(--raise);border:1px solid var(--line);border-radius:9px;padding:10px;min-width:0}.metric small{display:block;color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.06em}.metric strong{display:block;font-size:19px;margin-top:3px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.plot svg{display:block;width:100%;height:auto}.plot text{font:12px Inter,"Segoe UI",sans-serif;fill:var(--mute)}.plot .axislabel{fill:var(--ink);font-weight:700}.legend{display:flex;gap:8px 18px;flex-wrap:wrap;color:var(--mute);font-size:13px;margin-top:8px}.swatch{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:6px;background:var(--ink)}.swatch.sp{background:var(--gold)}.swatch.u{background:var(--blue)}.diagram{display:flex;flex-wrap:wrap;gap:7px;align-items:center;justify-content:center;text-align:center}.block{border:1px solid var(--line2);background:var(--raise);border-radius:8px;padding:12px 5px;font-size:13px}.arrow{color:var(--faint);font-size:20px}.feedback{grid-column:1/-1;color:var(--mute);font-size:12px;text-align:center;border-top:1px dashed var(--line2);padding-top:8px}.formula{padding:10px;background:var(--raise);border-radius:8px;color:var(--mute);font-family:"Cambria Math","Times New Roman",serif;overflow-wrap:anywhere}.formula b{color:var(--ink)}.status{font-size:13px;color:var(--mute);margin-top:9px}.status strong{color:var(--ink)}footer{color:var(--faint);font-size:12px;margin-top:22px}@media(max-width:420px){.diagram{gap:4px}.block{font-size:11px;padding:9px 3px}.arrow{font-size:16px}}
+*{box-sizing:border-box}html,body{background:var(--bg)}body{margin:0;color:var(--ink);font:15px/1.55 Inter,"Segoe UI",system-ui,sans-serif}.page{max-width:1280px;margin:auto;padding:22px 16px 48px}.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700}h1{font-size:clamp(27px,4vw,40px);line-height:1.12;margin:7px 0}.lede{color:var(--mute);max-width:82ch;margin:0}.nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.nav a{color:var(--mute);text-decoration:none;border:1px solid var(--line2);padding:7px 11px;border-radius:8px;font-size:13px}.nav a.active{background:var(--ink);color:#111;border-color:var(--ink)}.layout{display:grid;gap:14px;margin-top:14px}.col{display:grid;gap:14px;align-content:start;min-width:0}@media(min-width:980px){.layout{grid-template-columns:340px minmax(0,1fr);align-items:start}}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}.card h2{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:0 0 12px;font-weight:700}.note{font-size:13px;color:var(--mute);margin:9px 0 0}.field{display:block;margin:13px 0}.top{display:flex;justify-content:space-between;gap:10px;align-items:baseline;font-size:14px;font-weight:650}.top output{background:var(--raise);border:1px solid var(--line2);border-radius:6px;padding:1px 8px;min-width:70px;text-align:right;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:#ededf0;margin:7px 0 0;height:23px}.seg{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line2);border-radius:8px;overflow:hidden;margin-bottom:12px}.seg button{border:0;padding:9px;background:transparent;color:var(--mute);font:inherit;font-weight:650;cursor:pointer}.seg button[aria-pressed=true]{background:var(--ink);color:#111}.btn{border:1px solid var(--ink);background:var(--ink);color:#111;font:inherit;font-weight:700;padding:8px 13px;border-radius:8px;cursor:pointer}.btn.secondary{background:transparent;color:var(--ink);border-color:var(--line2)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.metric{background:var(--raise);border:1px solid var(--line);border-radius:9px;padding:10px;min-width:0}.metric small{display:block;color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.06em}.metric strong{display:block;font-size:19px;margin-top:3px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.plot svg{display:block;width:100%;height:auto}.plot text{font:12px Inter,"Segoe UI",sans-serif;fill:var(--mute)}.plot .axislabel{fill:var(--ink);font-weight:700}.legend{display:flex;gap:8px 18px;flex-wrap:wrap;color:var(--mute);font-size:13px;margin-top:8px}.swatch{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:6px;background:var(--ink)}.swatch.sp{background:var(--gold)}.swatch.u{background:var(--blue)}.diagram{display:flex;flex-wrap:wrap;gap:7px;align-items:center;justify-content:center;text-align:center}.block{border:1px solid var(--line2);background:var(--raise);border-radius:8px;padding:12px 5px;font-size:13px}.arrow{color:var(--faint);font-size:20px}.feedback{grid-column:1/-1;color:var(--mute);font-size:12px;text-align:center;border-top:1px dashed var(--line2);padding-top:8px}.formula{padding:10px;background:var(--raise);border-radius:8px;color:var(--mute);font-family:"Cambria Math","Times New Roman",serif;overflow-wrap:anywhere}.formula b{color:var(--ink)}.status{font-size:13px;color:var(--mute);margin-top:9px}.status strong{color:var(--ink)}footer{color:var(--faint);font-size:12px;margin-top:22px}.ok{color:var(--ok);font-weight:700}.bad{color:var(--bad);font-weight:700}.q{font-size:16px;font-weight:620;margin:0 0 12px}.opts{display:grid;gap:8px}.opt{text-align:left;border:1px solid var(--line2);background:var(--raise);color:var(--ink);font:inherit;padding:10px 12px;border-radius:8px;cursor:pointer}.opt:disabled{cursor:default;opacity:.45}.opt.right{border-color:var(--ok);color:var(--ok);opacity:1}.opt.wrong{border-color:var(--bad);color:var(--bad);opacity:1}.why{margin:12px 0 0;color:var(--mute);font-size:14px}.why:empty{display:none}.next{display:flex;justify-content:space-between;align-items:center;margin-top:12px}.count{color:var(--faint);font-size:13px}table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}th{text-align:left;font-size:12px;color:var(--faint);font-weight:650;padding:4px 6px 8px;border-bottom:1px solid var(--line2)}td{padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}td:last-child,th:last-child{text-align:right}td{overflow-wrap:anywhere}@media(max-width:640px){#val,#val tr,#val td{display:block}thead{display:none}#val tr{border-bottom:1px solid var(--line2);padding:8px 0}#val td{border:0;padding:2px 0;text-align:left}#val td:first-child{font-weight:700}#val td:nth-child(2)::before{content:"Expected: ";color:var(--faint)}#val td:nth-child(3)::before{content:"Simulated: ";color:var(--faint)}}@media(max-width:420px){.diagram{gap:4px}.block{font-size:11px;padding:9px 3px}.arrow{font-size:16px}}
 </style>
 </head>
 <body><main class="page">
@@ -17,6 +17,10 @@
 </nav>
 <div class="layout">
 <div class="col">
+<section class="card" aria-labelledby="h-pred"><h2 id="h-pred">Predict, then check</h2>
+<p class="q" id="q"></p><div class="opts" id="opts"></div><p class="why" id="why" aria-live="polite"></p>
+<div class="next"><span class="count" id="count"></span><button class="btn" id="nextQ" type="button">Next question</button></div>
+</section>
 <section class="card"><h2>Plant model</h2>
 <div class="seg" role="group" aria-label="Plant type"><button id="firstBtn" aria-pressed="true" type="button">First-order</button><button id="secondBtn" aria-pressed="false" type="button">Second-order</button></div>
 <div id="firstFields">
@@ -36,7 +40,7 @@
 <label class="field"><span class="top"><span>Integral gain Ki</span><output id="kiOut"></output></span><input id="ki" type="range" min="0" max="5" step="0.01" value="0.8"></label>
 <label class="field"><span class="top"><span>Derivative gain Kd</span><output id="kdOut"></output></span><input id="kd" type="range" min="0" max="5" step="0.01" value="0.15"></label>
 <div class="formula"><b>PID:</b> u* = Kp·e + Ki·∫e dt − Kd·dy/dt<br><b>Error:</b> e = r − y<br><b>Actuator:</b> u = clamp(u*, 0, 100%)</div>
-<p class="note">Derivative is applied to the measured output to avoid a derivative kick when the setpoint changes. Integral accumulation is paused when saturation would drive the actuator further into its limit.</p>
+<p class="note">Derivative is applied to the measured output to avoid a derivative kick when the setpoint changes. For a step setpoint this equals Kd·de/dt everywhere except at t = 0. Integral accumulation is paused when saturation would drive the actuator further into its limit.</p>
 <div class="actions"><button class="btn" id="resetBtn" type="button">Reset simulation</button><button class="btn secondary" id="defaultsBtn" type="button">Restore defaults</button></div>
 <p class="status" id="runStatus" aria-live="polite">Simulation ready.</p>
 </section>
@@ -48,15 +52,21 @@
 </section>
 </div>
 <div class="col">
-<section class="card"><h2>Closed-loop output response</h2><div class="plot" id="outputPlot"></div><div class="legend"><span><i class="swatch sp"></i>Setpoint</span><span><i class="swatch"></i>Plant output y(t)</span></div></section>
-<section class="card"><h2>Control effort and actuator limits</h2><div class="plot" id="controlPlot"></div><div class="legend"><span><i class="swatch u"></i>Control signal u(t)</span></div><p class="note">The dashed horizontal lines show the actuator limits. The plotted command is the saturated signal applied to the plant.</p></section>
+<section class="card"><h2>Closed-loop output response</h2><div class="plot" id="outputPlot" aria-label="Closed-loop output y(t) against the setpoint"></div><div class="legend"><span><i class="swatch sp"></i>Setpoint</span><span><i class="swatch"></i>Plant output y(t)</span></div></section>
+<section class="card"><h2>Control effort and actuator limits</h2><div class="plot" id="controlPlot" aria-label="Saturated control signal u(t) with the 0 and 100 percent limits"></div><div class="legend"><span><i class="swatch u"></i>Control signal u(t)</span></div><p class="note">The dashed horizontal lines show the actuator limits. The plotted command is the saturated signal applied to the plant.</p></section>
 <section class="card"><h2>Performance metrics</h2><div class="metrics">
 <div class="metric"><small>Rise time (10–90%)</small><strong id="riseMetric">—</strong></div>
 <div class="metric"><small>Overshoot</small><strong id="overMetric">—</strong></div>
 <div class="metric"><small>Settling time (2%)</small><strong id="settleMetric">—</strong></div>
 <div class="metric"><small>Steady-state error</small><strong id="errorMetric">—</strong></div>
-</div><p class="note">Metrics are calculated from the simulated output. Settling time is the first time after which the output remains within ±2% of the setpoint. If it does not settle during the displayed simulation, it is reported as “Not settled”.</p></section>
-<section class="card"><h2>Numerical model</h2><div id="modelEquation" class="formula"></div><p class="note">The differential equations are integrated using the forward Euler method with a 0.01 s time step. Change the plant and PID gains to see how the closed-loop response changes.</p></section>
+</div><p class="note">Metrics are calculated from the simulated output. Rise time, overshoot and settling time are measured against the final value y(∞); steady-state error is r − y(∞). Settling time is the first time after which the output remains within ±2% of y(∞). If it does not settle during the displayed simulation, it is reported as “Not settled”.</p></section>
+<section class="card" aria-labelledby="h-val"><h2 id="h-val">Validation checks</h2>
+<p class="note" style="margin-top:0">Plant K/(τs + 1) with K = 1, τ = 1 s, unit step setpoint. These runs use the same Euler solver as the plots, with a 1 ms step and <b>no actuator limit</b>, because the formulas below assume a linear loop. They do not depend on the sliders.</p>
+<table><thead><tr><th>Check</th><th>Expected</th><th>Simulated</th><th></th></tr></thead><tbody id="val"></tbody></table>
+<div class="actions"><button class="btn secondary" id="load1" type="button">Load check 1 into playground</button><button class="btn secondary" id="load2" type="button">Load check 2 into playground</button></div>
+<p class="note">Check 1 loads with setpoint 5, so the first command (Kp·r = 45%) stays below the 100% limit. With a larger setpoint the actuator saturates and the loop looks slower than τ/(1 + KKp).</p>
+</section>
+<section class="card"><h2>Numerical model</h2><div id="modelEquation" class="formula"></div><p class="note">The differential equations are integrated using the forward Euler method. Results are plotted every 0.01 s; when the gains make the loop fast, each 0.01 s is split into smaller Euler steps so the integration stays stable and accurate. Change the plant and PID gains to see how the closed-loop response changes.</p></section>
 </div>
 </div>
 <footer>ENCS4380 Interfacing Techniques · Birzeit University · Homework 2 · P1</footer></main>
@@ -68,30 +78,41 @@ let plant="first", result=null;
 const defaults={K:1,tau:2,zeta:.7,wn:2,setpoint:50,kp:2,ki:.8,kd:.15};
 const value=id=>Number($(id).value);
 const fmt=(v,d=2)=>Number.isFinite(v)?Number(v).toFixed(d):"—";
-function readParams(){return{K:plant==="first"?value("plantK"):value("plantK2"),tau:value("tau"),zeta:value("zeta"),wn:value("wn"),r:value("setpoint"),kp:value("kp"),ki:value("ki"),kd:value("kd")}}
-function simulate(){
- const p=readParams(), end=plant==="first"?Math.max(12,8*p.tau):Math.min(60,Math.max(12,8/(p.zeta*p.wn)));
- const n=Math.ceil(end/dt),data=[];let y=0,v=0,integral=0,previousY=0,u=0;
+function readParams(){return{plant,K:plant==="first"?value("plantK"):value("plantK2"),tau:value("tau"),zeta:value("zeta"),wn:value("wn"),r:value("setpoint"),kp:value("kp"),ki:value("ki"),kd:value("kd")}}
+// Closed-loop simulation with forward Euler. Used by the playground and by the validation checks.
+// p: {plant,K,tau,zeta,wn,r,kp,ki,kd}; opts: {end, step (output sample time), lo, hi (actuator limits)}
+function simulateLoop(p,{end,step=dt,lo=0,hi=LIMIT}={}){
+ // Euler is only stable/accurate if h·(fastest closed-loop rate) is small, so split each
+ // output sample into enough internal sub-steps that h·rate ≤ 0.1.
+ let rate;
+ if(p.plant==="first"){const te=p.tau+p.K*p.kd;rate=(1+p.K*p.kp)/te+Math.sqrt(p.K*p.ki/te);}
+ else rate=2*p.zeta*p.wn+p.wn*p.wn*p.K*p.kd+p.wn*Math.sqrt(1+p.K*p.kp)+Math.sqrt(p.wn*p.wn*p.K*p.ki);
+ const sub=Math.max(1,Math.ceil(step*rate/0.1)),h=step/sub;
+ const n=Math.round(end/step),data=[];let y=0,v=0,integral=0,u=0;
+ // Unclipped PID command for a given integral value. Derivative acts on the measurement (no kick).
+ // First order: dy/dt = (−y + K·u)/τ depends on u itself, so u = Kp·e + Ki·I − Kd·dy/dt is solved
+ // for u directly instead of using a one-step-old finite difference (that made large Kd chatter).
+ // Second order: dy/dt is the velocity state v.
+ const command=(e,I)=>p.plant==="first"?(p.kp*e+p.ki*I+p.kd*y/p.tau)/(1+p.kd*p.K/p.tau):p.kp*e+p.ki*I-p.kd*v;
  for(let i=0;i<=n;i++){
-  const t=i*dt,e=p.r-y,derivative=(y-previousY)/dt;
-  const candidateIntegral=integral+e*dt;
-  const raw=p.kp*e+p.ki*candidateIntegral-p.kd*derivative;
-  const saturated=Math.max(0,Math.min(LIMIT,raw));
-  const drivesFurther=(raw>LIMIT&&e>0)||(raw<0&&e<0);
-  if(!drivesFurther)integral=candidateIntegral;
-  u=Math.max(0,Math.min(LIMIT,p.kp*e+p.ki*integral-p.kd*derivative));
-  data.push({t,y,u});
-  if(i===n)break;
-  previousY=y;
-  if(plant==="first"){
-   const dydt=(-y+p.K*u)/p.tau;
-   y+=dt*dydt;
-  }else{
-   const acceleration=p.wn*p.wn*(p.K*u-y)-2*p.zeta*p.wn*v;
-   y+=dt*v;v+=dt*acceleration;
+  for(let s=0;s<sub;s++){
+   const e=p.r-y,candidateIntegral=integral+e*h,raw=command(e,candidateIntegral);
+   // Conditional anti-windup: stop integrating when that would push u further into a limit.
+   const drivesFurther=(raw>hi&&e>0)||(raw<lo&&e<0);
+   if(!drivesFurther)integral=candidateIntegral;
+   u=Math.max(lo,Math.min(hi,command(e,integral)));
+   if(s===0)data.push({t:i*step,y,u});
+   if(i===n)break;
+   if(p.plant==="first")y+=h*(-y+p.K*u)/p.tau;
+   else{const acceleration=p.wn*p.wn*(p.K*u-y)-2*p.zeta*p.wn*v;y+=h*v;v+=h*acceleration;}
   }
  }
- return{p,data,end};
+ return{data,end,sub};
+}
+function simulate(){
+ const p=readParams(), end=plant==="first"?Math.max(12,8*p.tau):Math.min(60,Math.max(12,8/(p.zeta*p.wn)));
+ const {data,sub}=simulateLoop(p,{end});
+ return{p,data,end,sub};
 }
 function niceTicks(max,count=5){const raw=max/count,p=Math.pow(10,Math.floor(Math.log10(Math.max(raw,1e-9)))),m=raw/p,step=(m<1.5?1:m<3?2:m<7?5:10)*p,out=[];for(let x=0;x<=max*1.00001;x+=step)out.push(x);return out}
 function drawPlot(el,series,{yMin=0,yMax=100,limitLines=[]}={}){
@@ -106,12 +127,16 @@ function drawPlot(el,series,{yMin=0,yMax=100,limitLines=[]}={}){
  el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+el.getAttribute("aria-label")+'">'+s.join('')+'</svg>';
 }
 function metrics(data,r){
- const final=data[data.length-1].y,thresholdLow=.1*r,thresholdHigh=.9*r;
+ // Rise, overshoot and settling are measured against the final value y(∞), as in the lecture,
+ // so a P-only loop that settles short of r still gets meaningful numbers. Error is measured against r.
+ const final=data[data.length-1].y,ref=Math.abs(final)>1e-9?final:r,thresholdLow=.1*ref,thresholdHigh=.9*ref;
  const i10=data.findIndex(q=>q.y>=thresholdLow),i90=data.findIndex(q=>q.y>=thresholdHigh);
  const rise=i10>=0&&i90>=0?data[i90].t-data[i10].t:NaN;
- const peak=Math.max(...data.map(q=>q.y)),overshoot=Math.max(0,(peak-r)/Math.max(Math.abs(r),1e-9)*100);
- const band=.02*Math.abs(r);let settleIndex=-1,staysInBand=true;
- for(let i=data.length-1;i>=0;i--){if(Math.abs(data[i].y-r)>band)staysInBand=false;if(staysInBand)settleIndex=i;}
+ const peak=Math.max(...data.map(q=>q.y)),overshoot=Math.max(0,(peak-ref)/Math.abs(ref)*100);
+ const band=.02*Math.abs(ref);let settleIndex=-1,staysInBand=true;
+ for(let i=data.length-1;i>=0;i--){if(Math.abs(data[i].y-ref)>band)staysInBand=false;if(staysInBand)settleIndex=i;}
+ // If it only "settles" in the last 10% of the window, y(∞) is not trustworthy (still moving or oscillating).
+ if(settleIndex>.9*data.length)settleIndex=-1;
  return{rise,overshoot,settle:settleIndex>=0?data[settleIndex].t:NaN,error:Math.abs(r-final),final,peak};
 }
 function render(){
@@ -123,8 +148,8 @@ function render(){
  $("overMetric").textContent=fmt(m.overshoot,1)+" %";
  $("settleMetric").textContent=Number.isFinite(m.settle)?fmt(m.settle)+" s":"Not settled";
  $("errorMetric").textContent=fmt(m.error)+" ("+fmt(m.final)+" final)";
- $("modelEquation").innerHTML=plant==="first"?"<b>First-order:</b> τ·dy/dt + y = K·u<br>G(s) = K / (τs + 1)":"<b>Second-order:</b> d²y/dt² + 2ζωn·dy/dt + ωn²·y = Kωn²·u<br>G(s) = Kωn² / (s² + 2ζωn·s + ωn²)";
- $("runStatus").textContent="Simulated "+fmt(result.end,1)+" s · "+data.length+" Euler steps · actuator command clipped to 0–100%.";
+ $("modelEquation").innerHTML=plant==="first"?"<b>First-order:</b> τ·dy/dt + y = K·u<br>G(s) = K / (τs + 1)":"<b>Second-order:</b> d²y/dt² + 2ζωn·dy/dt + ωn²·y = Kωn²·u<br>G(s) = Kωn² / (s² + 2ζωn·s + ωn²)<br><b>Module 3 mass–spring–damper</b> (m = 1 kg): k = ωn² = "+fmt(p.wn*p.wn)+" N/m, c = 2ζωn = "+fmt(2*p.zeta*p.wn)+" N·s/m";
+ $("runStatus").textContent="Simulated "+fmt(result.end,1)+" s · "+(data.length-1)*result.sub+" Euler steps (h = "+fmt(dt/result.sub*1000,2)+" ms) · actuator command clipped to 0–100%.";
  syncLabels();
 }
 function syncLabels(){
@@ -137,5 +162,55 @@ $("firstBtn").addEventListener("click",()=>setPlant("first"));$("secondBtn").add
 $("resetBtn").addEventListener("click",render);
 $("defaultsBtn").addEventListener("click",()=>{Object.entries(defaults).forEach(([k,v])=>{const id={K:plant==="first"?"plantK":"plantK2",...{tau:"tau",zeta:"zeta",wn:"wn",setpoint:"setpoint",kp:"kp",ki:"ki",kd:"kd"}}[k];if(id)$(id).value=v});render()});
 let resizeTimer;window.addEventListener("resize",()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(render,100)});
-render();
+
+// ---- Validation checks (independent of the sliders) ----
+function validate(){
+ const K=1,tau=1,base={plant:"first",K,tau,zeta:1,wn:1,r:1,kd:0},free={step:.001,lo:-Infinity,hi:Infinity};
+ const near=(a,b,tol)=>Math.abs(a-b)<=tol;
+ const rows=[];
+ // Check 1: P only, Kp = 9 → τcl = τ/(1+KKp) = 0.1 s, ess = 1/(1+KKp) = 10%
+ const kp1=9,tauCl=tau/(1+K*kp1),ess1=1/(1+K*kp1);
+ const d1=simulateLoop({...base,kp:kp1,ki:0},{...free,end:2}).data,final1=d1[d1.length-1].y;
+ const j=d1.findIndex(q=>q.y>=.632*final1),a=d1[j-1],b=d1[j];
+ const tau1=a.t+(.632*final1-a.y)/(b.y-a.y)*(b.t-a.t),err1=1-final1;
+ rows.push(["1. P, Kp = 9: closed-loop τ","τ/(1+KKp) = "+fmt(tauCl,3)+" s",fmt(tau1,3)+" s (63.2% time)",near(tau1,tauCl,.002)]);
+ rows.push(["1. P, Kp = 9: steady-state error","1/(1+KKp) = "+fmt(ess1*100,1)+" %",fmt(err1*100,2)+" %",near(err1,ess1,.001)]);
+ // Check 2: PI, Kp = Ki = 1 → ωn = √(KKi/τ) = 1, ζ = (1+KKp)/(2√(τKKi)) = 1
+ const kp2=1,ki2=1,wn2=Math.sqrt(K*ki2/tau),z2=(1+K*kp2)/(2*Math.sqrt(tau*K*ki2));
+ // Closed loop: Y/R = K(Kp·s + Ki) / (τs² + (1+KKp)s + KKi). For these gains that is (s+1)/(s+1)²,
+ // a double pole at −1 (ζ = 1, ωn = 1), so the exact step response is y = 1 − e^(−t). Compare the solver with it.
+ const d2=simulateLoop({...base,kp:kp2,ki:ki2},{...free,end:10}).data;
+ const dev2=Math.max(...d2.map(q=>Math.abs(q.y-(1-Math.exp(-q.t))))),over2=Math.max(0,Math.max(...d2.map(q=>q.y))-1)*100;
+ rows.push(["2. PI, Kp = Ki = 1: ωn","√(KKi/τ) = "+fmt(wn2,3)+" rad/s","poles of τs²+(1+KKp)s+KKi: "+fmt(-(1+K*kp2)/(2*tau),2)+" (double)",near(wn2,1,1e-9)]);
+ rows.push(["2. PI, Kp = Ki = 1: ζ","(1+KKp)/(2√(τKKi)) = "+fmt(z2,3)+" → no overshoot","overshoot "+fmt(over2,2)+" %, max |y − (1−e<sup>−t</sup>)| = "+fmt(dev2,4),near(z2,1,1e-9)&&over2<.05&&dev2<.005]);
+ // Check 3: any PI gives zero steady-state error for a step
+ const sets=[[1,1],[3,.5],[5,3],[.5,2],[9,4]],worst=Math.max(...sets.map(([kp,ki])=>{const d=simulateLoop({...base,kp,ki},{...free,step:.002,end:80}).data;return Math.abs(1-d[d.length-1].y)}));
+ rows.push(["3. Any PI: steady-state error","0 for (Kp, Ki) = "+sets.map(s=>"("+s+")").join(" "),"worst |e(∞)| = "+worst.toExponential(1),worst<1e-3]);
+ $("val").innerHTML=rows.map(([n,e,s,ok])=>"<tr><td>"+n+"</td><td>"+e+"</td><td>"+s+"</td><td class='"+(ok?"ok":"bad")+"'>"+(ok?"Pass":"Fail")+"</td></tr>").join("");
+}
+function loadCheck(kp,ki,sp){setPlant("first");Object.entries({plantK:1,tau:1,kp,ki,kd:0,setpoint:sp}).forEach(([id,v])=>$(id).value=v);render();$("outputPlot").scrollIntoView({behavior:"smooth",block:"center"})}
+$("load1").addEventListener("click",()=>loadCheck(9,0,5));
+$("load2").addEventListener("click",()=>loadCheck(1,1,50));
+
+// ---- Predict, then check ----
+const QUIZ=[
+ {q:"First-order plant, P only (Ki = Kd = 0). You raise Kp. The steady-state error will…",opts:["grow","shrink, but never reach zero","go to exactly zero"],a:1,
+  why:"With P only, e(∞) = r/(1 + K·Kp). A bigger Kp makes it smaller but it is never zero. Set Ki = Kd = 0, move Kp and watch the steady-state error metric."},
+ {q:"Now you add a small Ki to that P controller. The steady-state error becomes…",opts:["the same as before","smaller but not zero","zero"],a:2,
+  why:"The integral keeps growing while any error remains, so the loop can only come to rest at e = 0 (validation check 3). A small Ki just gets there slowly."},
+ {q:"K = 1, τ = 1 s, P only with Kp = 9 (load check 1). Compared with the plant alone (τ = 1 s), the closed loop is…",opts:["just as fast","about 3× faster","about 10× faster"],a:2,
+  why:"τcl = τ/(1 + K·Kp) = 0.1 s, ten times faster, but it settles 10% short of the setpoint. Press “Load check 1” and look at the rise time."},
+ {q:"Second-order plant, PI control. You push Ki up a lot. The overshoot will…",opts:["drop","stay the same","grow"],a:2,
+  why:"The integral keeps pushing until the error changes sign, so it carries the output past the setpoint. Too much Ki gives more overshoot and slower-dying oscillation."},
+ {q:"The response overshoots. You raise Kd. The overshoot will…",opts:["grow","shrink","not change"],a:1,
+  why:"The derivative term opposes how fast y is moving, so it acts like extra damping and brakes the output before it shoots past the setpoint."},
+ {q:"Setpoint 100, Kp = 10. Right after the step, the control signal u will…",opts:["equal Kp·e = 1000%","sit at the 100% limit","go negative"],a:1,
+  why:"The actuator cannot give more than 100%, so u is clipped. While it is saturated, a bigger Kp cannot make the loop any faster. Look at the control-effort plot."},
+];
+let qi=0;
+function ask(){const q=QUIZ[qi];$("q").textContent=q.q;$("opts").innerHTML=q.opts.map((o,i)=>'<button class="opt" type="button" data-i="'+i+'">'+o+'</button>').join("");$("why").textContent="";$("count").textContent=(qi+1)+" of "+QUIZ.length}
+$("opts").addEventListener("click",e=>{const b=e.target.closest(".opt");if(!b||b.disabled)return;const q=QUIZ[qi],right=+b.dataset.i===q.a;for(const o of $("opts").children){o.disabled=true;if(+o.dataset.i===q.a)o.classList.add("right")}if(!right)b.classList.add("wrong");$("why").innerHTML='<span class="'+(right?"ok":"bad")+'">'+(right?"Right.":"Not quite.")+'</span> '+q.why});
+$("nextQ").addEventListener("click",()=>{qi=(qi+1)%QUIZ.length;ask()});
+
+render();validate();ask();
 </script></body></html>
