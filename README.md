@@ -80,7 +80,9 @@ Interactive browser-based demonstrations for first-order and second-order dynami
 - Live PID gain and setpoint controls.
 - Closed-loop output and saturated control-effort plots.
 - Rise time, overshoot, 2% settling time, and steady-state error metrics.
-- Forward Euler numerical simulation with 0–100% actuator saturation and conditional integral anti-windup.
+- Forward Euler numerical simulation with 0–100% actuator saturation and conditional integral anti-windup. Steps are subdivided automatically when the gains make the loop fast, so Euler stays stable.
+- Predict, then check quiz on what P, I and D do.
+- Validation checks 1–3 from the handout (K = 1, τ = 1 s), run through the same solver, with buttons that load checks 1 and 2 into the playground.
 
 ## Implementation
 
