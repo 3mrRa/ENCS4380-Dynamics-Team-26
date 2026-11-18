@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>P1 · PID Playground · Team 26</title>
+<style>
+:root{--bg:#0e0e0f;--card:#161617;--raise:#202023;--line:#303034;--line2:#45454b;--ink:#ededf0;--mute:#a3a3aa;--faint:#707078;--ok:#5ad08f;--bad:#f07070;--blue:#9da9bd;--gold:#e5bd72}
+*{box-sizing:border-box}html,body{background:var(--bg)}body{margin:0;color:var(--ink);font:15px/1.55 Inter,"Segoe UI",system-ui,sans-serif}.page{max-width:1280px;margin:auto;padding:22px 16px 48px}.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700}h1{font-size:clamp(27px,4vw,40px);line-height:1.12;margin:7px 0}.lede{color:var(--mute);max-width:82ch;margin:0}.nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.nav a{color:var(--mute);text-decoration:none;border:1px solid var(--line2);padding:7px 11px;border-radius:8px;font-size:13px}.nav a.active{background:var(--ink);color:#111;border-color:var(--ink)}.layout{display:grid;gap:14px;margin-top:14px}.col{display:grid;gap:14px;align-content:start;min-width:0}@media(min-width:980px){.layout{grid-template-columns:340px minmax(0,1fr);align-items:start}}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}.card h2{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:0 0 12px;font-weight:700}.note{font-size:13px;color:var(--mute);margin:9px 0 0}.field{display:block;margin:13px 0}.top{display:flex;justify-content:space-between;gap:10px;align-items:baseline;font-size:14px;font-weight:650}.top output{background:var(--raise);border:1px solid var(--line2);border-radius:6px;padding:1px 8px;min-width:70px;text-align:right;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:#ededf0;margin:7px 0 0;height:23px}.seg{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line2);border-radius:8px;overflow:hidden;margin-bottom:12px}.seg button{border:0;padding:9px;background:transparent;color:var(--mute);font:inherit;font-weight:650;cursor:pointer}.seg button[aria-pressed=true]{background:var(--ink);color:#111}.btn{border:1px solid var(--ink);background:var(--ink);color:#111;font:inherit;font-weight:700;padding:8px 13px;border-radius:8px;cursor:pointer}.btn.secondary{background:transparent;color:var(--ink);border-color:var(--line2)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.metric{background:var(--raise);border:1px solid var(--line);border-radius:9px;padding:10px;min-width:0}.metric small{display:block;color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.06em}.metric strong{display:block;font-size:19px;margin-top:3px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.plot svg{display:block;width:100%;height:auto}.plot text{font:12px Inter,"Segoe UI",sans-serif;fill:var(--mute)}.plot .axislabel{fill:var(--ink);font-weight:700}.legend{display:flex;gap:8px 18px;flex-wrap:wrap;color:var(--mute);font-size:13px;margin-top:8px}.swatch{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:6px;background:var(--ink)}.swatch.sp{background:var(--gold)}.swatch.u{background:var(--blue)}.diagram{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:7px;align-items:center;text-align:center}.block{border:1px solid var(--line2);background:var(--raise);border-radius:8px;padding:12px 5px;font-size:13px}.arrow{color:var(--faint);font-size:20px}.feedback{grid-column:1/-1;color:var(--mute);font-size:12px;text-align:center;border-top:1px dashed var(--line2);padding-top:8px}.formula{padding:10px;background:var(--raise);border-radius:8px;color:var(--mute);font-family:"Cambria Math","Times New Roman",serif;overflow-wrap:anywhere}.formula b{color:var(--ink)}.status{font-size:13px;color:var(--mute);margin-top:9px}.status strong{color:var(--ink)}footer{color:var(--faint);font-size:12px;margin-top:22px}@media(max-width:420px){.diagram{gap:4px}.block{font-size:11px;padding:9px 3px}.arrow{font-size:16px}}
+</style>
+</head>
+<body><main class="page">
+<header><div class="kicker">ENCS4380 · Homework 2 · P1 · Team 26</div><h1>PID Playground</h1><p class="lede">Build a feedback controller, tune its gains, and compare the response of first-order and second-order plants. The simulation uses numerical time-step integration, with the actuator limited to 0–100%.</p></header>
+<nav class="nav" aria-label="Project modules">
+<a href="index.html">Module 1 · Time response</a><a href="module2.html">Module 2 · Frequency response</a><a href="module3.html">Module 3 · Second order &amp; State-Space</a><a href="module4.html">Module 4 · Guess the sensor</a><a class="active" href="pid.html">Control · P1 PID Playground</a>
+</nav>
+<div class="layout">
+<div class="col">
+<section class="card"><h2>Plant model</h2>
+<div class="seg" role="group" aria-label="Plant type"><button id="firstBtn" aria-pressed="true" type="button">First-order</button><button id="secondBtn" aria-pressed="false" type="button">Second-order</button></div>
+<div id="firstFields">
+<label class="field"><span class="top"><span>Gain K</span><output id="kOut"></output></span><input id="plantK" type="range" min="0.5" max="2" step="0.05" value="1"></label>
+<label class="field"><span class="top"><span>Time constant τ (s)</span><output id="tauOut"></output></span><input id="tau" type="range" min="0.5" max="8" step="0.1" value="2"></label>
+</div>
+<div id="secondFields" hidden>
+<label class="field"><span class="top"><span>Gain K</span><output id="k2Out"></output></span><input id="plantK2" type="range" min="0.5" max="2" step="0.05" value="1"></label>
+<label class="field"><span class="top"><span>Damping ratio ζ</span><output id="zetaOut"></output></span><input id="zeta" type="range" min="0.3" max="1.5" step="0.05" value="0.7"></label>
+<label class="field"><span class="top"><span>Natural frequency ωn (rad/s)</span><output id="wnOut"></output></span><input id="wn" type="range" min="0.5" max="5" step="0.1" value="2"></label>
+</div>
+<label class="field"><span class="top"><span>Setpoint r</span><output id="spOut"></output></span><input id="setpoint" type="range" min="5" max="100" step="1" value="50"></label>
+<p class="note">The plant input is the actuator command u (0–100%). Plant gain K maps this command to the output scale.</p>
+</section>
+<section class="card"><h2>PID controller</h2>
+<label class="field"><span class="top"><span>Proportional gain Kp</span><output id="kpOut"></output></span><input id="kp" type="range" min="0" max="10" step="0.05" value="2"></label>
+<label class="field"><span class="top"><span>Integral gain Ki</span><output id="kiOut"></output></span><input id="ki" type="range" min="0" max="5" step="0.01" value="0.8"></label>
+<label class="field"><span class="top"><span>Derivative gain Kd</span><output id="kdOut"></output></span><input id="kd" type="range" min="0" max="5" step="0.01" value="0.15"></label>
+<div class="formula"><b>PID:</b> u* = Kp·e + Ki·∫e dt − Kd·dy/dt<br><b>Error:</b> e = r − y<br><b>Actuator:</b> u = clamp(u*, 0, 100%)</div>
+<p class="note">Derivative is applied to the measured output to avoid a derivative kick when the setpoint changes. Integral accumulation is paused when saturation would drive the actuator further into its limit.</p>
+<div class="actions"><button class="btn" id="resetBtn" type="button">Reset simulation</button><button class="btn secondary" id="defaultsBtn" type="button">Restore defaults</button></div>
+<p class="status" id="runStatus" aria-live="polite">Simulation ready.</p>
+</section>
+<section class="card"><h2>Closed-loop block diagram</h2>
+<div class="diagram" role="img" aria-label="Setpoint enters summing junction, PID controller, actuator limits and plant; output is fed back to the summing junction">
+<div class="block">Setpoint<br><b>r(t)</b></div><div class="arrow">→</div><div class="block">PID<br><b>Kp, Ki, Kd</b></div><div class="arrow">→</div><div class="block">Plant<br><b>G(s)</b></div>
+<div class="feedback">Output y(t) ─────────────── negative feedback to the error summing junction (r − y)</div>
+</div><p class="note">The actuator saturation is applied to the controller output before it enters the plant.</p>
+</section>
+</div>
+<div class="col">
+<section class="card"><h2>Closed-loop output response</h2><div class="plot" id="outputPlot"></div><div class="legend"><span><i class="swatch sp"></i>Setpoint</span><span><i class="swatch"></i>Plant output y(t)</span></div></section>
+<section class="card"><h2>Control effort and actuator limits</h2><div class="plot" id="controlPlot"></div><div class="legend"><span><i class="swatch u"></i>Control signal u(t)</span></div><p class="note">The dashed horizontal lines show the actuator limits. The plotted command is the saturated signal applied to the plant.</p></section>
+<section class="card"><h2>Performance metrics</h2><div class="metrics">
+<div class="metric"><small>Rise time (10–90%)</small><strong id="riseMetric">—</strong></div>
+<div class="metric"><small>Overshoot</small><strong id="overMetric">—</strong></div>
+<div class="metric"><small>Settling time (2%)</small><strong id="settleMetric">—</strong></div>
+<div class="metric"><small>Steady-state error</small><strong id="errorMetric">—</strong></div>
+</div><p class="note">Metrics are calculated from the simulated output. Settling time is the first time after which the output remains within ±2% of the setpoint. If it does not settle during the displayed simulation, it is reported as “Not settled”.</p></section>
+<section class="card"><h2>Numerical model</h2><div id="modelEquation" class="formula"></div><p class="note">The differential equations are integrated using the forward Euler method with a 0.01 s time step. Change the plant and PID gains to see how the closed-loop response changes.</p></section>
+</div>
+</div>
+<footer>ENCS4380 Interfacing Techniques · Birzeit University · Homework 2 · P1</footer></main>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const dt=0.01, LIMIT=100;
+let plant="first", result=null;
+const defaults={K:1,tau:2,zeta:.7,wn:2,setpoint:50,kp:2,ki:.8,kd:.15};
+const value=id=>Number($(id).value);
+const fmt=(v,d=2)=>Number.isFinite(v)?Number(v).toFixed(d):"—";
+function readParams(){return{K:plant==="first"?value("plantK"):value("plantK2"),tau:value("tau"),zeta:value("zeta"),wn:value("wn"),r:value("setpoint"),kp:value("kp"),ki:value("ki"),kd:value("kd")}}
+function simulate(){
+ const p=readParams(), end=plant==="first"?Math.max(12,8*p.tau):Math.min(60,Math.max(12,8/(p.zeta*p.wn)));
+ const n=Math.ceil(end/dt),data=[];let y=0,v=0,integral=0,previousY=0,u=0;
+ for(let i=0;i<=n;i++){
+  const t=i*dt,e=p.r-y,derivative=(y-previousY)/dt;
+  const candidateIntegral=integral+e*dt;
+  const raw=p.kp*e+p.ki*candidateIntegral-p.kd*derivative;
+  const saturated=Math.max(0,Math.min(LIMIT,raw));
+  const drivesFurther=(raw>LIMIT&&e>0)||(raw<0&&e<0);
+  if(!drivesFurther)integral=candidateIntegral;
+  u=Math.max(0,Math.min(LIMIT,p.kp*e+p.ki*integral-p.kd*derivative));
+  data.push({t,y,u});
+  if(i===n)break;
+  previousY=y;
+  if(plant==="first"){
+   const dydt=(-y+p.K*u)/p.tau;
+   y+=dt*dydt;
+  }else{
+   const acceleration=p.wn*p.wn*(p.K*u-y)-2*p.zeta*p.wn*v;
+   y+=dt*v;v+=dt*acceleration;
+  }
+ }
+ return{p,data,end};
+}
+function niceTicks(max,count=5){const raw=max/count,p=Math.pow(10,Math.floor(Math.log10(Math.max(raw,1e-9)))),m=raw/p,step=(m<1.5?1:m<3?2:m<7?5:10)*p,out=[];for(let x=0;x<=max*1.00001;x+=step)out.push(x);return out}
+function drawPlot(el,series,{yMin=0,yMax=100,limitLines=[]}={}){
+ const W=Math.max(320,Math.min(900,el.clientWidth||760)),small=W<500,H=300,l=small?43:58,r=14,top=15,bottom=43,pw=W-l-r,ph=H-top-bottom;
+ const xmax=series[0].points[series[0].points.length-1][0],X=x=>l+pw*x/xmax,Y=y=>top+ph*(yMax-y)/(yMax-yMin),s=[];
+ niceTicks(xmax,6).forEach(x=>{s.push('<line x1="'+X(x)+'" x2="'+X(x)+'" y1="'+top+'" y2="'+(top+ph)+'" stroke="var(--line)"/><text x="'+X(x)+'" y="'+(H-20)+'" text-anchor="middle">'+fmt(x,0)+'</text>')});
+ niceTicks(yMax-yMin,5).map(y=>y+yMin).forEach(y=>{s.push('<line x1="'+l+'" x2="'+(l+pw)+'" y1="'+Y(y)+'" y2="'+Y(y)+'" stroke="var(--line)"/><text x="'+(l-7)+'" y="'+(Y(y)+4)+'" text-anchor="end">'+fmt(y,0)+'</text>')});
+ s.push('<rect x="'+l+'" y="'+top+'" width="'+pw+'" height="'+ph+'" fill="none" stroke="var(--line2)"/>');
+ limitLines.forEach(v=>s.push('<line x1="'+l+'" x2="'+(l+pw)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="var(--bad)" stroke-dasharray="5 5"/>'));
+ series.forEach(q=>{const pts=q.points.map(a=>X(a[0]).toFixed(1)+','+Y(Math.max(yMin,Math.min(yMax,a[1]))).toFixed(1)).join(' ');s.push('<polyline points="'+pts+'" fill="none" stroke="'+q.color+'" stroke-width="'+q.width+'" stroke-linejoin="round" stroke-linecap="round"/>')});
+ s.push('<text x="'+(l+pw/2)+'" y="'+(H-3)+'" text-anchor="middle">Time (s)</text>');
+ el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+el.getAttribute("aria-label")+'">'+s.join('')+'</svg>';
+}
+function metrics(data,r){
+ const final=data[data.length-1].y,thresholdLow=.1*r,thresholdHigh=.9*r;
+ const i10=data.findIndex(q=>q.y>=thresholdLow),i90=data.findIndex(q=>q.y>=thresholdHigh);
+ const rise=i10>=0&&i90>=0?data[i90].t-data[i10].t:NaN;
+ const peak=Math.max(...data.map(q=>q.y)),overshoot=Math.max(0,(peak-r)/Math.max(Math.abs(r),1e-9)*100);
+ const band=.02*Math.abs(r),settleIndex=data.findIndex((q,i)=>data.slice(i).every(z=>Math.abs(z.y-r)<=band));
+ return{rise,overshoot,settle:settleIndex>=0?data[settleIndex].t:NaN,error:Math.abs(r-final),final,peak};
+}
+function render(){
+ result=simulate();const {p,data}=result,m=metrics(data,p.r);
+ const yMax=Math.max(p.r*1.2,...data.map(q=>q.y))*1.05;
+ drawPlot($("outputPlot"),[{points:data.map(q=>[q.t,q.y]),color:"var(--ink)",width:2.5},{points:[[0,p.r],[result.end,p.r]],color:"var(--gold)",width:1.8}],{yMin:0,yMax:Math.max(10,yMax)});
+ drawPlot($("controlPlot"),[{points:data.map(q=>[q.t,q.u]),color:"var(--blue)",width:2.5}],{yMin:0,yMax:110,limitLines:[0,100]});
+ $("riseMetric").textContent=Number.isFinite(m.rise)?fmt(m.rise)+" s":"Not reached";
+ $("overMetric").textContent=fmt(m.overshoot,1)+" %";
+ $("settleMetric").textContent=Number.isFinite(m.settle)?fmt(m.settle)+" s":"Not settled";
+ $("errorMetric").textContent=fmt(m.error)+" ("+fmt(m.final)+" final)";
+ $("modelEquation").innerHTML=plant==="first"?"<b>First-order:</b> τ·dy/dt + y = K·u<br>G(s) = K / (τs + 1)":"<b>Second-order:</b> d²y/dt² + 2ζωn·dy/dt + ωn²·y = Kωn²·u<br>G(s) = Kωn² / (s² + 2ζωn·s + ωn²)";
+ $("runStatus").textContent="Simulated "+fmt(result.end,1)+" s · "+data.length+" Euler steps · actuator command clipped to 0–100%.";
+ syncLabels();
+}
+function syncLabels(){
+ const map={kOut:["plantK",2],tauOut:["tau",1],k2Out:["plantK2",2],zetaOut:["zeta",2],wnOut:["wn",2],spOut:["setpoint",0],kpOut:["kp",2],kiOut:["ki",2],kdOut:["kd",2]};
+ Object.entries(map).forEach(([out,[input,d]])=>$(out).textContent=fmt(value(input),d));
+}
+function setPlant(next){plant=next;$("firstBtn").setAttribute("aria-pressed",next==="first");$("secondBtn").setAttribute("aria-pressed",next==="second");$("firstFields").hidden=next!=="first";$("secondFields").hidden=next!=="second";render()}
+$("firstBtn").addEventListener("click",()=>setPlant("first"));$("secondBtn").addEventListener("click",()=>setPlant("second"));
+["plantK","plantK2","tau","zeta","wn","setpoint","kp","ki","kd"].forEach(id=>$(id).addEventListener("input",render));
+$("resetBtn").addEventListener("click",render);
+$("defaultsBtn").addEventListener("click",()=>{Object.entries(defaults).forEach(([k,v])=>{const id={K:plant==="first"?"plantK":"plantK2",...{tau:"tau",zeta:"zeta",wn:"wn",setpoint:"setpoint",kp:"kp",ki:"ki",kd:"kd"}}[k];if(id)$(id).value=v});render()});
+let resizeTimer;window.addEventListener("resize",()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(render,100)});
+render();
+</script></body></html>
