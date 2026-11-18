@@ -76,7 +76,8 @@ Interactive browser-based demonstrations for first-order and second-order dynami
 - ζ is drawn between 0.1 and 0.8 so the response always overshoots and the overshoot method can be used.
 
 ### Homework 2 — P1 PID Playground
-- First-order and second-order plant selection with adjustable plant parameters.
+- First-order and second-order plant selection with adjustable plant parameters. Wide ranges (K 0.1–20, τ 0.02–10 s) and number boxes for typing measured values; the time window follows the plant's speed.
+- Live SVG block diagram (r, Σ, PID, 0–100% actuator limit, plant G(s), negative feedback) labelled with the current gains and plant.
 - Live PID gain and setpoint controls.
 - Closed-loop output and saturated control-effort plots.
 - Rise time, overshoot, 2% settling time, and steady-state error metrics.
