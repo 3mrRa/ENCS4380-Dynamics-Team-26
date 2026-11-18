@@ -12,6 +12,7 @@ Interactive browser-based demonstrations for first-order and second-order dynami
 | Module 2 — First-order frequency response | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/module2.html |
 | Module 3 — Second-order response & State-Space | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/module3.html |
 | Module 4 — Guess the sensor | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/module4.html |
+| Homework 2 — P1 PID Playground | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/pid.html |
 
 ## Team
 
@@ -73,6 +74,13 @@ Interactive browser-based demonstrations for first-order and second-order dynami
 - Reveal: true values, error per parameter, true curve and guessed curve drawn on the plot.
 - Scoring: 50 points per parameter, full marks within 10 %, a running session score, hints on request and a New sensor button.
 - ζ is drawn between 0.1 and 0.8 so the response always overshoots and the overshoot method can be used.
+
+### Homework 2 — P1 PID Playground
+- First-order and second-order plant selection with adjustable plant parameters.
+- Live PID gain and setpoint controls.
+- Closed-loop output and saturated control-effort plots.
+- Rise time, overshoot, 2% settling time, and steady-state error metrics.
+- Forward Euler numerical simulation with 0–100% actuator saturation and conditional integral anti-windup.
 
 ## Implementation
 
