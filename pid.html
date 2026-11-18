@@ -110,7 +110,8 @@ function metrics(data,r){
  const i10=data.findIndex(q=>q.y>=thresholdLow),i90=data.findIndex(q=>q.y>=thresholdHigh);
  const rise=i10>=0&&i90>=0?data[i90].t-data[i10].t:NaN;
  const peak=Math.max(...data.map(q=>q.y)),overshoot=Math.max(0,(peak-r)/Math.max(Math.abs(r),1e-9)*100);
- const band=.02*Math.abs(r),settleIndex=data.findIndex((q,i)=>data.slice(i).every(z=>Math.abs(z.y-r)<=band));
+ const band=.02*Math.abs(r);let settleIndex=-1,staysInBand=true;
+ for(let i=data.length-1;i>=0;i--){if(Math.abs(data[i].y-r)>band)staysInBand=false;if(staysInBand)settleIndex=i;}
  return{rise,overshoot,settle:settleIndex>=0?data[settleIndex].t:NaN,error:Math.abs(r-final),final,peak};
 }
 function render(){
