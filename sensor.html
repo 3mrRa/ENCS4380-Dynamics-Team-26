@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>P2 · Slow Sensor in the Loop · Team 26</title>
+<style>
+:root{--bg:#0e0e0f;--card:#161617;--raise:#202023;--line:#303034;--line2:#45454b;--ink:#ededf0;--mute:#a3a3aa;--faint:#707078;--ok:#5ad08f;--bad:#f07070;--blue:#9da9bd;--gold:#e5bd72}
+*{box-sizing:border-box}html,body{background:var(--bg)}body{margin:0;color:var(--ink);font:15px/1.55 Inter,"Segoe UI",system-ui,sans-serif}.page{max-width:1280px;margin:auto;padding:22px 16px 48px}.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700}h1{font-size:clamp(27px,4vw,40px);line-height:1.12;margin:7px 0}.lede{color:var(--mute);max-width:82ch;margin:0}.nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.nav a{color:var(--mute);text-decoration:none;border:1px solid var(--line2);padding:7px 11px;border-radius:8px;font-size:13px}.nav a.active{background:var(--ink);color:#111;border-color:var(--ink)}.layout{display:grid;gap:14px;margin-top:14px}.col{display:grid;gap:14px;align-content:start;min-width:0}@media(min-width:980px){.layout{grid-template-columns:340px minmax(0,1fr);align-items:start}}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}.card h2{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:0 0 12px;font-weight:700}.note{font-size:13px;color:var(--mute);margin:9px 0 0}.field{display:block;margin:13px 0}.top{display:flex;justify-content:space-between;gap:10px;align-items:baseline;font-size:14px;font-weight:650}.top output{background:var(--raise);border:1px solid var(--line2);border-radius:6px;padding:1px 8px;min-width:70px;text-align:right;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:#ededf0;margin:7px 0 0;height:23px}.seg{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line2);border-radius:8px;overflow:hidden;margin-bottom:12px}.seg button{border:0;padding:9px;background:transparent;color:var(--mute);font:inherit;font-weight:650;cursor:pointer}.seg button[aria-pressed=true]{background:var(--ink);color:#111}.btn{border:1px solid var(--ink);background:var(--ink);color:#111;font:inherit;font-weight:700;padding:8px 13px;border-radius:8px;cursor:pointer}.btn.secondary{background:transparent;color:var(--ink);border-color:var(--line2)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.metric{background:var(--raise);border:1px solid var(--line);border-radius:9px;padding:10px;min-width:0}.metric small{display:block;color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.06em}.metric strong{display:block;font-size:19px;margin-top:3px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.plot svg{display:block;width:100%;height:auto}.plot text{font:12px Inter,"Segoe UI",sans-serif;fill:var(--mute)}.plot .axislabel{fill:var(--ink);font-weight:700}.legend{display:flex;gap:8px 18px;flex-wrap:wrap;color:var(--mute);font-size:13px;margin-top:8px}.swatch{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:6px;background:var(--ink)}.swatch.sp{background:var(--gold)}.swatch.u{background:var(--blue)}.diagram{display:flex;flex-wrap:wrap;gap:7px;align-items:center;justify-content:center;text-align:center}.block{border:1px solid var(--line2);background:var(--raise);border-radius:8px;padding:12px 5px;font-size:13px}.arrow{color:var(--faint);font-size:20px}.feedback{grid-column:1/-1;color:var(--mute);font-size:12px;text-align:center;border-top:1px dashed var(--line2);padding-top:8px}.formula{padding:10px;background:var(--raise);border-radius:8px;color:var(--mute);font-family:"Cambria Math","Times New Roman",serif;overflow-wrap:anywhere}.formula b{color:var(--ink)}.status{font-size:13px;color:var(--mute);margin-top:9px}.status strong{color:var(--ink)}footer{color:var(--faint);font-size:12px;margin-top:22px}.top .num{background:var(--raise);border:1px solid var(--line2);border-radius:6px;padding:1px 8px;width:92px;text-align:right;color:var(--ink);font:inherit;font-variant-numeric:tabular-nums}.top .num:focus{outline:2px solid var(--gold);outline-offset:1px}#diagram svg{display:block;max-width:760px;margin:auto}.ok{color:var(--ok);font-weight:700}.bad{color:var(--bad);font-weight:700}.q{font-size:16px;font-weight:620;margin:0 0 12px}.opts{display:grid;gap:8px}.opt{text-align:left;border:1px solid var(--line2);background:var(--raise);color:var(--ink);font:inherit;padding:10px 12px;border-radius:8px;cursor:pointer}.opt:disabled{cursor:default;opacity:.45}.opt.right{border-color:var(--ok);color:var(--ok);opacity:1}.opt.wrong{border-color:var(--bad);color:var(--bad);opacity:1}.why{margin:12px 0 0;color:var(--mute);font-size:14px}.why:empty{display:none}.next{display:flex;justify-content:space-between;align-items:center;margin-top:12px}.count{color:var(--faint);font-size:13px}table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}th{text-align:left;font-size:12px;color:var(--faint);font-weight:650;padding:4px 6px 8px;border-bottom:1px solid var(--line2)}td{padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}td:last-child,th:last-child{text-align:right}td{overflow-wrap:anywhere}@media(max-width:640px){#val,#val tr,#val td{display:block}thead{display:none}#val tr{border-bottom:1px solid var(--line2);padding:8px 0}#val td{border:0;padding:2px 0;text-align:left}#val td:first-child{font-weight:700}#val td:nth-child(2)::before{content:"Expected: ";color:var(--faint)}#val td:nth-child(3)::before{content:"Simulated: ";color:var(--faint)}}@media(max-width:420px){.diagram{gap:4px}.block{font-size:11px;padding:9px 3px}.arrow{font-size:16px}}
+:root{--sens:#62c6d8}
+.swatch.ym{background:repeating-linear-gradient(90deg,var(--sens) 0 6px,transparent 6px 9px)}
+.swatch.band{background:rgba(240,112,112,.35);height:10px}
+.verdict{display:inline-block;padding:3px 10px;border-radius:999px;font-weight:700;font-size:13px;border:1px solid var(--line2)}
+.verdict.good{color:var(--ok);border-color:var(--ok)}.verdict.warn{color:var(--gold);border-color:var(--gold)}.verdict.bad{color:var(--bad);border-color:var(--bad)}
+.toggle{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:650;margin:13px 0}.toggle input{width:18px;height:18px;accent-color:#ededf0}
+.meter{height:8px;border-radius:99px;background:var(--raise);border:1px solid var(--line);overflow:hidden;margin-top:6px}.meter i{display:block;height:100%;background:var(--ok)}
+.stab p{margin:6px 0;font-size:14px}.stab .formula{margin:8px 0}
+.warnline{color:var(--gold);font-size:13px;margin-top:8px}
+.presets{display:flex;gap:8px;flex-wrap:wrap}
+</style>
+</head>
+<body><main class="page">
+<header><div class="kicker">ENCS4380 · Homework 2 · P2 · Team 26</div><h1>A slow sensor in the loop</h1><p class="lede">The controller never sees the real output. It only sees what the sensor reports. Make the sensor slower and watch the true output overshoot more and more, until the loop starts to oscillate.</p></header>
+<nav class="nav" aria-label="Project modules">
+<a href="index.html">Module 1 · Time response</a><a href="module2.html">Module 2 · Frequency response</a><a href="module3.html">Module 3 · Second order &amp; State-Space</a><a href="module4.html">Module 4 · Guess the sensor</a><a href="pid.html">Control · P1 PID Playground</a><a class="active" href="sensor.html">Control · P2 Slow sensor</a>
+</nav>
+<div class="layout">
+<div class="col">
+<section class="card" aria-labelledby="h-pred"><h2 id="h-pred">Predict, then check</h2>
+<p class="q" id="q"></p><div class="opts" id="opts"></div><p class="why" id="why" aria-live="polite"></p>
+<div class="next"><span class="count" id="count"></span><button class="btn" id="nextQ" type="button">Next question</button></div>
+</section>
+<section class="card"><h2>Sensor in the feedback path</h2>
+<label class="field"><span class="top"><span>Sensor time constant τ<sub>s</sub> (s)</span><input class="num" id="tsOut" type="number" min="0.01" max="10" step="any"></span><input id="ts" type="range" min="-2" max="1" step="0.005" value="-1.30103"></label>
+<p class="note">Log scale: 0.01 s to 10 s. The sensor is first order with gain 1: τ<sub>s</sub>·dy<sub>m</sub>/dt = y − y<sub>m</sub>. This is the same first-order sensor model as Homework 1 Module 1 (τẏ + y = Kx with K = 1), now placed inside the feedback loop.</p>
+<div class="presets" style="margin-top:12px"><button class="btn secondary" type="button" data-preset="fast">Fast sensor</button><button class="btn secondary" type="button" data-preset="near">Near critical</button><button class="btn secondary" type="button" data-preset="osc">Oscillating</button></div>
+<p class="note">Presets use K = 1, τ = 1 s, Kp = 1, Ki = 5, Kd = 0, where theory puts the edge of stability at τ<sub>s</sub> = 0.667 s.</p>
+</section>
+<section class="card"><h2>Plant and setpoint</h2>
+<label class="field"><span class="top"><span>Plant gain K</span><input class="num" id="kOut" type="number" min="0.1" max="20" step="any"></span><input id="plantK" type="range" min="0.1" max="20" step="0.01" value="1"></label>
+<label class="field"><span class="top"><span>Plant time constant τ (s)</span><input class="num" id="tauOut" type="number" min="0.02" max="10" step="any"></span><input id="tau" type="range" min="0.02" max="10" step="0.01" value="1"></label>
+<label class="field"><span class="top"><span>Setpoint r</span><input class="num" id="spOut" type="number" min="1" max="1000" step="any"></span><input id="setpoint" type="range" min="1" max="1000" step="1" value="50"></label>
+<label class="toggle"><input id="limited" type="checkbox" checked> Actuator limit 0–100 %</label>
+<p class="note">Turn the limit off to see the linear loop the stability formulas describe: past the critical τ<sub>s</sub> its oscillation grows without bound. With the limit on, the swing is capped and becomes a steady oscillation (a limit cycle).</p>
+</section>
+<section class="card"><h2>PID controller</h2>
+<label class="field"><span class="top"><span>Proportional gain Kp</span><input class="num" id="kpOut" type="number" min="0" max="20" step="any"></span><input id="kp" type="range" min="0" max="20" step="0.001" value="1"></label>
+<label class="field"><span class="top"><span>Integral gain Ki</span><input class="num" id="kiOut" type="number" min="0" max="20" step="any"></span><input id="ki" type="range" min="0" max="20" step="0.001" value="5"></label>
+<label class="field"><span class="top"><span>Derivative gain Kd</span><input class="num" id="kdOut" type="number" min="0" max="5" step="any"></span><input id="kd" type="range" min="0" max="5" step="0.001" value="0"></label>
+<div class="formula"><b>Error:</b> e = r − y<sub>m</sub> &nbsp;(the sensor reading, not y)<br><b>PID:</b> u* = Kp·e + Ki·∫e dt − Kd·dy<sub>m</sub>/dt<br><b>Actuator:</b> u = clamp(u*, 0, 100 %)</div>
+<p class="note">The derivative acts on the sensor reading. Its slope is known exactly from the sensor equation, dy<sub>m</sub>/dt = (y − y<sub>m</sub>)/τ<sub>s</sub>, so no finite difference is needed. The integral stops growing while the actuator is pushed into a limit (anti-windup).</p>
+<div class="actions"><button class="btn secondary" id="defaultsBtn" type="button">Restore defaults</button></div>
+</section>
+</div>
+<div class="col">
+<section class="card"><h2>Closed-loop block diagram</h2><div id="diagram"></div>
+<p class="note">The sensor sits in the feedback path. The controller subtracts y<sub>m</sub>, not y, so it can only correct what the sensor reports.</p></section>
+<section class="card"><h2>True output and sensor reading</h2>
+<div class="plot" id="outputPlot" aria-label="True output y, sensor reading y_m and setpoint against time"></div>
+<div class="legend"><span><i class="swatch sp"></i>Setpoint r</span><span><i class="swatch"></i>True output y</span><span><i class="swatch ym"></i>Sensor reading y<sub>m</sub></span></div>
+<p class="note" id="clipNote"></p>
+</section>
+<section class="card"><h2>Control signal</h2><div class="plot" id="controlPlot" aria-label="Control signal u against time"></div>
+<div class="legend"><span><i class="swatch u"></i>Control signal u(t)</span></div><p class="note" id="uNote"></p></section>
+<section class="card"><h2>What happened</h2>
+<p style="margin:0 0 12px"><span class="verdict" id="verdict">—</span></p>
+<div class="metrics">
+<div class="metric"><small>Overshoot of true y</small><strong id="osY">—</strong></div>
+<div class="metric"><small>Overshoot the sensor shows</small><strong id="osM">—</strong></div>
+<div class="metric"><small>Settling time of y (2 %)</small><strong id="settle">—</strong></div>
+<div class="metric"><small>Oscillation period</small><strong id="period">—</strong></div>
+</div>
+<p class="note" id="story"></p>
+<p class="status" id="runStatus" aria-live="polite"></p>
+</section>
+<section class="card stab" aria-labelledby="h-stab"><h2 id="h-stab">Stability: where the loop starts to oscillate</h2><div id="stability"></div></section>
+<section class="card"><h2>Overshoot as the sensor gets slower</h2>
+<div class="plot" id="sweepPlot" aria-label="Overshoot of y and y_m against sensor time constant on a log axis"></div>
+<div class="legend"><span><i class="swatch"></i>True output y</span><span><i class="swatch ym"></i>Sensor reading y<sub>m</sub></span><span><i class="swatch band"></i>Linear loop unstable (τ<sub>s</sub> &gt; τ<sub>s,crit</sub>)</span><span><i class="swatch sp"></i>Current τ<sub>s</sub></span></div>
+<p class="note">Each point is a full simulation with the current plant, gains and limit setting, only τ<sub>s</sub> changed. Overshoot is capped at 300 % on this chart.</p>
+</section>
+<section class="card" aria-labelledby="h-val"><h2 id="h-val">Validation checks</h2>
+<p class="note" style="margin-top:0">Plant K/(τs + 1) with K = 1, τ = 1 s, unit step, <b>no actuator limit</b>, 1 ms RK4 step (0.2 ms for check 1). These compare the solver with the formulas on this page and do not depend on the sliders.</p>
+<table><thead><tr><th>Check</th><th>Expected</th><th>Simulated</th><th></th></tr></thead><tbody id="val"></tbody></table>
+</section>
+<section class="card"><h2>Numerical model</h2>
+<div class="formula">τ·dy/dt = −y + K·u &nbsp;&nbsp;(plant)<br>τ<sub>s</sub>·dy<sub>m</sub>/dt = y − y<sub>m</sub> &nbsp;&nbsp;(sensor)<br>dI/dt = r − y<sub>m</sub> &nbsp;&nbsp;(integral, paused by anti-windup)</div>
+<p class="note">The three states are stepped with the classical 4th-order Runge–Kutta method (RK4). Forward Euler was tried first, but it adds a small false growth to every oscillation (about h·ω²/2 per second), which shifts the edge of stability by a few percent; RK4 makes that error negligible. The time window follows the slower of τ and τ<sub>s</sub>. Results are stored at about 2000 points, and each point is split into smaller steps when the loop is fast (h·rate ≤ 0.5).</p>
+</section>
+</div>
+</div>
+<footer>ENCS4380 Interfacing Techniques · Birzeit University · Homework 2 · P2</footer></main>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const dt=0.01,LIMIT=100;
+const fmt=(v,d=2)=>Number.isFinite(v)?Number(v).toFixed(d):"—";
+const show=v=>String(+Number(v).toPrecision(4));
+
+// ---------- Inputs: slider + number box. τs uses a log10 slider. ----------
+const FIELDS={ts:{box:"tsOut",log:true},plantK:{box:"kOut"},tau:{box:"tauOut"},setpoint:{box:"spOut"},kp:{box:"kpOut"},ki:{box:"kiOut"},kd:{box:"kdOut"}};
+const boxOf=id=>$(FIELDS[id].box);
+const sliderToVal=id=>FIELDS[id].log?Math.pow(10,+$(id).value):+$(id).value;
+const valToSlider=(id,v)=>FIELDS[id].log?Math.log10(v):v;
+function clampTo(id,v){const b=boxOf(id);return Math.max(+b.min,Math.min(+b.max,v))}
+function value(id){const b=boxOf(id),v=Number(b.value);return b.value!==""&&Number.isFinite(v)?clampTo(id,v):sliderToVal(id)}
+function setVal(id,v){v=clampTo(id,v);$(id).value=valToSlider(id,v);boxOf(id).value=show(v)}
+const defaults={ts:.05,plantK:1,tau:1,setpoint:50,kp:1,ki:5,kd:0};
+function readParams(){return{K:value("plantK"),tau:value("tau"),ts:value("ts"),r:value("setpoint"),kp:value("kp"),ki:value("ki"),kd:value("kd"),limited:$("limited").checked}}
+
+// ---------- Solver (classical 4th-order Runge–Kutta) ----------
+// States: y (plant), m (sensor reading y_m), I (integral of e). Controller sees e = r − m.
+// RK4 is used instead of forward Euler because Euler adds a small false growth (about h·ω²/2 per second)
+// to every oscillation, which is enough to move the edge of stability, the very thing P2 is about.
+function simulateLoop(p,{end,step}){
+ const lo=p.limited?0:-Infinity,hi=p.limited?LIMIT:Infinity;
+ // Right-hand side. Returns derivatives and the applied (clipped) command u.
+ const f=(y,m,I)=>{
+  const e=p.r-m,dm=(y-m)/p.ts,raw=p.kp*e+p.ki*I-p.kd*dm,u=Math.max(lo,Math.min(hi,raw));
+  const dI=(raw>hi&&e>0)||(raw<lo&&e<0)?0:e;     // conditional anti-windup: stop integrating into a limit
+  return[(-y+p.K*u)/p.tau,dm,dI,u];
+ };
+ // Fastest rates in the loop: sensor 1/τs, P loop (1+K·Kp)/τ, D term K·Kd/(τ·τs), I loop √(K·Ki/τ).
+ const rate=1/p.ts+(1+p.K*p.kp)/p.tau+p.K*p.kd/(p.tau*p.ts)+Math.sqrt(p.K*p.ki/p.tau);
+ let sub=Math.max(1,Math.ceil(step*rate/0.5));const capped=sub>400;if(capped)sub=400;
+ const h=step/sub,n=Math.round(end/step),big=1e6*Math.max(1,Math.abs(p.r)),data=[];
+ let y=0,m=0,I=0;
+ outer:for(let i=0;i<=n;i++){
+  data.push({t:i*step,y,m,u:f(y,m,I)[3]});
+  if(i===n)break;
+  for(let s=0;s<sub;s++){
+   const k1=f(y,m,I),k2=f(y+h/2*k1[0],m+h/2*k1[1],I+h/2*k1[2]),k3=f(y+h/2*k2[0],m+h/2*k2[1],I+h/2*k2[2]),k4=f(y+h*k3[0],m+h*k3[1],I+h*k3[2]);
+   y+=h/6*(k1[0]+2*k2[0]+2*k3[0]+k4[0]);m+=h/6*(k1[1]+2*k2[1]+2*k3[1]+k4[1]);I+=h/6*(k1[2]+2*k2[2]+2*k3[2]+k4[2]);
+   if(!Number.isFinite(y)||Math.abs(y)>big){data.exploded=true;break outer}
+  }
+ }
+ data.sub=sub;data.h=h;data.stiff=capped&&h*rate>2.5;   // RK4 is stable up to h·rate ≈ 2.8
+ return data;
+}
+// ---------- Response analysis ----------
+function analyse(data,r){
+ const n=data.length,ys=data.map(q=>q.y),ms=data.map(q=>q.m),scale=Math.max(Math.abs(r),1e-9);
+ const pp=a=>{let lo=Infinity,hi=-Infinity;for(const v of a){if(v<lo)lo=v;if(v>hi)hi=v}return a.length?hi-lo:0};
+ const ppA=pp(ys.slice(Math.floor(n/2),Math.floor(3*n/4))),ppB=pp(ys.slice(Math.floor(3*n/4)));
+ let verdict,ratio=ppB/Math.max(ppA,1e-12);
+ if(data.exploded)verdict="growing";
+ else if(ppB<.005*scale)verdict="settled";
+ else verdict=ratio>1.02?"growing":ratio>=.98?"sustained":"decaying";   // windows ~2.5 periods apart; a limit cycle keeps its size within 2 %
+ const final=ys[n-1],ref=verdict==="settled"&&Math.abs(final)>1e-6*scale?final:r;
+ let peakY=-Infinity,peakM=-Infinity;for(let i=0;i<n;i++){if(ys[i]>peakY)peakY=ys[i];if(ms[i]>peakM)peakM=ms[i]}
+ const osY=Math.max(0,(peakY-ref)/Math.abs(ref)*100),osM=Math.max(0,(peakM-ref)/Math.abs(ref)*100);
+ let settle=NaN;
+ if(verdict==="settled"){const band=.02*Math.abs(ref);let k=-1;for(let i=n-1;i>=0;i--){if(Math.abs(ys[i]-ref)>band)break;k=i}if(k>=0&&k<=.9*n)settle=data[k].t}
+ // Oscillation period from upward crossings of the mean in the second half
+ let period=NaN;
+ if(verdict!=="settled"){const half=data.slice(Math.floor(n/2));const mean=half.reduce((a,q)=>a+q.y,0)/half.length;const up=[];
+  for(let i=1;i<half.length;i++)if(half[i-1].y<mean&&half[i].y>=mean){const a=half[i-1],b=half[i];up.push(a.t+(mean-a.y)/(b.y-a.y)*(b.t-a.t))}
+  if(up.length>=2)period=(up[up.length-1]-up[0])/(up.length-1)}
+ if(verdict==="decaying"&&!Number.isFinite(period))verdict="creeping";   // still moving, but no oscillation
+ return{verdict,ratio,final,ref,peakY,peakM,osY,osM,settle,period};
+}
+// Pick a window from the slower of τ and τs. Use the first that settles in its first half;
+// if none settles (oscillation), show about 10 periods.
+function simulate(p){
+ const T0=Math.max(p.tau,p.ts),run=end=>{const step=Math.min(dt,end/2000),data=simulateLoop(p,{end,step});return{p,data,end,step,a:analyse(data,p.r)}};
+ let last;
+ for(const f of [2,8,30,100]){const end=Math.min(120,Math.max(.2,f*T0));last=run(end);if(last.a.verdict==="settled"&&last.a.settle<=.5*end)return last;if(end>=120)break}
+ if(Number.isFinite(last.a.period)){const end=Math.min(120,Math.max(4*T0,10*last.a.period));if(Math.abs(end-last.end)>1e-9)last=run(end)}
+ // A swing that looks steady over 10 periods may still be shrinking or growing by ~1 % per cycle (close to τs,crit).
+ // Confirm with a long run: compare the swing over 3 periods at 30 % of the run with the last 3 periods.
+ if(last.a.verdict==="sustained"&&Number.isFinite(last.a.period)){
+  const P=last.a.period,end=Math.min(600,60*P),d=simulateLoop(p,{end,step:Math.min(dt,end/6000)});
+  const swing=(t0,t1)=>{let lo=Infinity,hi=-Infinity;for(const q of d)if(q.t>=t0&&q.t<t1){if(q.y<lo)lo=q.y;if(q.y>hi)hi=q.y}return hi-lo};
+  const r=swing(end-3*P,end)/Math.max(swing(.3*end,.3*end+3*P),1e-12);last.a.longRatio=r;last.a.longEnd=end;
+  if(r<.9)last.a.verdict="decaying";else if(r>1.1)last.a.verdict="growing";
+ }
+ return last;
+}
+
+// ---------- Theory: characteristic equation, Routh, poles ----------
+// Loop gain C(s)·G(s)·H(s), C = Kp + Ki/s + Kd·s, G = K/(τs+1), H = 1/(τs·s+1)
+// Ki > 0: τ·τs·s³ + (τ+τs+K·Kd)·s² + (1+K·Kp)·s + K·Ki = 0
+// Ki = 0: τ·τs·s² + (τ+τs+K·Kd)·s + (1+K·Kp) = 0
+function theory(p){
+ const a3=p.tau*p.ts,a2=p.tau+p.ts+p.K*p.kd,a1=1+p.K*p.kp,a0=p.K*p.ki;
+ const t={a3,a2,a1,a0,cubic:p.ki>0};
+ if(t.cubic){
+  t.stable=a2*a1>a3*a0;
+  const den=p.tau*p.K*p.ki-a1;
+  t.tsCrit=den>0?(p.tau+p.K*p.kd)*a1/den:Infinity;      // from (τ+τs+K·Kd)(1+K·Kp) = τ·τs·K·Ki
+  t.wCrit=Number.isFinite(t.tsCrit)?Math.sqrt(a1/(p.tau*t.tsCrit)):NaN;
+  t.poles=rootsCubic(a3,a2,a1,a0);
+ }else{
+  t.stable=true;t.tsCrit=Infinity;
+  t.wn=Math.sqrt(a1/a3);t.zeta=a2/(2*Math.sqrt(a3*a1));
+  t.osM=t.zeta<1?Math.exp(-Math.PI*t.zeta/Math.sqrt(1-t.zeta*t.zeta))*100:0;
+  t.poles=rootsQuad(a3,a2,a1);
+ }
+ return t;
+}
+function rootsQuad(a,b,c){const d=b*b-4*a*c;return d>=0?[[(-b+Math.sqrt(d))/(2*a),0],[(-b-Math.sqrt(d))/(2*a),0]]:[[-b/(2*a),Math.sqrt(-d)/(2*a)],[-b/(2*a),-Math.sqrt(-d)/(2*a)]]}
+// Durand–Kerner iteration for the three roots of a monic cubic
+function rootsCubic(a3,a2,a1,a0){
+ const c=[a2/a3,a1/a3,a0/a3],mul=(x,y)=>[x[0]*y[0]-x[1]*y[1],x[0]*y[1]+x[1]*y[0]],sub=(x,y)=>[x[0]-y[0],x[1]-y[1]];
+ const div=(x,y)=>{const d=y[0]*y[0]+y[1]*y[1]||1e-300;return[(x[0]*y[0]+x[1]*y[1])/d,(x[1]*y[0]-x[0]*y[1])/d]};
+ const f=z=>{let v=[1,0];for(const k of c)v=[mul(v,z)[0]+k,mul(v,z)[1]];return v};
+ const R=1+Math.max(...c.map(Math.abs));let z=[[.4*R,.9*R],mul([.4*R,.9*R],[.4,.9]),mul(mul([.4*R,.9*R],[.4,.9]),[.4,.9])];
+ for(let it=0;it<500;it++){z=z.map((zi,i)=>{let d=[1,0];z.forEach((zj,j)=>{if(j!==i)d=mul(d,sub(zi,zj))});return sub(zi,div(f(zi),d))})}
+ return z.map(q=>[q[0],Math.abs(q[1])<1e-7*R?0:q[1]]).sort((a,b)=>b[0]-a[0]);
+}
+const poleTxt=p=>p[1]===0?fmt(p[0],3):fmt(p[0],3)+(p[1]>0?" + ":" − ")+fmt(Math.abs(p[1]),3)+"j";
+
+// ---------- Plotting ----------
+function niceTicks(lo,hi,count=5){const raw=(hi-lo)/count,p=Math.pow(10,Math.floor(Math.log10(Math.max(raw,1e-12)))),m=raw/p,step=(m<1.5?1:m<3?2:m<7?5:10)*p,out=[];for(let x=Math.ceil(lo/step-1e-9)*step;x<=hi+step*1e-6;x+=step)out.push(Math.abs(x)<step*1e-9?0:x);return out}
+const tickDigits=t=>t.length>1&&t[1]-t[0]<1?Math.ceil(-Math.log10(t[1]-t[0])-1e-9):0;
+function drawPlot(el,series,o){
+ const W=Math.max(320,Math.min(900,el.clientWidth||760)),small=W<500,H=o.height||300,l=small?46:60,r=14,top=15,bottom=43,pw=W-l-r,ph=H-top-bottom;
+ const lx=v=>Math.log10(v),X=o.logX?x=>l+pw*(lx(x)-lx(o.xMin))/(lx(o.xMax)-lx(o.xMin)):x=>l+pw*(x-(o.xMin||0))/(o.xMax-(o.xMin||0));
+ const Y=y=>top+ph*(o.yMax-y)/(o.yMax-o.yMin),cy=y=>Y(Math.max(o.yMin,Math.min(o.yMax,y))),s=[];
+ (o.bands||[]).forEach(b=>{const x1=X(Math.max(b.from,o.xMin||0)),x2=X(Math.min(b.to,o.xMax));if(x2>x1)s.push('<rect x="'+x1+'" y="'+top+'" width="'+(x2-x1)+'" height="'+ph+'" fill="'+b.color+'"/>')});
+ const xt=o.logX?[.01,.1,1,10].filter(v=>v>=o.xMin&&v<=o.xMax):niceTicks(o.xMin||0,o.xMax,6),xd=o.logX?2:tickDigits(xt);
+ xt.forEach(x=>s.push('<line x1="'+X(x)+'" x2="'+X(x)+'" y1="'+top+'" y2="'+(top+ph)+'" stroke="var(--line)"/><text x="'+X(x)+'" y="'+(H-20)+'" text-anchor="middle">'+(o.logX?String(x):fmt(x,xd))+'</text>'));
+ const yt=niceTicks(o.yMin,o.yMax,5),yd=tickDigits(yt);
+ yt.forEach(y=>s.push('<line x1="'+l+'" x2="'+(l+pw)+'" y1="'+Y(y)+'" y2="'+Y(y)+'" stroke="var(--line)"/><text x="'+(l-7)+'" y="'+(Y(y)+4)+'" text-anchor="end">'+fmt(y,yd)+'</text>'));
+ s.push('<rect x="'+l+'" y="'+top+'" width="'+pw+'" height="'+ph+'" fill="none" stroke="var(--line2)"/>');
+ (o.limitLines||[]).forEach(v=>{if(v>=o.yMin&&v<=o.yMax)s.push('<line x1="'+l+'" x2="'+(l+pw)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="var(--bad)" stroke-dasharray="5 5"/>')});
+ (o.vlines||[]).forEach(v=>{if(v.x>=(o.xMin||0)&&v.x<=o.xMax)s.push('<line x1="'+X(v.x)+'" x2="'+X(v.x)+'" y1="'+top+'" y2="'+(top+ph)+'" stroke="'+v.color+'" stroke-width="'+(v.width||1.5)+'"'+(v.dash?' stroke-dasharray="'+v.dash+'"':'')+'/>')});
+ series.forEach(q=>{let seg=[];const flush=()=>{if(seg.length>1)s.push('<polyline points="'+seg.join(' ')+'" fill="none" stroke="'+q.color+'" stroke-width="'+q.width+'"'+(q.dash?' stroke-dasharray="'+q.dash+'"':'')+' stroke-linejoin="round" stroke-linecap="round"/>');seg=[]};
+  q.points.forEach(a=>{if(Number.isFinite(a[1]))seg.push(X(a[0]).toFixed(1)+','+cy(a[1]).toFixed(1));else flush()});flush();
+  if(q.dots)q.points.forEach(a=>{if(Number.isFinite(a[1]))s.push('<circle cx="'+X(a[0]).toFixed(1)+'" cy="'+cy(a[1]).toFixed(1)+'" r="2.2" fill="'+q.color+'"/>')})});
+ s.push('<text x="'+(l+pw/2)+'" y="'+(H-3)+'" text-anchor="middle">'+(o.xLabel||"Time (s)")+'</text>');
+ if(o.yLabel)s.push('<text x="12" y="'+(top+ph/2)+'" text-anchor="middle" transform="rotate(-90 12 '+(top+ph/2)+')">'+o.yLabel+'</text>');
+ el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+el.getAttribute("aria-label")+'">'+s.join('')+'</svg>';
+}
+
+// ---------- Block diagram (horizontal on wide cards, vertical on phones) ----------
+function drawDiagram(p){
+ const el=$("diagram"),wide=(el.clientWidth||700)>=640;
+ const plantTxt=show(p.K)+" / ("+show(p.tau)+"s + 1)",sensTxt="1 / ("+show(p.ts)+"s + 1)",gainTxt="Kp "+show(p.kp)+" · Ki "+show(p.ki)+" · Kd "+show(p.kd),limTxt=p.limited?"0–100 %":"no limit";
+ const T=(x,y,t,o={})=>'<text x="'+x+'" y="'+y+'" text-anchor="'+(o.a||"middle")+'" fill="'+(o.c||"var(--mute)")+'" font-size="'+(o.s||13)+'"'+(o.b?' font-weight="700"':'')+'>'+t+'</text>';
+ const B=(x,y,w,h,c)=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="8" fill="var(--raise)" stroke="'+(c||"var(--line2)")+'"/>';
+ const A=pts=>'<polyline points="'+pts+'" fill="none" stroke="var(--faint)" stroke-width="1.6" marker-end="url(#ah)"/>';
+ const L=pts=>'<polyline points="'+pts+'" fill="none" stroke="var(--faint)" stroke-width="1.6"/>';
+ const sat=(cx,cy)=>p.limited?'<polyline points="'+(cx-16)+','+(cy+8)+' '+(cx-6)+','+(cy+8)+' '+(cx+6)+','+(cy-8)+' '+(cx+16)+','+(cy-8)+'" fill="none" stroke="var(--gold)" stroke-width="1.8"/>':'<line x1="'+(cx-16)+'" y1="'+(cy+8)+'" x2="'+(cx+16)+'" y2="'+(cy-8)+'" stroke="var(--faint)" stroke-width="1.8"/>';
+ const defs='<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--faint)"/></marker></defs>';
+ let W,H,s=[];
+ if(wide){
+  W=760;H=220;const cy=60,fy=180;
+  s.push(T(14,cy-10,"r(t)",{a:"start",c:"var(--gold)",b:1}),A("12,"+cy+" 72,"+cy));
+  s.push('<circle cx="90" cy="'+cy+'" r="17" fill="var(--raise)" stroke="var(--line2)"/>',T(90,cy+5,"Σ",{c:"var(--ink)",s:16,b:1}),T(66,cy-20,"+"),T(80,cy+38,"−",{s:16}));
+  s.push(A("107,"+cy+" 158,"+cy),T(132,cy-8,"e"));
+  s.push(B(160,cy-34,200,68),T(260,cy-10,"PID controller",{c:"var(--ink)",b:1}),T(260,cy+14,gainTxt,{s:12}));
+  s.push(A("360,"+cy+" 398,"+cy),T(379,cy-8,"u*"));
+  s.push(B(400,cy-34,100,68),sat(450,cy-6),T(450,cy+24,limTxt,{s:12}));
+  s.push(A("500,"+cy+" 538,"+cy),T(519,cy-8,"u"));
+  s.push(B(540,cy-34,170,68),T(625,cy-10,"Plant G(s)",{c:"var(--ink)",b:1}),T(625,cy+14,plantTxt,{s:12}));
+  s.push(A("710,"+cy+" 752,"+cy),T(744,cy-10,"y(t)",{a:"end",c:"var(--ink)",b:1}));
+  s.push('<circle cx="728" cy="'+cy+'" r="3" fill="var(--faint)"/>',L("728,"+cy+" 728,"+fy),A("728,"+fy+" 512,"+fy));
+  s.push(B(330,fy-30,180,60,"var(--sens)"),T(420,fy-7,"Sensor H(s)",{c:"var(--sens)",b:1}),T(420,fy+16,sensTxt,{s:12}));
+  s.push(L("330,"+fy+" 90,"+fy),A("90,"+fy+" 90,"+(cy+19)),T(100,fy-8,"y<tspan baseline-shift='sub' font-size='10'>m</tspan>",{a:"start",c:"var(--sens)",b:1}));
+ }else{
+  W=340;H=500;const cx=110,fx=285;
+  s.push(T(cx,14,"r(t)",{c:"var(--gold)",b:1}),A(cx+",20 "+cx+",50"));
+  s.push('<circle cx="'+cx+'" cy="68" r="17" fill="var(--raise)" stroke="var(--line2)"/>',T(cx,73,"Σ",{c:"var(--ink)",s:16,b:1}),T(cx-12,46,"+"),T(cx+28,62,"−",{s:16}));
+  s.push(A(cx+",85 "+cx+",118"),T(cx+10,106,"e",{a:"start"}));
+  s.push(B(10,120,200,64),T(cx,146,"PID controller",{c:"var(--ink)",b:1}),T(cx,168,gainTxt,{s:12}));
+  s.push(A(cx+",184 "+cx+",216"),T(cx+10,204,"u*",{a:"start"}));
+  s.push(B(50,218,120,60),sat(cx,240),T(cx,268,limTxt,{s:12}));
+  s.push(A(cx+",278 "+cx+",310"),T(cx+10,298,"u",{a:"start"}));
+  s.push(B(10,312,200,64),T(cx,338,"Plant G(s)",{c:"var(--ink)",b:1}),T(cx,360,plantTxt,{s:12}));
+  s.push(A(cx+",376 "+cx+",470"),T(cx,490,"y(t)",{c:"var(--ink)",b:1}));
+  s.push('<circle cx="'+cx+'" cy="430" r="3" fill="var(--faint)"/>',L(cx+",430 "+fx+",430"),A(fx+",430 "+fx+",306"));
+  s.push(B(232,236,106,70,"var(--sens)"),T(fx,258,"Sensor",{c:"var(--sens)",b:1,s:12}),T(fx,280,sensTxt,{s:11}));
+  s.push(L(fx+",236 "+fx+",68"),A(fx+",68 "+(cx+19)+",68"),T(fx-8,100,"y<tspan baseline-shift='sub' font-size='10'>m</tspan>",{a:"end",c:"var(--sens)",b:1}));
+ }
+ el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Block diagram: r minus sensor reading y_m gives e, PID ('+gainTxt+'), actuator '+limTxt+', plant '+plantTxt+', output y goes through sensor '+sensTxt+' back to the summing junction">'+defs+s.join("")+'</svg>';
+}
+
+// ---------- Render ----------
+let result=null;
+function render(){
+ const p=readParams();result=simulate(p);const {data,a,end}=result,th=theory(p);
+ drawDiagram(p);
+ // Output plot. Cap the axis so a growing (unstable) response does not flatten everything.
+ const rr=Math.abs(p.r),peak=Math.max(...data.map(q=>Math.max(q.y,q.m))),low=Math.min(...data.map(q=>Math.min(q.y,q.m)));
+ const yMax=Math.min(3*rr,Math.max(1.2*rr,peak*1.05)),yMin=Math.max(-rr,Math.min(0,low*1.05));
+ drawPlot($("outputPlot"),[{points:[[0,p.r],[end,p.r]],color:"var(--gold)",width:1.8},{points:data.map(q=>[q.t,q.y]),color:"var(--ink)",width:2.5},{points:data.map(q=>[q.t,q.m]),color:"var(--sens)",width:2.2,dash:"7 4"}],{xMax:end,yMin,yMax});
+ $("clipNote").textContent=(peak>yMax||low<yMin)?"The response leaves the plotted range (axis capped at 3·r), so it is clipped at the edge."+(data.exploded?" The linear loop grew so large that the simulation was stopped.":""):"";
+ const us=data.map(q=>q.u),uLo=p.limited?0:Math.max(-3*LIMIT,Math.min(0,...us)),uHi=p.limited?110:Math.min(3*LIMIT,Math.max(110,...us));
+ drawPlot($("controlPlot"),[{points:data.map(q=>[q.t,q.u]),color:"var(--blue)",width:2.2}],{xMax:end,yMin:uLo,yMax:uHi,limitLines:[0,100]});
+ $("uNote").textContent=p.limited?"Dashed lines: actuator limits. The plotted u is the clipped command the plant receives.":"Limit off: dashed lines show where 0 % and 100 % would be. A real actuator could not follow this command.";
+ // Verdict and metrics
+ const V={settled:["Stable: settled","good"],creeping:["Stable: still settling slowly (no oscillation)","good"],decaying:[a.ratio>.9?"Stable: oscillation dying out very slowly":"Stable: oscillation dying out","warn"],sustained:[p.limited?"Oscillating: steady swing (limit cycle)":"On the edge: steady oscillation","bad"],growing:["Unstable: oscillation growing","bad"]}[a.verdict];
+ $("verdict").textContent=V[0];$("verdict").className="verdict "+V[1];
+ const grow=a.verdict==="growing";$("osY").textContent=grow?"Unbounded":fmt(a.osY,1)+" %";$("osM").textContent=grow?"Unbounded":fmt(a.osM,1)+" %";
+ $("settle").textContent=Number.isFinite(a.settle)?fmt(a.settle)+" s":"Not settled";
+ $("period").textContent=Number.isFinite(a.period)?fmt(a.period,2)+" s":"—";
+ let story;const need=p.r/p.K;
+ if(p.kp===0&&p.ki===0)story="Kp and Ki are both zero, so the controller does nothing and the output stays at 0.";
+ else if(a.verdict==="settled"||a.verdict==="decaying"||a.verdict==="creeping"){
+  story=a.osY>a.osM+0.5?"The true output peaks "+fmt(a.osY-a.osM,1)+" points higher than the sensor shows. The controller is reacting to a late, smoothed copy of y, so it keeps pushing after y has already passed the setpoint."
+   :"The sensor is fast enough that y and y_m almost overlap. The controller sees close to the truth.";
+  if(a.verdict==="creeping")story+=" The integral gain is small, so the last part of the error is removed slowly.";
+  if(p.limited&&need>LIMIT)story+=" The setpoint cannot be reached: holding y = r needs u = r/K = "+fmt(need,0)+" %, above the 100 % limit, so u stays pinned at 100 % and y stops at "+fmt(LIMIT*p.K,1)+".";
+  else if(p.ki===0&&a.verdict==="settled"&&Math.abs(a.final-p.r)>.01*rr)story+=" Without an integral term the loop settles short of r (steady-state error "+fmt(p.r-a.final,2)+").";
+ }else if(a.verdict==="sustained"&&!p.limited)story="The loop is right at the edge of stability: the swing neither grows nor dies out. A tiny bit more τs and it grows; a tiny bit less and it decays.";
+ else story=p.limited?"The sensor lags so much that by the time y_m reports a change, the controller is already pushing the wrong way. The actuator limit stops the swing from growing, so it settles into a steady oscillation.":"With no actuator limit nothing caps the swing: each cycle is bigger than the last, as the stability test predicts for τ_s > τ_s,crit.";
+ if(Number.isFinite(a.longRatio))story+=" Long check over "+fmt(a.longEnd,0)+" s: the swing ended at "+fmt(a.longRatio*100,0)+" % of its size at "+fmt(.3*a.longEnd,0)+" s"+(a.verdict==="decaying"?", so it is dying out, just very slowly.":a.verdict==="growing"?", so it is growing.":", so the oscillation is steady.");
+ $("story").textContent=story;
+ $("runStatus").textContent="Simulated "+show(end)+" s · "+((data.length-1)*data.sub)+" RK4 steps (h = "+show(data.h*1000)+" ms)"+(data.stiff?" · warning: the gains and τ_s make this loop very stiff; the RK4 result may be inaccurate.":"");
+ drawStability(p,th);
+ scheduleSweep(p,th);
+}
+function drawStability(p,th){
+ const eq=th.cubic?show(th.a3)+"·s³ + "+show(th.a2)+"·s² + "+show(th.a1)+"·s + "+show(th.a0)+" = 0":show(th.a3)+"·s² + "+show(th.a2)+"·s + "+show(th.a1)+" = 0";
+ let h='<p>Characteristic equation (linear loop):</p><div class="formula">'+(th.cubic?"τ·τ<sub>s</sub>·s³ + (τ + τ<sub>s</sub> + K·Kd)·s² + (1 + K·Kp)·s + K·Ki = 0":"τ·τ<sub>s</sub>·s² + (τ + τ<sub>s</sub> + K·Kd)·s + (1 + K·Kp) = 0")+'<br><b>'+eq+'</b></div>';
+ h+='<p>Closed-loop poles: '+th.poles.map(poleTxt).join(", ")+'</p>';
+ if(!th.cubic){
+  h+='<p><b>Ki = 0: second order.</b> All coefficients are positive, so this loop is stable for <b>every</b> τ<sub>s</sub>. A slow sensor only lowers the damping: ζ = '+fmt(th.zeta,3)+', ω<sub>n</sub> = '+fmt(th.wn,3)+' rad/s, predicted sensor overshoot '+fmt(th.osM,1)+' %. The ringing always dies out; add Ki to see the loop go unstable.</p>';
+ }else{
+  h+='<p><b>Routh test:</b> stable only if (τ + τ<sub>s</sub> + K·Kd)(1 + K·Kp) &gt; τ·τ<sub>s</sub>·K·Ki<br>'+fmt(th.a2*th.a1,3)+' '+(th.stable?'&gt;':'≤')+' '+fmt(th.a3*th.a0,3)+' → <span class="'+(th.stable?'ok':'bad')+'">'+(th.stable?'stable':'unstable')+'</span></p>';
+  if(Number.isFinite(th.tsCrit)){
+   const ratio=p.ts/th.tsCrit,w=Math.min(100,ratio*100),col=ratio<.7?"var(--ok)":ratio<1?"var(--gold)":"var(--bad)";
+   h+='<p><b>Critical sensor time constant</b> τ<sub>s,crit</sub> = (τ + K·Kd)(1 + K·Kp) / (τ·K·Ki − (1 + K·Kp)) = <b>'+fmt(th.tsCrit,3)+' s</b>. There the loop oscillates at ω = √((1 + K·Kp)/(τ·τ<sub>s</sub>)) = '+fmt(th.wCrit,3)+' rad/s, period '+fmt(2*Math.PI/th.wCrit,2)+' s.</p>';
+   h+='<p>Current τ<sub>s</sub> is '+fmt(ratio*100,0)+' % of τ<sub>s,crit</sub>.</p><div class="meter" aria-hidden="true"><i style="width:'+w+'%;background:'+col+'"></i></div>';
+   h+='<div class="actions"><button class="btn secondary" type="button" id="toCrit">Set τ<sub>s</sub> = τ<sub>s,crit</sub></button></div>';
+  }else h+='<p><b>No critical τ<sub>s</sub>:</b> τ·K·Ki = '+fmt(p.tau*p.K*p.ki,3)+' is not larger than 1 + K·Kp = '+fmt(th.a1,3)+', so this loop stays stable however slow the sensor is.</p>';
+ }
+ if(p.kd>0)h+='<p class="note">Kd adds K·Kd to the s² coefficient, which pushes τ<sub>s,crit</sub> up: derivative action buys back some of the margin the sensor took away.</p>';
+ $("stability").innerHTML=h;
+ if($("toCrit"))$("toCrit").addEventListener("click",()=>{setVal("ts",th.tsCrit);render()});
+}
+// ---------- Sweep: overshoot vs τs (debounced, it runs 36 simulations) ----------
+let sweepTimer;
+function scheduleSweep(p,th){clearTimeout(sweepTimer);sweepTimer=setTimeout(()=>drawSweep(p,th),120)}
+function drawSweep(p,th){
+ const N=36,pts=[];
+ for(let i=0;i<N;i++){const ts=Math.pow(10,-2+3*i/(N-1)),q={...p,ts},end=Math.min(120,30*Math.max(q.tau,ts)),d=simulateLoop(q,{end,step:end/800}),a=analyse(d,q.r);
+  pts.push({ts,y:Math.min(300,a.osY),m:Math.min(300,a.osM)})}
+ const top=Math.min(300,Math.max(20,...pts.map(q=>Math.max(q.y,q.m)))*1.1);
+ drawPlot($("sweepPlot"),[{points:pts.map(q=>[q.ts,q.y]),color:"var(--ink)",width:2.2,dots:true},{points:pts.map(q=>[q.ts,q.m]),color:"var(--sens)",width:2,dash:"7 4",dots:true}],
+  {logX:true,xMin:.01,xMax:10,yMin:0,yMax:top,xLabel:"Sensor time constant τs (s), log scale",yLabel:"Overshoot (%)",height:280,
+   bands:Number.isFinite(th.tsCrit)?[{from:th.tsCrit,to:10,color:"rgba(240,112,112,.18)"}]:[],
+   vlines:[{x:p.ts,color:"var(--gold)",width:2}].concat(Number.isFinite(th.tsCrit)?[{x:th.tsCrit,color:"var(--bad)",dash:"5 4"}]:[])});
+}
+
+// ---------- Validation checks ----------
+function validate(){
+ const base={K:1,tau:1,r:1,kd:0,limited:false},rows=[];
+ const sim=(q,end,step=.001)=>{const d=simulateLoop({...base,...q},{end,step});return{d,a:analyse(d,1)}};
+ // 1. P only: sensor reading is exactly second order, so its overshoot follows exp(−πζ/√(1−ζ²))
+ {const q={kp:9,ki:0,ts:.3},t=theory({...base,...q}),{a}=sim(q,10,.0002);
+  rows.push(["1. P only, Kp = 9, τ<sub>s</sub> = 0.3 s: sensor overshoot","ζ = "+fmt(t.zeta,3)+" → "+fmt(t.osM,2)+" %",fmt(a.osM,2)+" %",Math.abs(a.osM-t.osM)<.2]);
+  rows.push(["1b. Same loop: true y overshoots more than the sensor shows","osY &gt; osM",fmt(a.osY,1)+" % vs "+fmt(a.osM,1)+" %",a.osY>a.osM+5]);}
+ // 2. PI: Routh edge of stability
+ {const q={kp:1,ki:5},t=theory({...base,...q,ts:.5}),tc=t.tsCrit,lo=sim({...q,ts:.9*tc},120).a,hi=sim({...q,ts:1.1*tc},60).a,at=sim({...q,ts:tc},120).a,Tp=2*Math.PI/Math.sqrt(2/tc);
+  rows.push(["2. PI, Kp = 1, Ki = 5: critical τ<sub>s</sub>","Routh: τ<sub>s,crit</sub> = "+fmt(tc,3)+" s","0.9·τ<sub>s,crit</sub>: "+lo.verdict+"; 1.1·τ<sub>s,crit</sub>: "+hi.verdict,(lo.verdict==="decaying"||lo.verdict==="settled")&&hi.verdict==="growing"]);
+  rows.push(["2b. Oscillation period at τ<sub>s,crit</sub>","2π/ω = "+fmt(Tp,3)+" s",fmt(at.period,3)+" s",Math.abs(at.period-Tp)<.01*Tp]);}
+ // 3. Kd restores stability at τs = 0.8 s (beyond the PI edge)
+ {const q={kp:1,ki:5,ts:.8},t0=theory({...base,...q}),t1=theory({...base,...q,kd:.3}),a0=sim(q,60).a,a1=sim({...q,kd:.3},120).a;
+  rows.push(["3. τ<sub>s</sub> = 0.8 s: Kd = 0 vs Kd = 0.3","Routh: "+(t0.stable?"stable":"unstable")+" → "+(t1.stable?"stable":"unstable"),a0.verdict+" → "+a1.verdict,!t0.stable&&t1.stable&&a0.verdict==="growing"&&(a1.verdict==="decaying"||a1.verdict==="settled")]);}
+ // 4. PI with a slow but stable sensor: zero steady-state error in the TRUE output (sensor DC gain = 1)
+ {const {a}=sim({kp:1,ki:1,ts:2},120);
+  rows.push(["4. PI, slow sensor τ<sub>s</sub> = 2 s: final true output","y(∞) = r = 1",fmt(a.final,4),Math.abs(a.final-1)<1e-3]);}
+ $("val").innerHTML=rows.map(([n,e,s,ok])=>"<tr><td>"+n+"</td><td>"+e+"</td><td>"+s+"</td><td class='"+(ok?"ok":"bad")+"'>"+(ok?"Pass":"Fail")+"</td></tr>").join("");
+}
+
+// ---------- Predict, then check ----------
+const QUIZ=[
+ {q:"You make the sensor slower (bigger τs). The overshoot of the true output y will…",opts:["shrink","stay the same","grow"],a:2,
+  why:"The controller reacts to y_m, which arrives late. It keeps pushing after y has passed r, so y overshoots more. Move the τs slider and watch the sweep chart."},
+ {q:"Look at the peaks of y and y_m. Which one overshoots more?",opts:["the sensor reading y_m","the true output y","they are always equal"],a:1,
+  why:"The sensor smooths and delays y, so it under-reports the peak. The real system goes further than the sensor says. That is what 'the controller only controls what the sensor says' means."},
+ {q:"P only (Ki = 0). You make τs very large. Will the loop ever oscillate forever?",opts:["yes, past some τs","no, the ringing always dies out","only with a big setpoint"],a:1,
+  why:"With P only the characteristic equation is second order with all positive coefficients, so it is stable for every τs. Set Ki = 0 and check the stability card."},
+ {q:"A PI loop oscillates because τs > τs,crit. You cannot change the sensor. What helps?",opts:["raise Ki","add some Kd","raise the setpoint"],a:1,
+  why:"Kd adds K·Kd to the s² coefficient, which raises τs,crit. Lowering Ki also helps. Raising Ki makes it worse. Try the Oscillating preset, then raise Kd."},
+ {q:"Actuator limit ON and τs past the critical value. The oscillation will…",opts:["grow forever","settle into a steady swing of fixed size","die out"],a:1,
+  why:"The loop is unstable for small signals, but u cannot go beyond 0–100 %, so the swing stops growing: a limit cycle. Turn the limit off to see it grow without bound."},
+ {q:"PI loop, slow but stable sensor. In steady state the sensor reads exactly r. The true output reads…",opts:["exactly r","less than r","it depends on τs"],a:0,
+  why:"The sensor has gain 1, so once everything stops moving y_m = y. The integral forces y_m = r, so y = r too. Validation check 4 tests this."},
+];
+let qi=0;
+function ask(){const q=QUIZ[qi];$("q").textContent=q.q;$("opts").innerHTML=q.opts.map((o,i)=>'<button class="opt" type="button" data-i="'+i+'">'+o+'</button>').join("");$("why").textContent="";$("count").textContent=(qi+1)+" of "+QUIZ.length}
+$("opts").addEventListener("click",e=>{const b=e.target.closest(".opt");if(!b||b.disabled)return;const q=QUIZ[qi],right=+b.dataset.i===q.a;for(const o of $("opts").children){o.disabled=true;if(+o.dataset.i===q.a)o.classList.add("right")}if(!right)b.classList.add("wrong");$("why").innerHTML='<span class="'+(right?"ok":"bad")+'">'+(right?"Right.":"Not quite.")+'</span> '+q.why});
+$("nextQ").addEventListener("click",()=>{qi=(qi+1)%QUIZ.length;ask()});
+
+// ---------- Wiring ----------
+Object.entries(FIELDS).forEach(([id,f])=>{
+ const box=$(f.box);box.value=show(sliderToVal(id));box.setAttribute("aria-label",box.previousElementSibling.textContent);
+ $(id).addEventListener("input",()=>{box.value=show(sliderToVal(id));render()});
+ box.addEventListener("input",()=>{const v=Number(box.value);if(box.value!==""&&Number.isFinite(v)&&(v>0||(!f.log&&v===0))){$(id).value=valToSlider(id,clampTo(id,v));render()}});
+ box.addEventListener("change",()=>{const v=Number(box.value);setVal(id,box.value!==""&&Number.isFinite(v)?v:sliderToVal(id));render()});
+});
+$("limited").addEventListener("change",render);
+$("defaultsBtn").addEventListener("click",()=>{Object.entries(defaults).forEach(([id,v])=>setVal(id,v));$("limited").checked=true;render()});
+document.querySelectorAll("[data-preset]").forEach(b=>b.addEventListener("click",()=>{
+ const ts={fast:.02,near:.6,osc:1.5}[b.dataset.preset];
+ Object.entries({plantK:1,tau:1,kp:1,ki:5,kd:0,setpoint:50,ts}).forEach(([id,v])=>setVal(id,v));render();
+ $("outputPlot").scrollIntoView({behavior:"smooth",block:"center"})}));
+let resizeTimer;window.addEventListener("resize",()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(render,100)});
+setVal("ts",defaults.ts);
+render();validate();ask();
+</script></body></html>
