@@ -14,6 +14,7 @@ Interactive browser-based demonstrations for first-order and second-order dynami
 | Module 4 — Guess the sensor | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/module4.html |
 | Homework 2 — P1 PID Playground | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/pid.html |
 | Homework 2 — P2 A slow sensor in the loop | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/sensor.html |
+| Homework 2 — P3 Digital PID | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/digital.html |
 
 ## Team
 
@@ -22,7 +23,7 @@ Interactive browser-based demonstrations for first-order and second-order dynami
 | Omar Rabieh | [@3mrRa](https://github.com/3mrRa) | Module 1 (with Omar Takhman and Anas), Module 2 (with Omar Takhman), Module 3 (with Omar Takhman), Homework 2 P2 (slow sensor in the loop) |
 | Omar Takhman | [@omarta5man](https://github.com/omarta5man) | Module 1 (with Omar Rabieh and Anas), Module 2 (with Omar Rabieh), Module 3 (with Omar Rabieh) |
 | Anas | [@Anas-MAD-h](https://github.com/Anas-MAD-h) | Module 1 (with Omar Rabieh and Omar Takhman) |
-| Baraa Halaseh | [@BraaHalaseh](https://github.com/BraaHalaseh) | Module 4 |
+| Baraa Halaseh | [@BraaHalaseh](https://github.com/BraaHalaseh) | Module 4, Homework 2 P3 (digital PID) |
 
 ## Screenshots
 
@@ -96,10 +97,23 @@ Interactive browser-based demonstrations for first-order and second-order dynami
 - RK4 solver (Euler adds false growth to oscillations, which moves the edge of stability); derivative on the sensor reading uses dy_m/dt = (y − y_m)/τs exactly.
 - Predict, then check quiz and 6 validation checks against the formulas (sensor overshoot, τs,crit, oscillation period, effect of Kd, zero steady-state error).
 
+### Homework 2 — P3 Digital PID
+- The PID runs only every Ts seconds, as it would on an Arduino: u[k] = Kp·e[k] + Ki·Ts·Σe[j] + Kd·(e[k] − e[k−1])/Ts, held constant between samples (zero-order hold) and clamped to 0–100 %.
+- Ts on a log slider (1 ms to 2 s), Kp, Ki, Kd, first-order plant K and τ from Module 1, setpoint, with number boxes for exact values.
+- Output of the digital loop drawn over the continuous PID (Ts → 0); stair-step control signal with the actuator limits.
+- Digital vs continuous metrics (rise time, overshoot, 2 % settling time, steady-state error).
+- "How performance falls as Ts grows": overshoot against Ts/τ and a table from 0.01τ to τ with the current Ts marked.
+- Anti-windup on/off (the error sum stops growing while u is at a limit and the error pushes further), with a Windup demo preset.
+- Arduino loop code generated for the current gains, Ts and anti-windup setting, with a Copy button. It uses the same equation, clamp and anti-windup rule as the simulation.
+- Plant stepped with forward Euler in sub-steps of at most τ/100 between samples, so the only difference from the continuous loop is the sampling.
+- Predict, then check quiz on Ts, windup and the digital integral and derivative.
+
 ## Implementation
 
 The project uses plain HTML, CSS, and JavaScript with SVG plots. No external charting libraries or build step are required. Open the html file locally, or use the GitHub Pages deployment configured for this repository.
 
 ## AI use
 
-Module 1-4 were written with help from an AI assistant, which explained the estimation methods and helped write the page code. 
+Module 1-4 were written with help from an AI assistant, which explained the estimation methods and helped write the page code.
+
+Homework 2 P3 (digital PID) was written with help from an AI assistant (Claude), which explained digital PID, sampling time and anti-windup, and helped write the page code. The page reuses the team's plot helper, metrics and input pattern from P1 and P2.
