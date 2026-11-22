@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark">
+<title>P3 · Digital PID · Team 26</title>
+<style>
+:root{--bg:#0e0e0f;--card:#161617;--raise:#202023;--line:#303034;--line2:#45454b;--ink:#ededf0;--mute:#a3a3aa;--faint:#707078;--ok:#5ad08f;--bad:#f07070;--blue:#9da9bd;--gold:#e5bd72}
+*{box-sizing:border-box}html,body{background:var(--bg)}body{margin:0;color:var(--ink);font:15px/1.55 Inter,"Segoe UI",system-ui,sans-serif}.page{max-width:1280px;margin:auto;padding:22px 16px 48px}.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700}h1{font-size:clamp(27px,4vw,40px);line-height:1.12;margin:7px 0}.lede{color:var(--mute);max-width:82ch;margin:0}.nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.nav a{color:var(--mute);text-decoration:none;border:1px solid var(--line2);padding:7px 11px;border-radius:8px;font-size:13px}.nav a.active{background:var(--ink);color:#111;border-color:var(--ink)}.layout{display:grid;gap:14px;margin-top:14px}.col{display:grid;gap:14px;align-content:start;min-width:0}@media(min-width:980px){.layout{grid-template-columns:340px minmax(0,1fr);align-items:start}}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}.card h2{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:0 0 12px;font-weight:700}.note{font-size:13px;color:var(--mute);margin:9px 0 0}.field{display:block;margin:13px 0}.top{display:flex;justify-content:space-between;gap:10px;align-items:baseline;font-size:14px;font-weight:650}.top output{background:var(--raise);border:1px solid var(--line2);border-radius:6px;padding:1px 8px;min-width:70px;text-align:right;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:#ededf0;margin:7px 0 0;height:23px}.seg{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line2);border-radius:8px;overflow:hidden;margin-bottom:12px}.seg button{border:0;padding:9px;background:transparent;color:var(--mute);font:inherit;font-weight:650;cursor:pointer}.seg button[aria-pressed=true]{background:var(--ink);color:#111}.btn{border:1px solid var(--ink);background:var(--ink);color:#111;font:inherit;font-weight:700;padding:8px 13px;border-radius:8px;cursor:pointer}.btn.secondary{background:transparent;color:var(--ink);border-color:var(--line2)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.metric{background:var(--raise);border:1px solid var(--line);border-radius:9px;padding:10px;min-width:0}.metric small{display:block;color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.06em}.metric strong{display:block;font-size:19px;margin-top:3px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.plot svg{display:block;width:100%;height:auto}.plot text{font:12px Inter,"Segoe UI",sans-serif;fill:var(--mute)}.plot .axislabel{fill:var(--ink);font-weight:700}.legend{display:flex;gap:8px 18px;flex-wrap:wrap;color:var(--mute);font-size:13px;margin-top:8px}.swatch{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:6px;background:var(--ink)}.swatch.sp{background:var(--gold)}.swatch.u{background:var(--blue)}.diagram{display:flex;flex-wrap:wrap;gap:7px;align-items:center;justify-content:center;text-align:center}.block{border:1px solid var(--line2);background:var(--raise);border-radius:8px;padding:12px 5px;font-size:13px}.arrow{color:var(--faint);font-size:20px}.feedback{grid-column:1/-1;color:var(--mute);font-size:12px;text-align:center;border-top:1px dashed var(--line2);padding-top:8px}.formula{padding:10px;background:var(--raise);border-radius:8px;color:var(--mute);font-family:"Cambria Math","Times New Roman",serif;overflow-wrap:anywhere}.formula b{color:var(--ink)}.status{font-size:13px;color:var(--mute);margin-top:9px}.status strong{color:var(--ink)}footer{color:var(--faint);font-size:12px;margin-top:22px}.top .num{background:var(--raise);border:1px solid var(--line2);border-radius:6px;padding:1px 8px;width:92px;text-align:right;color:var(--ink);font:inherit;font-variant-numeric:tabular-nums}.top .num:focus{outline:2px solid var(--gold);outline-offset:1px}#diagram svg{display:block;max-width:760px;margin:auto}.ok{color:var(--ok);font-weight:700}.bad{color:var(--bad);font-weight:700}.q{font-size:16px;font-weight:620;margin:0 0 12px}.opts{display:grid;gap:8px}.opt{text-align:left;border:1px solid var(--line2);background:var(--raise);color:var(--ink);font:inherit;padding:10px 12px;border-radius:8px;cursor:pointer}.opt:disabled{cursor:default;opacity:.45}.opt.right{border-color:var(--ok);color:var(--ok);opacity:1}.opt.wrong{border-color:var(--bad);color:var(--bad);opacity:1}.why{margin:12px 0 0;color:var(--mute);font-size:14px}.why:empty{display:none}.next{display:flex;justify-content:space-between;align-items:center;margin-top:12px}.count{color:var(--faint);font-size:13px}table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}th{text-align:left;font-size:12px;color:var(--faint);font-weight:650;padding:4px 6px 8px;border-bottom:1px solid var(--line2)}td{padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}td:last-child,th:last-child{text-align:right}td{overflow-wrap:anywhere}@media(max-width:640px){#val,#val tr,#val td{display:block}thead{display:none}#val tr{border-bottom:1px solid var(--line2);padding:8px 0}#val td{border:0;padding:2px 0;text-align:left}#val td:first-child{font-weight:700}#val td:nth-child(2)::before{content:"Expected: ";color:var(--faint)}#val td:nth-child(3)::before{content:"Simulated: ";color:var(--faint)}}@media(max-width:420px){.diagram{gap:4px}.block{font-size:11px;padding:9px 3px}.arrow{font-size:16px}}
+.swatch.faint{background:var(--faint)}.code{background:var(--raise);border:1px solid var(--line);border-radius:9px;padding:12px;margin:0;font:12.5px/1.55 ui-monospace,Consolas,monospace;color:var(--ink);overflow:auto;max-height:460px;white-space:pre}.block small{color:var(--faint);font-size:11px}
+</style>
+</head>
+<body><main class="page">
+<header><div class="kicker">ENCS4380 · Homework 2 · P3 · Team 26</div><h1>Digital PID</h1><p class="lede">A real controller runs on a microcontroller: it reads the sensor, computes u, and holds that value until the next sample, every Ts seconds. Make Ts larger and watch the response get worse. Turn anti-windup off and see why it matters. The page writes the Arduino code for your gains.</p></header>
+<nav class="nav" aria-label="Project modules">
+<a href="index.html">Module 1 · Time response</a><a href="module2.html">Module 2 · Frequency response</a><a href="module3.html">Module 3 · Second order &amp; State-Space</a><a href="module4.html">Module 4 · Guess the sensor</a><a href="pid.html">Control · P1 PID Playground</a><a href="sensor.html">Control · P2 Slow sensor</a><a class="active" href="digital.html">Control · P3 Digital PID</a>
+</nav>
+<div class="layout">
+<div class="col">
+<section class="card" aria-labelledby="h-pred"><h2 id="h-pred">Predict, then check</h2>
+<p class="q" id="q"></p><div class="opts" id="opts"></div><p class="why" id="why" aria-live="polite"></p>
+<div class="next"><span class="count" id="count"></span><button class="btn" id="nextQ" type="button">Next question</button></div>
+</section>
+<section class="card"><h2>Sampling</h2>
+<label class="field"><span class="top"><span>Sampling time Ts (s)</span><input class="num" id="tsOut" type="number" min="0.001" max="2" step="any"></span><input id="ts" type="range" min="-3" max="0.301" step="0.001" value="-1.301"></label>
+<p class="note">Log scale: 1 ms to 2 s. The controller only acts at t = 0, Ts, 2Ts, … and holds u constant in between (zero-order hold).</p>
+<div class="seg" role="group" aria-label="Anti-windup" style="margin-top:12px"><button id="awOn" aria-pressed="true" type="button">Anti-windup on</button><button id="awOff" aria-pressed="false" type="button">Anti-windup off</button></div>
+<p class="note" style="margin-top:0">Anti-windup: while u is stuck at 0 % or 100 % and the error would push it further, the error sum stops growing.</p>
+<div class="actions"><button class="btn secondary" id="windupBtn" type="button">Windup demo</button><button class="btn secondary" id="defaultsBtn" type="button">Restore defaults</button></div>
+</section>
+<section class="card"><h2>PID gains</h2>
+<label class="field"><span class="top"><span>Proportional gain Kp</span><input class="num" id="kpOut" type="number" min="0" max="20" step="any"></span><input id="kp" type="range" min="0" max="20" step="0.01" value="3"></label>
+<label class="field"><span class="top"><span>Integral gain Ki</span><input class="num" id="kiOut" type="number" min="0" max="20" step="any"></span><input id="ki" type="range" min="0" max="20" step="0.01" value="8"></label>
+<label class="field"><span class="top"><span>Derivative gain Kd</span><input class="num" id="kdOut" type="number" min="0" max="2" step="any"></span><input id="kd" type="range" min="0" max="2" step="0.001" value="0.05"></label>
+<div class="formula"><b>Digital PID:</b> u[k] = Kp·e[k] + Ki·Ts·Σe[j] + Kd·(e[k] − e[k−1])/Ts<br><b>Error:</b> e[k] = r − y(k·Ts)<br><b>Actuator:</b> u = clamp(u[k], 0, 100 %), held until the next sample</div>
+<p class="note">Σe[j] is the sum of every error so far: times Ts it is the area under e(t) built from rectangles, the digital integral. (e[k] − e[k−1])/Ts is the slope between two samples, the digital derivative.</p>
+</section>
+<section class="card"><h2>Plant (first order, from Module 1)</h2>
+<label class="field"><span class="top"><span>Gain K</span><input class="num" id="kOut" type="number" min="0.1" max="10" step="any"></span><input id="plantK" type="range" min="0.1" max="10" step="0.01" value="1"></label>
+<label class="field"><span class="top"><span>Time constant τ (s)</span><input class="num" id="tauOut" type="number" min="0.05" max="10" step="any"></span><input id="tau" type="range" min="0.05" max="10" step="0.01" value="1"></label>
+<label class="field"><span class="top"><span>Setpoint r</span><input class="num" id="spOut" type="number" min="1" max="1000" step="any"></span><input id="setpoint" type="range" min="1" max="1000" step="1" value="20"></label>
+<div class="formula"><b>Plant:</b> τ·dy/dt + y = K·u &nbsp;·&nbsp; G(s) = K / (τs + 1)</div>
+<p class="note">u is in % (0–100). The highest output the plant can reach is K·100, so a setpoint near that keeps the actuator saturated for a long time.</p>
+</section>
+</div>
+<div class="col">
+<section class="card"><h2>The digital loop</h2>
+<div class="diagram" aria-label="Digital loop: setpoint minus sampled output gives e[k], the PID computes u[k], a hold keeps it until the next sample, the plant gives y, which is sampled every Ts">
+<span class="block">r</span><span class="arrow">→</span><span class="block">Σ<br><small>e[k] = r − y[k]</small></span><span class="arrow">→</span><span class="block">PID code<br><small>u[k]</small></span><span class="arrow">→</span><span class="block">Hold + clamp<br><small>0–100 %</small></span><span class="arrow">→</span><span class="block">Plant<br><small id="plantTxt"></small></span><span class="arrow">→</span><span class="block">y(t)</span>
+<span class="feedback">y(t) is sampled every <b id="tsTxt"></b>: the code never sees what happens between two samples</span>
+</div>
+</section>
+<section class="card"><h2>Output response</h2><div class="plot" id="outputPlot" aria-label="Plant output with the digital PID, with the continuous PID and the setpoint"></div><div class="legend"><span><i class="swatch sp"></i>Setpoint</span><span><i class="swatch"></i>Digital PID</span><span><i class="swatch faint"></i>Continuous PID (Ts → 0)</span></div></section>
+<section class="card"><h2>Control signal (stair steps)</h2><div class="plot" id="controlPlot" aria-label="Stair-step control signal of the digital PID with the 0 and 100 percent limits"></div><div class="legend"><span><i class="swatch u"></i>Digital u[k], held for Ts</span><span><i class="swatch faint"></i>Continuous u(t)</span></div><p class="note">Each flat step is one sample period. The dashed lines are the actuator limits.</p></section>
+<section class="card"><h2>Performance: digital vs continuous</h2>
+<table><thead><tr><th>Metric</th><th>Continuous</th><th>Digital (this Ts)</th></tr></thead><tbody id="cmp"></tbody></table>
+<p class="status" id="runStatus" aria-live="polite"></p>
+</section>
+<section class="card"><h2>How performance falls as Ts grows</h2>
+<div class="plot" id="sweepPlot" aria-label="Overshoot of the digital loop against the sampling time"></div><div class="legend"><span><i class="swatch u"></i>Overshoot (%) against Ts</span><span><i class="swatch sp"></i>Your Ts</span></div>
+<table style="margin-top:12px"><thead><tr><th>Ts</th><th>Overshoot</th><th>Settling (2 %)</th><th>Result</th></tr></thead><tbody id="sweep"></tbody></table>
+<p class="note">Same plant and gains, only Ts changes. Ts is shown as a fraction of the plant's τ: a common rule is to sample at least 10 times faster than the system responds.</p>
+</section>
+<section class="card"><h2>Arduino code for these gains</h2>
+<pre class="code" id="code"></pre>
+<div class="actions"><button class="btn" id="copyBtn" type="button">Copy code</button><span class="status" id="copyStatus" aria-live="polite" style="margin:0;align-self:center"></span></div>
+<p class="note">The loop runs once every Ts using millis(). It uses the same equation, the same clamp and the same anti-windup rule as the simulation above. Replace readSensor() with your own sensor reading, scaled to the same units as the setpoint.</p>
+</section>
+</div>
+</div>
+<footer>ENCS4380 Interfacing Techniques · Birzeit University · Homework 2 · P3</footer></main>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const LIMIT=100;
+const fmt=(v,d=2)=>Number.isFinite(v)?Number(v).toFixed(d):"—";
+const show=v=>String(+Number(v).toPrecision(4));
+
+// ---------- Inputs: slider + number box (same pattern as P1 and P2). Ts uses a log10 slider. ----------
+const FIELDS={ts:{box:"tsOut",log:true},kp:{box:"kpOut"},ki:{box:"kiOut"},kd:{box:"kdOut"},plantK:{box:"kOut"},tau:{box:"tauOut"},setpoint:{box:"spOut"}};
+const boxOf=id=>$(FIELDS[id].box);
+const sliderToVal=id=>FIELDS[id].log?Math.pow(10,+$(id).value):+$(id).value;
+const valToSlider=(id,v)=>FIELDS[id].log?Math.log10(v):v;
+function clampTo(id,v){const b=boxOf(id);return Math.max(+b.min,Math.min(+b.max,v))}
+function value(id){const b=boxOf(id),v=Number(b.value);return b.value!==""&&Number.isFinite(v)?clampTo(id,v):sliderToVal(id)}
+function setVal(id,v){v=clampTo(id,v);$(id).value=valToSlider(id,v);boxOf(id).value=show(v)}
+const defaults={ts:.05,kp:3,ki:8,kd:.05,plantK:1,tau:1,setpoint:20};
+let antiWindup=true;
+function readParams(){return{Ts:value("ts"),kp:value("kp"),ki:value("ki"),kd:value("kd"),K:value("plantK"),tau:value("tau"),r:value("setpoint"),aw:antiWindup}}
+
+// ---------- Digital PID loop ----------
+// The controller runs only at t = k·Ts. Between samples u is held (zero-order hold) and the plant
+// τ·dy/dt = −y + K·u is stepped with forward Euler in small sub-steps h (h ≤ τ/100), so the plant itself
+// is simulated accurately and every difference from the continuous loop comes from the sampling.
+function simulateDigital(p,Ts,end){
+ const lo=0,hi=LIMIT;
+ const sub=Math.max(1,Math.ceil(Ts/(p.tau/100))),h=Ts/sub;
+ const nSamples=Math.floor(end/Ts+1e-9);
+ const every=Math.max(1,Math.ceil(nSamples*sub/2000));    // keep about 2000 points for the plot
+ let y=0,sum=0,prevE=null,step=0;
+ const points=[],samples=[];
+ for(let k=0;k<=nSamples;k++){
+  const t=k*Ts,e=p.r-y;
+  if(prevE===null)prevE=e;                                // first sample: no derivative kick
+  const D=p.kd*(e-prevE)/Ts;
+  // Anti-windup: if u is already at a limit (with the old sum) and e would push it further, do not add e.
+  const before=p.kp*e+p.ki*Ts*sum+D;
+  const atLimit=(before>=hi&&e>0)||(before<=lo&&e<0);
+  if(!(p.aw&&atLimit))sum+=e;
+  const raw=p.kp*e+p.ki*Ts*sum+D;                          // u[k] = Kp·e[k] + Ki·Ts·Σe + Kd·(e[k]−e[k−1])/Ts
+  const u=Math.max(lo,Math.min(hi,raw));                  // actuator limit 0–100 %
+  samples.push([t,u]);
+  prevE=e;
+  if(k===nSamples){points.push({t,y});break}
+  for(let s=0;s<sub;s++){                                  // hold u for one sample period
+   if(step%every===0)points.push({t:t+s*h,y});
+   y+=h*(-y+p.K*u)/p.tau;step++;
+  }
+ }
+ return{points,samples};
+}
+
+// ---------- Continuous PID (Ts → 0), for comparison ----------
+// Same idea as P1: derivative on the measurement, with dy/dt known from the plant equation,
+// so u = (Kp·e + Ki·I + Kd·y/τ) / (1 + Kd·K/τ). Same clamp and same anti-windup rule.
+function simulateContinuous(p,end){
+ const lo=0,hi=LIMIT,te=p.tau+p.K*p.kd;
+ const rate=(1+p.K*p.kp)/te+Math.sqrt(p.K*p.ki/te);
+ const h=Math.min(p.tau/200,.1/rate,end/4000),n=Math.ceil(end/h),every=Math.max(1,Math.ceil(n/2000));
+ const cmd=(e,I,y)=>(p.kp*e+p.ki*I+p.kd*y/p.tau)/(1+p.kd*p.K/p.tau);
+ let y=0,I=0;const points=[],us=[];
+ for(let i=0;i<=n;i++){
+  const e=p.r-y,before=cmd(e,I,y);
+  const atLimit=(before>=hi&&e>0)||(before<=lo&&e<0);
+  if(!(p.aw&&atLimit))I+=e*h;
+  const u=Math.max(lo,Math.min(hi,cmd(e,I,y)));
+  if(i%every===0||i===n){points.push({t:i*h,y});us.push([i*h,u])}
+  y+=h*(-y+p.K*u)/p.tau;
+ }
+ return{points,us};
+}
+
+// ---------- Metrics (same definitions as P1) ----------
+function metrics(data,r){
+ const final=data[data.length-1].y,ref=Math.abs(final)>1e-9?final:r,thresholdLow=.1*ref,thresholdHigh=.9*ref;
+ const i10=data.findIndex(q=>q.y>=thresholdLow),i90=data.findIndex(q=>q.y>=thresholdHigh);
+ const rise=i10>=0&&i90>=0?data[i90].t-data[i10].t:NaN;
+ const peak=Math.max(...data.map(q=>q.y)),overshoot=Math.max(0,(peak-ref)/Math.abs(ref)*100);
+ const band=.02*Math.abs(ref);let settleIndex=-1,staysInBand=true;
+ for(let i=data.length-1;i>=0;i--){if(Math.abs(data[i].y-ref)>band)staysInBand=false;if(staysInBand)settleIndex=i;}
+ if(settleIndex>.9*data.length)settleIndex=-1;
+ return{rise,overshoot,settle:settleIndex>=0?data[settleIndex].t:NaN,error:Math.abs(r-final),final,peak};
+}
+
+// Time window from the continuous loop: the shortest of 5τ, 10τ, 30τ, 100τ in which it settles in the first third,
+// so a slower digital loop still has room to settle on the same plot.
+function pickWindow(p){
+ let best;
+ for(const f of [5,10,30,100]){
+  const end=Math.min(200,f*p.tau),c=simulateContinuous(p,end),m=metrics(c.points,p.r);
+  best={end,c,m};
+  if((Number.isFinite(m.settle)&&m.settle<=end/3)||end>=200)break;
+ }
+ return best;
+}
+
+// ---------- Plot (same helper as P1) ----------
+function niceTicks(max,count=5){const raw=max/count,p=Math.pow(10,Math.floor(Math.log10(Math.max(raw,1e-9)))),m=raw/p,step=(m<1.5?1:m<3?2:m<7?5:10)*p,out=[];for(let x=0;x<=max*1.00001;x+=step)out.push(x);return out}
+const tickDigits=t=>t.length>1&&t[1]-t[0]<1?Math.ceil(-Math.log10(t[1]-t[0])-1e-9):0;
+function drawPlot(el,series,{yMin=0,yMax=100,limitLines=[],xLabel="Time (s)"}={}){
+ const W=Math.max(320,Math.min(900,el.clientWidth||760)),small=W<500,H=300,l=small?43:58,r=14,top=15,bottom=43,pw=W-l-r,ph=H-top-bottom;
+ const xmax=series[0].points[series[0].points.length-1][0],X=x=>l+pw*x/xmax,Y=y=>top+ph*(yMax-y)/(yMax-yMin),s=[];
+ const xt=niceTicks(xmax,6),xd=tickDigits(xt),yt=niceTicks(yMax-yMin,5),yd=tickDigits(yt);
+ xt.forEach(x=>{s.push('<line x1="'+X(x)+'" x2="'+X(x)+'" y1="'+top+'" y2="'+(top+ph)+'" stroke="var(--line)"/><text x="'+X(x)+'" y="'+(H-20)+'" text-anchor="middle">'+fmt(x,xd)+'</text>')});
+ yt.map(y=>y+yMin).forEach(y=>{s.push('<line x1="'+l+'" x2="'+(l+pw)+'" y1="'+Y(y)+'" y2="'+Y(y)+'" stroke="var(--line)"/><text x="'+(l-7)+'" y="'+(Y(y)+4)+'" text-anchor="end">'+fmt(y,yd)+'</text>')});
+ s.push('<rect x="'+l+'" y="'+top+'" width="'+pw+'" height="'+ph+'" fill="none" stroke="var(--line2)"/>');
+ limitLines.forEach(v=>s.push('<line x1="'+l+'" x2="'+(l+pw)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="var(--bad)" stroke-dasharray="5 5"/>'));
+ series.forEach(q=>{const pts=q.points.map(a=>X(a[0]).toFixed(1)+','+Y(Math.max(yMin,Math.min(yMax,a[1]))).toFixed(1)).join(' ');s.push('<polyline points="'+pts+'" fill="none" stroke="'+q.color+'" stroke-width="'+q.width+'" stroke-linejoin="round" stroke-linecap="round"/>')});
+ s.push('<text x="'+(l+pw/2)+'" y="'+(H-3)+'" text-anchor="middle">'+xLabel+'</text>');
+ el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+el.getAttribute("aria-label")+'">'+s.join('')+'</svg>';
+}
+// Stair-step line: hold each sample's u until the next sample time.
+function stairs(samples,end){const pts=[];samples.forEach(([t,u],i)=>{pts.push([t,u]);pts.push([i+1<samples.length?samples[i+1][0]:end,u])});return pts}
+
+// ---------- Render ----------
+function render(){
+ const p=readParams(),w=pickWindow(p),end=w.end;
+ const d=simulateDigital(p,p.Ts,end),md=metrics(d.points,p.r),mc=w.m;
+ const yMax=Math.max(10,Math.max(p.r*1.2,...d.points.map(q=>q.y),...w.c.points.map(q=>q.y))*1.05);
+ drawPlot($("outputPlot"),[
+  {points:w.c.points.map(q=>[q.t,q.y]),color:"var(--faint)",width:1.8},
+  {points:[[0,p.r],[end,p.r]],color:"var(--gold)",width:1.8},
+  {points:d.points.map(q=>[q.t,q.y]),color:"var(--ink)",width:2.5}],{yMin:0,yMax});
+ drawPlot($("controlPlot"),[
+  {points:w.c.us,color:"var(--faint)",width:1.6},
+  {points:stairs(d.samples,end),color:"var(--blue)",width:2.2}],{yMin:0,yMax:110,limitLines:[0,100]});
+ const row=(name,a,b,unit,dg)=>"<tr><td>"+name+"</td><td>"+a+"</td><td>"+b+"</td></tr>";
+ const tx=(v,u)=>Number.isFinite(v)?fmt(v)+u:"Not settled";
+ $("cmp").innerHTML=row("Rise time (10–90 %)",tx(mc.rise," s"),tx(md.rise," s"))+row("Overshoot",fmt(mc.overshoot,1)+" %",fmt(md.overshoot,1)+" %")+row("Settling time (2 %)",tx(mc.settle," s"),tx(md.settle," s"))+row("Steady-state error",fmt(mc.error),Number.isFinite(md.settle)?fmt(md.error):"— (still moving)");
+ $("runStatus").innerHTML="Ts = <strong>"+show(p.Ts*1000)+" ms</strong> = "+show(p.Ts/p.tau)+"·τ · "+d.samples.length+" controller updates in "+fmt(end,1)+" s · anti-windup <strong>"+(p.aw?"on":"off")+"</strong>";
+ $("plantTxt").textContent=show(p.K)+" / ("+show(p.tau)+"s + 1)";
+ $("tsTxt").textContent="Ts = "+show(p.Ts*1000)+" ms";
+ drawSweep(p,end);
+ $("code").textContent=arduinoCode(p);
+}
+
+// Same plant and gains, only Ts changes: Ts from 0.02τ to τ.
+function drawSweep(p,end){
+ const pts=[],rows=[];
+ for(let i=1;i<=25;i++){const f=.04*i,m=metrics(simulateDigital(p,f*p.tau,end).points,p.r);pts.push([f,Number.isFinite(m.settle)?m.overshoot:NaN])}
+ const good=pts.filter(q=>Number.isFinite(q[1])),yMax=Math.max(10,...good.map(q=>q[1]))*1.15;
+ const cur=p.Ts/p.tau,series=[{points:[[0,0],[1,0]],color:"transparent",width:0}];
+ // Break the curve where the loop no longer settles.
+ let seg=[];pts.forEach(q=>{if(Number.isFinite(q[1]))seg.push(q);else{if(seg.length)series.push({points:seg,color:"var(--blue)",width:2.4});seg=[]}});
+ if(seg.length)series.push({points:seg,color:"var(--blue)",width:2.4});
+ if(cur<=1)series.push({points:[[cur,0],[cur,yMax]],color:"var(--gold)",width:1.8});
+ drawPlot($("sweepPlot"),series,{yMin:0,yMax,xLabel:"Ts / τ"});
+ const list=[.01,.05,.1,.2,.4,.7,1];
+ if(!list.some(f=>Math.abs(f-cur)<1e-6))list.push(cur);
+ list.sort((a,b)=>a-b);
+ $("sweep").innerHTML=list.map(f=>{
+  const m=metrics(simulateDigital(p,f*p.tau,end).points,p.r),ok=Number.isFinite(m.settle),mine=Math.abs(f-cur)<1e-6;
+  return "<tr"+(mine?' style="color:var(--gold)"':'')+"><td>"+show(f*p.tau*1000)+" ms ("+show(f)+"τ)"+(mine?" ← yours":"")+"</td><td>"+fmt(m.overshoot,1)+" %</td><td>"+(ok?fmt(m.settle)+" s":"—")+"</td><td class='"+(ok?"ok":"bad")+"'>"+(ok?"Settles":"Does not settle")+"</td></tr>";
+ }).join("");
+}
+
+// ---------- Arduino code generator ----------
+function arduinoCode(p){
+ const n=v=>String(+Number(v).toPrecision(5)),ms=Math.max(1,Math.round(p.Ts*1000));
+ return `// Digital PID, generated by Team 26 (Homework 2, P3)
+// Plant used for tuning: K = ${n(p.K)}, tau = ${n(p.tau)} s
+const float Kp = ${n(p.kp)};
+const float Ki = ${n(p.ki)};
+const float Kd = ${n(p.kd)};
+const unsigned long TS_MS = ${ms};          // sampling time in ms
+const float Ts = TS_MS / 1000.0;          // sampling time in s
+const float U_MIN = 0.0, U_MAX = 100.0;   // actuator limits (% PWM)
+const bool ANTI_WINDUP = ${p.aw?"true":"false"};
+const int PWM_PIN = 9;
+
+float setpoint = ${n(p.r)};
+float errorSum = 0;                       // sum of e[j]
+float prevError = 0;                      // e[k-1]
+bool firstSample = true;
+unsigned long lastTime = 0;
+
+float readSensor() {
+  // Replace with your sensor, in the same units as the setpoint
+  return analogRead(A0) * (100.0 / 1023.0);
+}
+
+void setup() {
+  pinMode(PWM_PIN, OUTPUT);
+  lastTime = millis();
+}
+
+void loop() {
+  if (millis() - lastTime < TS_MS) return;   // run once every Ts
+  lastTime += TS_MS;
+
+  float y = readSensor();
+  float e = setpoint - y;                    // e[k]
+  if (firstSample) { prevError = e; firstSample = false; }
+
+  float d = Kd * (e - prevError) / Ts;
+
+  // Anti-windup: if u is already at a limit and e pushes further, do not add e to the sum
+  float before = Kp * e + Ki * Ts * errorSum + d;
+  bool atLimit = (before >= U_MAX && e > 0) || (before <= U_MIN && e < 0);
+  if (!(ANTI_WINDUP && atLimit)) errorSum += e;
+
+  float u = Kp * e + Ki * Ts * errorSum + d; // u[k]
+  u = constrain(u, U_MIN, U_MAX);
+  analogWrite(PWM_PIN, (int)(u * 255.0 / 100.0));
+  prevError = e;
+}`;
+}
+$("copyBtn").addEventListener("click",async()=>{
+ const text=$("code").textContent;
+ try{await navigator.clipboard.writeText(text);$("copyStatus").textContent="Copied."}
+ catch(err){const r=document.createRange();r.selectNodeContents($("code"));const s=getSelection();s.removeAllRanges();s.addRange(r);$("copyStatus").textContent="Selected: press Ctrl+C to copy."}
+});
+
+// ---------- Wiring the controls ----------
+function setAW(on){antiWindup=on;$("awOn").setAttribute("aria-pressed",on);$("awOff").setAttribute("aria-pressed",!on);render()}
+$("awOn").addEventListener("click",()=>setAW(true));$("awOff").addEventListener("click",()=>setAW(false));
+Object.keys(FIELDS).forEach(id=>{
+ const box=boxOf(id);box.value=show(sliderToVal(id));box.setAttribute("aria-label",box.previousElementSibling.textContent);
+ $(id).addEventListener("input",()=>{box.value=show(sliderToVal(id));render()});
+ box.addEventListener("input",()=>{const v=Number(box.value);if(box.value!==""&&Number.isFinite(v)){$(id).value=valToSlider(id,clampTo(id,v));render()}});
+ box.addEventListener("change",()=>{const v=Number(box.value);setVal(id,box.value!==""&&Number.isFinite(v)?v:sliderToVal(id));render()});
+});
+$("defaultsBtn").addEventListener("click",()=>{Object.entries(defaults).forEach(([id,v])=>setVal(id,v));setAW(true)});
+// Windup demo: the setpoint is close to the most the plant can give (K·100), so u sits at 100 % for a long time.
+$("windupBtn").addEventListener("click",()=>{Object.entries({ts:.05,kp:1,ki:3,kd:0,plantK:1,tau:1,setpoint:90}).forEach(([id,v])=>setVal(id,v));setAW(false);$("outputPlot").scrollIntoView({behavior:"smooth",block:"center"})});
+let resizeTimer;window.addEventListener("resize",()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(render,100)});
+
+// ---------- Predict, then check ----------
+const QUIZ=[
+ {q:"Same gains, but you make Ts ten times larger (still smaller than τ). The overshoot will…",opts:["shrink","stay the same","grow"],a:2,
+  why:"Between samples the controller is blind and keeps applying an old u, so it reacts late and pushes past the setpoint. Move the Ts slider up and watch the overshoot row and the sweep plot."},
+ {q:"Ts is 100 times smaller than τ. Compared with the continuous PID, the digital PID will look…",opts:["almost the same","much slower","unstable"],a:0,
+  why:"When the plant barely moves during one sample, holding u for Ts makes almost no difference. That is why controllers are sampled at least about 10 times faster than the system responds."},
+ {q:"Anti-windup off. The setpoint is so high that u sits at 100 % for a long time. When y finally reaches the setpoint, it will…",opts:["stop right at the setpoint","overshoot a lot","never reach it"],a:1,
+  why:"While u was stuck at 100 %, the error sum kept growing. It has to be unwound by a long negative error before u drops, so y shoots past. Press “Windup demo”, then switch anti-windup on."},
+ {q:"In u[k], the error sum is multiplied by Ts and the difference e[k] − e[k−1] is divided by Ts. Why?",opts:["To change the units to %","Sum × Ts ≈ area (integral), difference ÷ Ts ≈ slope (derivative)","It is only a convention"],a:1,
+  why:"Each sample adds a rectangle of height e and width Ts, so Ts·Σe approximates ∫e dt. The change of e over one Ts is the slope, which approximates de/dt."},
+];
+let qi=0;
+function ask(){const q=QUIZ[qi];$("q").textContent=q.q;$("opts").innerHTML=q.opts.map((o,i)=>'<button class="opt" type="button" data-i="'+i+'">'+o+'</button>').join("");$("why").textContent="";$("count").textContent=(qi+1)+" of "+QUIZ.length}
+$("opts").addEventListener("click",e=>{const b=e.target.closest(".opt");if(!b||b.disabled)return;const q=QUIZ[qi],right=+b.dataset.i===q.a;for(const o of $("opts").children){o.disabled=true;if(+o.dataset.i===q.a)o.classList.add("right")}if(!right)b.classList.add("wrong");$("why").innerHTML='<span class="'+(right?"ok":"bad")+'">'+(right?"Right.":"Not quite.")+'</span> '+q.why});
+$("nextQ").addEventListener("click",()=>{qi=(qi+1)%QUIZ.length;ask()});
+
+render();ask();
+</script></body></html>
