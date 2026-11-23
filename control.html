@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Control · Homework 2 · Team 26</title>
+<style>
+:root{--bg:#0e0e0f;--card:#161617;--raise:#202023;--line:#303034;--line2:#45454b;--ink:#ededf0;--mute:#a3a3aa;--faint:#707078;--gold:#e5bd72}
+*{box-sizing:border-box}html,body{background:var(--bg)}body{margin:0;color:var(--ink);font:15px/1.55 Inter,"Segoe UI",system-ui,sans-serif}.page{max-width:1280px;margin:auto;padding:22px 16px 48px}.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700}h1{font-size:clamp(27px,4vw,40px);line-height:1.12;margin:7px 0}.lede{color:var(--mute);max-width:82ch;margin:0}.nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.nav a{color:var(--mute);text-decoration:none;border:1px solid var(--line2);padding:7px 11px;border-radius:8px;font-size:13px}.nav a.active{background:var(--ink);color:#111;border-color:var(--ink)}.grid{display:grid;gap:14px;margin-top:14px}@media(min-width:760px){.grid{grid-template-columns:1fr 1fr}}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0;display:flex;flex-direction:column}.card h2{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:0 0 6px;font-weight:700}.card h3{font-size:20px;margin:0 0 8px}.card p{color:var(--mute);margin:0 0 12px;flex:1}.card ul{color:var(--mute);margin:0 0 14px;padding-left:18px;font-size:14px}.btn{align-self:flex-start;border:1px solid var(--ink);background:var(--ink);color:#111;font-weight:700;padding:8px 13px;border-radius:8px;text-decoration:none}.formula{margin-top:14px;padding:12px 14px;background:var(--raise);border-radius:8px;color:var(--mute);font-family:"Cambria Math","Times New Roman",serif}.formula b{color:var(--ink)}footer{color:var(--faint);font-size:12px;margin-top:22px}
+</style>
+</head>
+<body><main class="page">
+<header><div class="kicker">ENCS4380 · Homework 2 · Team 26</div><h1>Control</h1><p class="lede">Homework 1 showed how slow a system is. These four modules show how feedback makes it faster and more accurate. They reuse the plants, sliders and plots from Homework 1. Each one steps the closed loop in time with its own solver, and each keeps the "Predict, then check" box.</p></header>
+<nav class="nav" aria-label="Project modules">
+<a href="index.html">Module 1 · Time response</a><a href="module2.html">Module 2 · Frequency response</a><a href="module3.html">Module 3 · Second order &amp; State-Space</a><a href="module4.html">Module 4 · Guess the sensor</a><a class="active" href="control.html">Control · Overview</a><a href="pid.html">Control · P1 PID Playground</a><a href="sensor.html">Control · P2 Slow sensor</a><a href="digital.html">Control · P3 Digital PID</a><a href="tuning.html">Control · P4 Tuning challenge</a>
+</nav>
+<div class="grid">
+<section class="card"><h2>P1</h2><h3>PID Playground</h3>
+<p>What P, I and D each do to rise time, overshoot, settling time and steady-state error.</p>
+<ul><li>First-order plant (Module 1) or second-order plant (Module 3)</li><li>Block diagram, output against setpoint, control signal with its 0–100 % limit</li><li>Live metrics and the three validation checks</li></ul>
+<a class="btn" href="pid.html">Open P1</a></section>
+<section class="card"><h2>P2</h2><h3>A slow sensor in the loop</h3>
+<p>Why a slow sensor in the feedback path causes overshoot and, past a point, oscillation.</p>
+<ul><li>Sensor time constant τs and the PID gains</li><li>True output and the sensor reading on the same plot</li><li>Critical τs where the loop starts to oscillate</li></ul>
+<a class="btn" href="sensor.html">Open P2</a></section>
+<section class="card"><h2>P3</h2><h3>Digital PID</h3>
+<p>The PID as it runs on an Arduino, and how the sampling time Ts changes it.</p>
+<ul><li>Stair-step control signal, anti-windup on or off</li><li>Performance against Ts</li><li>Arduino loop code for the current gains, with a Copy button</li></ul>
+<a class="btn" href="digital.html">Open P3</a></section>
+<section class="card"><h2>P4</h2><h3>Tuning challenge</h3>
+<p>Tune a controller to meet a spec for a hidden plant from Module 4.</p>
+<ul><li>Overshoot ≤ 10 %, a settling-time limit and zero steady-state error</li><li>Pass or fail on each part, and a score</li><li>Each extra run costs points</li></ul>
+<a class="btn" href="tuning.html">Open P4</a></section>
+</div>
+<div class="formula"><b>Digital PID (P3):</b> u[k] = Kp·e[k] + Ki·Ts·Σe[j] + Kd·(e[k] − e[k−1]) / Ts<br><b>Validation (K = 1, τ = 1 s):</b> P only with Kp = 9 gives τ = 0.1 s and 10 % steady-state error. PI with Kp = Ki = 1 gives ωn = 1 rad/s and ζ = 1. Any PI gives zero steady-state error for a step.</div>
+<footer>ENCS4380 Interfacing Techniques · Birzeit University · Homework 2</footer></main>
+</body></html>
