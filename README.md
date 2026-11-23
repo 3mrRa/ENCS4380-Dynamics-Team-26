@@ -1,6 +1,6 @@
 # ENCS4380 Dynamics — Team 26
 
-Interactive browser-based demonstrations for first-order and second-order dynamic systems.
+Interactive browser-based demonstrations for first-order and second-order dynamic systems (Homework 1) and for PID feedback control (Homework 2).
 
 ## Live project
 
@@ -12,17 +12,19 @@ Interactive browser-based demonstrations for first-order and second-order dynami
 | Module 2 — First-order frequency response | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/module2.html |
 | Module 3 — Second-order response & State-Space | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/module3.html |
 | Module 4 — Guess the sensor | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/module4.html |
+| Control — Overview of Homework 2 | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/control.html |
 | Homework 2 — P1 PID Playground | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/pid.html |
 | Homework 2 — P2 A slow sensor in the loop | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/sensor.html |
 | Homework 2 — P3 Digital PID | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/digital.html |
+| Homework 2 — P4 Tuning challenge | https://3mrra.github.io/ENCS4380-Dynamics-Team-26/tuning.html |
 
 ## Team
 
 | Member | GitHub | Built |
 |---|---|---|
-| Omar Rabieh | [@3mrRa](https://github.com/3mrRa) | Module 1 (with Omar Takhman and Anas), Module 2 (with Omar Takhman), Module 3 (with Omar Takhman), Homework 2 P2 (slow sensor in the loop) |
-| Omar Takhman | [@omarta5man](https://github.com/omarta5man) | Module 1 (with Omar Rabieh and Anas), Module 2 (with Omar Rabieh), Module 3 (with Omar Rabieh) |
-| Anas | [@Anas-MAD-h](https://github.com/Anas-MAD-h) | Module 1 (with Omar Rabieh and Omar Takhman) |
+| Omar Rabieh | [@3mrRa](https://github.com/3mrRa) | Module 1 (with Omar Takhman and Anas), Module 2 (with Omar Takhman), Module 3 (with Omar Takhman), Homework 2 P1 (fixes, validation checks and block diagram, with Anas), Homework 2 P2 (slow sensor in the loop) |
+| Omar Takhman | [@omarta5man](https://github.com/omarta5man) | Module 1 (with Omar Rabieh and Anas), Module 2 (with Omar Rabieh), Module 3 (with Omar Rabieh), Homework 2 P4 (tuning challenge), Control overview page |
+| Anas | [@Anas-MAD-h](https://github.com/Anas-MAD-h) | Module 1 (with Omar Rabieh and Omar Takhman), Homework 2 P1 (PID playground, with Omar Rabieh) |
 | Baraa Halaseh | [@BraaHalaseh](https://github.com/BraaHalaseh) | Module 4, Homework 2 P3 (digital PID) |
 
 ## Screenshots
@@ -42,6 +44,10 @@ Interactive browser-based demonstrations for first-order and second-order dynami
 **Module 4 — Guess the sensor**
 
 ![Module 4](screenshots/module4_desktop.png)
+
+**Homework 2 — P4 Tuning challenge**
+
+![P4 Tuning challenge](screenshots/p4_desktop.png)
 
 **On a phone (Module 1)**
 
@@ -77,6 +83,11 @@ Interactive browser-based demonstrations for first-order and second-order dynami
 - Scoring: 50 points per parameter, full marks within 10 %, a running session score, hints on request and a New sensor button.
 - ζ is drawn between 0.1 and 0.8 so the response always overshoots and the overshoot method can be used.
 
+### Control — Overview of Homework 2
+- The Control section, linked from every page's menu, including the landing page.
+- One card per module (P1–P4): what it shows, what you can change, and a link to it.
+- The digital PID equation and the three validation checks from the handout.
+
 ### Homework 2 — P1 PID Playground
 - First-order and second-order plant selection with adjustable plant parameters. Wide ranges (K 0.1–20, τ 0.02–10 s) and number boxes for typing measured values; the time window follows the plant's speed.
 - Live SVG block diagram (r, Σ, PID, 0–100% actuator limit, plant G(s), negative feedback) labelled with the current gains and plant.
@@ -108,12 +119,25 @@ Interactive browser-based demonstrations for first-order and second-order dynami
 - Plant stepped with forward Euler in sub-steps of at most τ/100 between samples, so the only difference from the continuous loop is the sampling.
 - Predict, then check quiz on Ts, windup and the digital integral and derivative.
 
+### Homework 2 — P4 Tuning challenge
+- A hidden random plant from Module 4 (same ranges and models): first order (K 0.5–5, τ 0.5–10 s) or second order (ζ 0.1–0.8, ωn 0.5–6 rad/s, unit gain).
+- Its noisy open-loop step response is shown as the clue, with a t / y readout under the mouse or finger, so K and τ (or ζ and ωn) can be read off it as in Module 4.
+- The user changes only Kp, Ki and Kd (sliders and number boxes), then presses Run test.
+- Spec for a unit step: overshoot ≤ 10 %, 2 % settling time within a limit (2τ for first order, 4/ωn for second order, half of what the plant needs on its own) and zero steady-state error (≤ 0.5 % at the end of the test). Actuator limited to 0 ≤ u ≤ 5.
+- Pass or fail on each part of the spec, drawn on the plot as the overshoot limit, the settling-time line and the ±2 % band; control signal plot with the actuator limits.
+- Score: 35 points for overshoot, 35 for settling time, 30 for steady-state error, minus 10 for each run after the first. The round keeps the best run; a session total runs across plants. Hints, Show the plant and New plant buttons; after a round the true plant is drawn on the clue and the gains can be moved freely for practice.
+- Closed loop stepped with RK4, with sub-steps when the gains make the loop fast, conditional anti-windup, and the derivative on the output (no kick at the setpoint step). A solver check compares RK4 with the exact answers for P only (Kp = 9) and PI (Kp = Ki = 1).
+- Tested on 160 random plants: every plant has gains that pass the whole spec, and the starting gains never pass.
+- Predict, then check quiz on which gain fixes which part of the spec.
+
 ## Implementation
 
-The project uses plain HTML, CSS, and JavaScript with SVG plots. No external charting libraries or build step are required. Open the html file locally, or use the GitHub Pages deployment configured for this repository.
+The project uses plain HTML, CSS, and JavaScript with SVG plots. No external charting libraries or build step are required. The Homework 2 modules simulate the closed loop with their own solvers (forward Euler in P1 and P3, RK4 in P2 and P4). Open the html file locally, or use the GitHub Pages deployment configured for this repository.
 
 ## AI use
 
 Module 1-4 were written with help from an AI assistant, which explained the estimation methods and helped write the page code.
 
 Homework 2 P3 (digital PID) was written with help from an AI assistant (Claude), which explained digital PID, sampling time and anti-windup, and helped write the page code. The page reuses the team's plot helper, metrics and input pattern from P1 and P2.
+
+Homework 2 P4 (tuning challenge) and the Control overview page were written with help from an AI assistant (Claude), which explained PID tuning and RK4 and helped write the page code. P4 reuses the hidden plant from Module 4 and the plot, input and quiz pattern from P1.
