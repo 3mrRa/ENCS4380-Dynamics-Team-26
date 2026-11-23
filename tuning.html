@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>P4 · Tuning challenge · Team 26</title>
+<style>
+:root{--bg:#0e0e0f;--card:#161617;--raise:#202023;--line:#303034;--line2:#45454b;--ink:#ededf0;--mute:#a3a3aa;--faint:#707078;--ok:#5ad08f;--bad:#f07070;--blue:#9da9bd;--gold:#e5bd72}
+*{box-sizing:border-box}html,body{background:var(--bg)}body{margin:0;color:var(--ink);font:15px/1.55 Inter,"Segoe UI",system-ui,sans-serif}.page{max-width:1280px;margin:auto;padding:22px 16px 48px}.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700}h1{font-size:clamp(27px,4vw,40px);line-height:1.12;margin:7px 0}.lede{color:var(--mute);max-width:82ch;margin:0}.nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.nav a{color:var(--mute);text-decoration:none;border:1px solid var(--line2);padding:7px 11px;border-radius:8px;font-size:13px}.nav a.active{background:var(--ink);color:#111;border-color:var(--ink)}.layout{display:grid;gap:14px;margin-top:14px}.col{display:grid;gap:14px;align-content:start;min-width:0}@media(min-width:980px){.layout{grid-template-columns:340px minmax(0,1fr);align-items:start}}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}.card h2{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:0 0 12px;font-weight:700}.note{font-size:13px;color:var(--mute);margin:9px 0 0}.field{display:block;margin:13px 0}.top{display:flex;justify-content:space-between;gap:10px;align-items:baseline;font-size:14px;font-weight:650}input[type=range]{width:100%;accent-color:#ededf0;margin:7px 0 0;height:23px}.btn{border:1px solid var(--ink);background:var(--ink);color:#111;font:inherit;font-weight:700;padding:8px 13px;border-radius:8px;cursor:pointer}.btn.secondary{background:transparent;color:var(--ink);border-color:var(--line2)}.btn:disabled{opacity:.4;cursor:default}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.metric{background:var(--raise);border:1px solid var(--line);border-radius:9px;padding:10px;min-width:0}.metric small{display:block;color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.06em}.metric strong{display:block;font-size:19px;margin-top:3px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.plot svg{display:block;width:100%;height:auto;touch-action:pan-y}.plot text{font:12px Inter,"Segoe UI",sans-serif;fill:var(--mute)}.legend{display:flex;gap:8px 18px;flex-wrap:wrap;color:var(--mute);font-size:13px;margin-top:8px}.swatch{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:6px;background:var(--ink)}.swatch.sp{background:var(--gold)}.swatch.u{background:var(--blue)}.swatch.ok{background:var(--ok)}.swatch.bad{height:0;border-top:2px dashed var(--bad);background:none}.formula{padding:10px;background:var(--raise);border-radius:8px;color:var(--mute);font-family:"Cambria Math","Times New Roman",serif;overflow-wrap:anywhere}.formula b{color:var(--ink)}.status{font-size:13px;color:var(--mute);margin-top:9px}.status strong{color:var(--ink)}footer{color:var(--faint);font-size:12px;margin-top:22px}.top .num{background:var(--raise);border:1px solid var(--line2);border-radius:6px;padding:1px 8px;width:92px;text-align:right;color:var(--ink);font:inherit;font-variant-numeric:tabular-nums}.top .num:focus{outline:2px solid var(--gold);outline-offset:1px}.ok{color:var(--ok);font-weight:700}.bad{color:var(--bad);font-weight:700}.q{font-size:16px;font-weight:620;margin:0 0 12px}.opts{display:grid;gap:8px}.opt{text-align:left;border:1px solid var(--line2);background:var(--raise);color:var(--ink);font:inherit;padding:10px 12px;border-radius:8px;cursor:pointer}.opt:disabled{cursor:default;opacity:.45}.opt.right{border-color:var(--ok);color:var(--ok);opacity:1}.opt.wrong{border-color:var(--bad);color:var(--bad);opacity:1}.why{margin:12px 0 0;color:var(--mute);font-size:14px}.why:empty{display:none}.next{display:flex;justify-content:space-between;align-items:center;margin-top:12px}.count{color:var(--faint);font-size:13px}table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}th{text-align:left;font-size:12px;color:var(--faint);font-weight:650;padding:4px 6px 8px;border-bottom:1px solid var(--line2)}td{padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}td:last-child,th:last-child{text-align:right}td{overflow-wrap:anywhere}.spec{margin:0;padding:0;list-style:none;display:grid;gap:6px}.spec li{display:flex;justify-content:space-between;gap:10px;background:var(--raise);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:14px}.spec li b{font-variant-numeric:tabular-nums}.empty{color:var(--faint);font-size:14px;padding:40px 10px;text-align:center;border:1px dashed var(--line2);border-radius:9px}.readout{font-size:13px;color:var(--mute);margin-top:6px;min-height:1.5em}.readout b{color:var(--ink)}.banner{margin-top:10px;padding:10px 12px;border-radius:8px;border:1px solid var(--line2);background:var(--raise);font-size:14px}.banner:empty{display:none}@media(max-width:640px){.res,.res tr,.res td{display:block}.res-head{display:none}.res tr{border-bottom:1px solid var(--line2);padding:8px 0}.res td{border:0;padding:2px 0;text-align:left}.res td:first-child{font-weight:700}.res td:nth-child(2)::before{content:"Spec: ";color:var(--faint)}.res td:nth-child(3)::before{content:"Yours: ";color:var(--faint)}#val td:nth-child(2)::before{content:"Exact: "}#val td:nth-child(3)::before{content:"RK4: "}}
+</style>
+</head>
+<body><main class="page">
+<header><div class="kicker">ENCS4380 · Homework 2 · P4 · Team 26</div><h1>Tuning challenge</h1><p class="lede">A hidden plant from Module 4 is in the loop. You only see its open-loop step response. Read it, pick Kp, Ki and Kd, and run the test. The page checks each part of the spec and scores you. Every extra run costs points, so think before you press Run.</p></header>
+<nav class="nav" aria-label="Project modules">
+<a href="index.html">Module 1 · Time response</a><a href="module2.html">Module 2 · Frequency response</a><a href="module3.html">Module 3 · Second order &amp; State-Space</a><a href="module4.html">Module 4 · Guess the sensor</a><a href="control.html">Control · Overview</a><a href="pid.html">Control · P1 PID Playground</a><a href="sensor.html">Control · P2 Slow sensor</a><a href="digital.html">Control · P3 Digital PID</a><a class="active" href="tuning.html">Control · P4 Tuning challenge</a>
+</nav>
+<div class="layout">
+<div class="col">
+<section class="card" aria-labelledby="h-pred"><h2 id="h-pred">Predict, then check</h2>
+<p class="q" id="q"></p><div class="opts" id="opts"></div><p class="why" id="why" aria-live="polite"></p>
+<div class="next"><span class="count" id="count"></span><button class="btn" id="nextQ" type="button">Next question</button></div>
+</section>
+<section class="card"><h2>The spec</h2>
+<p class="note" style="margin:0 0 10px" id="plantType"></p>
+<ul class="spec">
+<li><span>Overshoot</span><b>≤ 10 %</b></li>
+<li><span>Settling time (2 %)</span><b id="specTs">—</b></li>
+<li><span>Steady-state error</span><b>0 (≤ 0.5 %)</b></li>
+</ul>
+<p class="note">Setpoint: unit step, r = 1. The actuator is limited to 0 ≤ u ≤ 5. Steady-state error is read at the end of the test (t = 3 × the settling limit).</p>
+</section>
+<section class="card"><h2>PID gains</h2>
+<label class="field"><span class="top"><span>Proportional gain Kp</span><input class="num" id="kpOut" type="number" min="0" max="30" step="any"></span><input id="kp" type="range" min="0" max="30" step="0.01" value="1"></label>
+<label class="field"><span class="top"><span>Integral gain Ki</span><input class="num" id="kiOut" type="number" min="0" max="30" step="any"></span><input id="ki" type="range" min="0" max="30" step="0.01" value="0"></label>
+<label class="field"><span class="top"><span>Derivative gain Kd</span><input class="num" id="kdOut" type="number" min="0" max="10" step="any"></span><input id="kd" type="range" min="0" max="10" step="0.01" value="0"></label>
+<div class="formula"><b>PID:</b> u = Kp·e + Ki·∫e dt − Kd·dy/dt, e = r − y<br><b>Actuator:</b> u clamped to 0…5</div>
+<div class="actions"><button class="btn" id="runBtn" type="button">Run test</button><button class="btn secondary" id="hintBtn" type="button">Hint</button><button class="btn secondary" id="revealBtn" type="button">Show the plant</button><button class="btn secondary" id="newBtn" type="button">New plant</button></div>
+<p class="status" id="hint" aria-live="polite"></p>
+</section>
+<section class="card"><h2>Score</h2><div class="metrics">
+<div class="metric"><small>This round</small><strong id="roundScore">—</strong></div>
+<div class="metric"><small>Runs this round</small><strong id="runCount">0</strong></div>
+<div class="metric"><small>Last run</small><strong id="lastScore">—</strong></div>
+<div class="metric"><small>Session total</small><strong id="totalScore">0 / 0</strong></div>
+</div><p class="note">A run earns 35 points for overshoot, 35 for settling time and 30 for steady-state error. Each run after the first costs 10 points. The round keeps your best run, and it ends when you meet the whole spec or press Show the plant.</p>
+<p class="banner" id="banner" aria-live="polite"></p>
+</section>
+</div>
+<div class="col">
+<section class="card"><h2>Hidden plant · open-loop step response</h2>
+<div class="plot" id="cluePlot" aria-label="Noisy open-loop step response of the hidden plant"></div>
+<p class="readout" id="readout">Move over the plot (or touch it) to read t and y.</p>
+<div class="legend" id="clueLegend"></div>
+<p class="note">This is the plant on its own with u = 1 and no controller, measured with 1.5 % noise, the same as Module 4. Read K and τ, or ζ and ωn, off this curve before you pick the gains.</p>
+</section>
+<section class="card"><h2>Closed-loop test · output against setpoint</h2>
+<div class="plot" id="outPlot" aria-label="Closed-loop output y against the setpoint and the spec limits"><p class="empty">Pick your gains and press Run test.</p></div>
+<div class="legend"><span><i class="swatch sp"></i>Setpoint r = 1</span><span><i class="swatch"></i>Output y(t)</span><span><i class="swatch bad"></i>Overshoot limit and settling time</span><span><i class="swatch ok"></i>±2 % band</span></div>
+</section>
+<section class="card"><h2>Control signal</h2>
+<div class="plot" id="uPlot" aria-label="Control signal u with the 0 and 5 limits"><p class="empty">The control signal shows here after a run.</p></div>
+<div class="legend"><span><i class="swatch u"></i>u(t)</span><span><i class="swatch bad"></i>Actuator limits 0 and 5</span></div>
+</section>
+<section class="card"><h2>Result</h2>
+<table><thead class="res-head"><tr><th>Part</th><th>Spec</th><th>Yours</th><th></th></tr></thead><tbody class="res" id="res"><tr><td colspan="4" style="text-align:left">No run yet.</td></tr></tbody></table>
+</section>
+<section class="card"><h2>How it is simulated</h2>
+<div class="formula" id="model"></div>
+<p class="note">The closed loop is stepped in time with RK4. Each plotted point is split into smaller steps when the gains make the loop fast. The integral stops growing while u is at a limit and the error pushes it further (anti-windup). The derivative acts on y, not on e, so the setpoint step gives no derivative kick.</p>
+<table style="margin-top:10px"><thead class="res-head"><tr><th>Solver check (K = 1, τ = 1 s, no actuator limit)</th><th>Exact</th><th>RK4</th><th></th></tr></thead><tbody class="res" id="val"></tbody></table>
+</section>
+</div>
+</div>
+<footer>ENCS4380 Interfacing Techniques · Birzeit University · Homework 2 · P4</footer></main>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const R=1,UMAX=5,OS_MAX=10,ESS_MAX=.5,N=1500;
+const fmt=(v,d=2)=>Number.isFinite(v)?Number(v).toFixed(d):"—";
+const show=v=>String(+Number(v).toFixed(4));
+
+// Hidden plant, same ranges and models as Module 4
+const rand=(lo,hi,step)=>+(lo+Math.round(Math.random()*(hi-lo)/step)*step).toFixed(4);
+function gauss(){let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+const firstOrder=(t,K,tau)=>K*(1-Math.exp(-t/tau));
+function unitStep(t,z,wn){
+ if(z<1){const wd=wn*Math.sqrt(1-z*z);return 1-Math.exp(-z*wn*t)*(Math.cos(wd*t)+(z/Math.sqrt(1-z*z))*Math.sin(wd*t))}
+ const d=Math.sqrt(z*z-1),r1=-wn*(z-d),r2=-wn*(z+d);
+ return 1+(r2*Math.exp(r1*t)-r1*Math.exp(r2*t))/(r1-r2);
+}
+const model=(p,t)=>p.type==="first"?firstOrder(t,p.p1,p.p2):unitStep(t,p.p1,p.p2);
+// Settling limit: half of what the plant needs on its own (2τ for first order, 4/ωn for second order)
+const specFor=p=>Math.round((p.type==="first"?2*p.p2:4/p.p2)*10)/10;
+
+function makePlant(){
+ const p=Math.random()<.5?{type:"first",p1:rand(.5,5,.1),p2:rand(.5,10,.1)}:{type:"second",p1:rand(.1,.8,.01),p2:rand(.5,6,.1)};
+ p.tSpec=specFor(p);
+ p.clueEnd=p.type==="first"?6*p.p2:Math.max(5/(p.p1*p.p2),2.5*Math.PI/(p.p2*Math.sqrt(1-p.p1*p.p1)));
+ p.final=p.type==="first"?p.p1:1;
+ p.clue=[];for(let i=0;i<=160;i++){const t=p.clueEnd*i/160;p.clue.push([t,model(p,t)+.015*p.final*gauss()])}
+ return p;
+}
+
+// Closed loop stepped with RK4. State: y, v = dy/dt (second order only), I = ∫e dt.
+function simulateLoop(p,g,{end,lo=0,hi=UMAX,n=N}){
+ const first=p.type==="first",K=first?p.p1:1,tau=p.p2,z=p.p1,wn=p.p2;
+ const rate=first?(1+K*g.kp)/(tau+K*g.kd)+Math.sqrt(K*g.ki/(tau+K*g.kd)):2*z*wn+wn*wn*g.kd+wn*Math.sqrt(1+g.kp)+Math.sqrt(wn*wn*g.ki);
+ const step=end/n,sub=Math.min(500,Math.max(1,Math.ceil(step*rate/.2))),h=step/sub;
+ // First order: dy/dt depends on u, so u = Kp·e + Ki·I − Kd·dy/dt is solved for u directly (as in P1)
+ const control=(y,v,I)=>{const e=R-y,raw=first?(g.kp*e+g.ki*I+g.kd*y/tau)/(1+g.kd*K/tau):g.kp*e+g.ki*I-g.kd*v;return{e,raw,u:Math.min(hi,Math.max(lo,raw))}};
+ const f=(y,v,I)=>{const c=control(y,v,I),dI=(c.raw>hi&&c.e>0)||(c.raw<lo&&c.e<0)?0:c.e;return first?[(K*c.u-y)/tau,0,dI]:[v,wn*wn*(c.u-y)-2*z*wn*v,dI]};
+ let y=0,v=0,I=0;const data=[];
+ for(let i=0;i<=n;i++){
+  data.push({t:i*step,y,u:control(y,v,I).u});
+  if(i===n)break;
+  for(let s=0;s<sub;s++){
+   const a=f(y,v,I),b=f(y+h/2*a[0],v+h/2*a[1],I+h/2*a[2]),c=f(y+h/2*b[0],v+h/2*b[1],I+h/2*b[2]),d=f(y+h*c[0],v+h*c[1],I+h*c[2]);
+   y+=h/6*(a[0]+2*b[0]+2*c[0]+d[0]);v+=h/6*(a[1]+2*b[1]+2*c[1]+d[1]);I+=h/6*(a[2]+2*b[2]+2*c[2]+d[2]);
+  }
+ }
+ return{data,sub,h};
+}
+// Overshoot and settling are measured against the setpoint. If y leaves the ±2 % band in the last 10 % of the test, it has not settled.
+function metrics(data){
+ const peak=Math.max(...data.map(q=>q.y));let last=-1;
+ data.forEach((q,i)=>{if(Math.abs(q.y-R)>.02*R)last=i});
+ const settle=last<0?0:last>=data.length-1-Math.floor(.1*data.length)?Infinity:data[last+1].t;
+ return{os:Math.max(0,(peak-R)/R*100),settle,ess:Math.abs(R-data[data.length-1].y)/R*100};
+}
+function judge(m,p){const pass={os:m.os<=OS_MAX,ts:m.settle<=p.tSpec,ess:m.ess<=ESS_MAX};return{pass,earned:(pass.os?35:0)+(pass.ts?35:0)+(pass.ess?30:0)}}
+
+// Plots
+function niceTicks(max,count=5){const raw=max/count,pw=Math.pow(10,Math.floor(Math.log10(Math.max(raw,1e-9)))),m=raw/pw,st=(m<1.5?1:m<3?2:m<7?5:10)*pw,out=[];for(let x=0;x<=max*1.00001;x+=st)out.push(x);return out}
+const tickDigits=t=>t.length>1&&t[1]-t[0]<1?Math.ceil(-Math.log10(t[1]-t[0])-1e-9):0;
+function plot(el,{xMax,yMin=0,yMax,series=[],hLines=[],vLines=[],band=null,height=300}){
+ const W=Math.max(320,Math.min(900,el.clientWidth||760)),H=height,l=W<500?43:58,r=14,top=15,bottom=43,pw=W-l-r,ph=H-top-bottom;
+ const X=x=>l+pw*x/xMax,Y=y=>top+ph*(yMax-Math.max(yMin,Math.min(yMax,y)))/(yMax-yMin),s=[];
+ const xt=niceTicks(xMax,6),xd=tickDigits(xt),yt=niceTicks(yMax-yMin,5),yd=tickDigits(yt);
+ if(band)s.push('<rect x="'+X(band.from)+'" y="'+Y(band.hi)+'" width="'+(X(xMax)-X(band.from))+'" height="'+(Y(band.lo)-Y(band.hi))+'" fill="var(--ok)" fill-opacity=".16"/>');
+ xt.forEach(x=>s.push('<line x1="'+X(x)+'" x2="'+X(x)+'" y1="'+top+'" y2="'+(top+ph)+'" stroke="var(--line)"/><text x="'+X(x)+'" y="'+(H-20)+'" text-anchor="middle">'+fmt(x,xd)+'</text>'));
+ yt.map(y=>y+yMin).forEach(y=>s.push('<line x1="'+l+'" x2="'+(l+pw)+'" y1="'+Y(y)+'" y2="'+Y(y)+'" stroke="var(--line)"/><text x="'+(l-7)+'" y="'+(Y(y)+4)+'" text-anchor="end">'+fmt(y,yd)+'</text>'));
+ s.push('<rect x="'+l+'" y="'+top+'" width="'+pw+'" height="'+ph+'" fill="none" stroke="var(--line2)"/>');
+ hLines.forEach(v=>s.push('<line x1="'+l+'" x2="'+(l+pw)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="var(--bad)" stroke-dasharray="5 5"/>'));
+ vLines.forEach(x=>s.push('<line x1="'+X(x)+'" x2="'+X(x)+'" y1="'+top+'" y2="'+(top+ph)+'" stroke="var(--bad)" stroke-dasharray="5 5"/>'));
+ series.forEach(q=>s.push('<polyline points="'+q.points.map(a=>X(a[0]).toFixed(1)+','+Y(a[1]).toFixed(1)).join(' ')+'" fill="none" stroke="'+q.color+'" stroke-width="'+q.width+'" stroke-linejoin="round" stroke-linecap="round"/>'));
+ s.push('<text x="'+(l+pw/2)+'" y="'+(H-3)+'" text-anchor="middle">Time (s)</text>');
+ el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+el.getAttribute("aria-label")+'">'+s.join('')+'</svg>';
+ el._map={W,l,pw,xMax};
+}
+
+// Game state
+let P=null,runs=0,best=0,done=false,revealed=false,last=null,rounds=0,points=0,hintNo=0,cursor=null;
+const FIELDS={kp:"kpOut",ki:"kiOut",kd:"kdOut"};
+const clampTo=(id,v)=>Math.max(+$(id).min,Math.min(+$(id).max,v));
+function gainOf(id){const box=$(FIELDS[id]),v=Number(box.value);return box.value!==""&&Number.isFinite(v)?clampTo(id,v):Number($(id).value)}
+const gains=()=>({kp:gainOf("kp"),ki:gainOf("ki"),kd:gainOf("kd")});
+function setGain(id,v){$(id).value=v;$(FIELDS[id]).value=show(v)}
+
+function drawClue(){
+ const ymax=Math.max(...P.clue.map(q=>q[1]))*1.1,series=[{points:P.clue,color:"var(--ink)",width:1.6}];
+ if(revealed){const t=[];for(let i=0;i<=400;i++){const x=P.clueEnd*i/400;t.push([x,model(P,x)])}series.push({points:t,color:"var(--ok)",width:2.6})}
+ if(cursor!==null){const y=nearest(cursor);series.push({points:[[cursor,0],[cursor,ymax]],color:"var(--mute)",width:1})}
+ plot($("cluePlot"),{xMax:P.clueEnd,yMax:ymax,series,height:280});
+ $("clueLegend").innerHTML='<span><i class="swatch"></i>Measured (noisy)</span>'+(revealed?'<span><i class="swatch ok"></i>True plant</span>':'');
+}
+const nearest=t=>P.clue.reduce((b,q)=>Math.abs(q[0]-t)<Math.abs(b[0]-t)?q:b)[1];
+function readAt(e){
+ const m=$("cluePlot")._map,box=$("cluePlot").getBoundingClientRect();if(!m)return;
+ cursor=Math.min(Math.max(((e.clientX-box.left)*m.W/box.width-m.l)/m.pw,0),1)*m.xMax;
+ drawClue();$("readout").innerHTML="t = <b>"+fmt(cursor,2)+" s</b> · y = <b>"+fmt(nearest(cursor),3)+"</b>";
+}
+$("cluePlot").addEventListener("pointermove",readAt);$("cluePlot").addEventListener("pointerdown",readAt);
+
+function drawRun(){
+ if(!last){$("outPlot").innerHTML='<p class="empty">Pick your gains and press Run test.</p>';$("uPlot").innerHTML='<p class="empty">The control signal shows here after a run.</p>';return}
+ const d=last.data,end=d[d.length-1].t,yMax=Math.max(1.3,Math.min(3,Math.max(...d.map(q=>q.y))*1.08));
+ plot($("outPlot"),{xMax:end,yMax,band:{lo:.98,hi:1.02,from:P.tSpec},hLines:[1+OS_MAX/100],vLines:[P.tSpec],series:[{points:[[0,R],[end,R]],color:"var(--gold)",width:1.6},{points:d.map(q=>[q.t,q.y]),color:"var(--ink)",width:2.4}]});
+ plot($("uPlot"),{xMax:end,yMax:5.5,hLines:[0,UMAX],series:[{points:d.map(q=>[q.t,q.u]),color:"var(--blue)",width:2.2}],height:240});
+ const m=last.m,ps=last.pass,row=(n,spec,mine,ok)=>"<tr><td>"+n+"</td><td>"+spec+"</td><td>"+mine+"</td><td class='"+(ok?"ok":"bad")+"'>"+(ok===null?"":ok?"Pass":"Fail")+"</td></tr>";
+ $("res").innerHTML=row("Overshoot","≤ 10 %",fmt(m.os,1)+" %",ps.os)+row("Settling time (2 %)","≤ "+fmt(P.tSpec,1)+" s",Number.isFinite(m.settle)?fmt(m.settle,2)+" s":"not settled",ps.ts)+row("Steady-state error","≤ 0.5 %",fmt(m.ess,2)+" %",ps.ess)+(last.scored?row("Run score",last.earned+" earned − "+10*(last.run-1)+" for extra runs",last.score+" / 100",null):"");
+}
+function simulateNow(){const {data}=simulateLoop(P,gains(),{end:3*P.tSpec}),m=metrics(data),j=judge(m,P);return{data,m,pass:j.pass,earned:j.earned}}
+function runTest(){
+ if(done){last={...simulateNow(),scored:false};drawRun();return}
+ runs++;const r=simulateNow(),score=Math.max(0,r.earned-10*(runs-1));
+ last={...r,score,run:runs,scored:true};best=Math.max(best,score);
+ $("runCount").textContent=runs;$("lastScore").textContent=score+" / 100";$("roundScore").textContent=best+" / 100";
+ if(r.pass.os&&r.pass.ts&&r.pass.ess)endRound("Spec met in "+runs+(runs===1?" run":" runs")+". Round score "+best+" / 100. The true plant is now drawn on the clue plot. Move the gains to see how close the edges are, or press New plant.");
+ drawRun();
+}
+function endRound(msg){
+ if(done)return;done=true;revealed=true;rounds++;points+=best;
+ $("totalScore").textContent=points+" / "+rounds*100;$("roundScore").textContent=best+" / 100";
+ $("banner").textContent=msg;$("revealBtn").disabled=true;$("runBtn").textContent="Run (practice)";
+ $("plantType").innerHTML=plantText(true);drawClue();
+}
+function plantText(full){
+ if(P.type==="first")return full?"First-order plant: <b>K = "+show(P.p1)+", τ = "+show(P.p2)+" s</b>. G(s) = K / (τs + 1)":"First-order plant (like the thermometer in Module 4). K and τ are hidden.";
+ return full?"Second-order plant: <b>ζ = "+show(P.p1)+", ωn = "+show(P.p2)+" rad/s</b>, unit gain. G(s) = ωn² / (s² + 2ζωn·s + ωn²)":"Second-order plant (like the spring in Module 4), unit gain. ζ and ωn are hidden.";
+}
+function newRound(){
+ if(P&&!done&&runs>0)endRound("");
+ P=makePlant();runs=0;best=0;done=false;revealed=false;last=null;hintNo=0;cursor=null;
+ setGain("kp",1);setGain("ki",0);setGain("kd",0);
+ $("specTs").textContent="≤ "+fmt(P.tSpec,1)+" s";$("plantType").innerHTML=plantText(false);
+ $("runCount").textContent="0";$("lastScore").textContent="—";$("roundScore").textContent="—";$("banner").textContent="";$("hint").textContent="";
+ $("revealBtn").disabled=false;$("runBtn").textContent="Run test";
+ $("res").innerHTML='<tr><td colspan="4" style="text-align:left">No run yet.</td></tr>';
+ $("readout").textContent="Move over the plot (or touch it) to read t and y.";
+ $("model").innerHTML=P.type==="first"?"<b>Plant:</b> τ·dy/dt + y = K·u<br><b>Loop:</b> e = 1 − y, dI/dt = e, u = clamp(Kp·e + Ki·I − Kd·dy/dt, 0, 5)":"<b>Plant:</b> d²y/dt² + 2ζωn·dy/dt + ωn²·y = ωn²·u<br><b>Loop:</b> e = 1 − y, dI/dt = e, u = clamp(Kp·e + Ki·I − Kd·dy/dt, 0, 5)";
+ drawClue();drawRun();
+}
+const HINTS={
+ first:["Read K from the final value of the clue and τ from the time it reaches 63.2 % of it (Module 4).","Set Ki = Kp/τ. The integral zero then cancels the plant pole, and the loop acts like a first-order system with time constant τ/(K·Kp).","Pick Kp so that 4·τ/(K·Kp) is below the settling limit. Keep Kp at 5 or less so u does not sit on its limit. Kd is not needed."],
+ second:["Read ζ from the overshoot and ωn from the peak time of the clue (Module 4).","Kd adds damping: the closed loop has 2ζωn + ωn²·Kd where the plant had 2ζωn. Raise Kd until the overshoot is small.","Kp makes it faster, Ki removes the steady-state error. Keep Ki small: too much brings the overshoot back."]
+};
+$("hintBtn").addEventListener("click",()=>{const h=HINTS[P.type];$("hint").textContent="Hint "+(hintNo%h.length+1)+": "+h[hintNo%h.length];hintNo++});
+$("runBtn").addEventListener("click",runTest);
+$("revealBtn").addEventListener("click",()=>endRound("Round over: "+(best>0?"your best run scored "+best+" / 100.":"no points this round.")+" The true plant is drawn on the clue plot. Keep tuning for practice, or press New plant."));
+$("newBtn").addEventListener("click",newRound);
+Object.entries(FIELDS).forEach(([id,out])=>{
+ const box=$(out);box.value=show($(id).value);box.setAttribute("aria-label",box.previousElementSibling.textContent);
+ const after=()=>{if(done&&last)runTest()};
+ $(id).addEventListener("input",()=>{box.value=show($(id).value);after()});
+ box.addEventListener("input",()=>{const v=Number(box.value);if(box.value!==""&&Number.isFinite(v)){$(id).value=clampTo(id,v);after()}});
+ box.addEventListener("change",()=>{const v=Number(box.value);setGain(id,box.value!==""&&Number.isFinite(v)?clampTo(id,v):Number($(id).value));after()});
+});
+let resizeTimer;window.addEventListener("resize",()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{drawClue();drawRun()},100)});
+
+// Solver check: the RK4 loop against the exact answers from the handout (K = 1, τ = 1 s)
+function validate(){
+ const p={type:"first",p1:1,p2:1},free={lo:-Infinity,hi:Infinity};
+ const a=simulateLoop(p,{kp:9,ki:0,kd:0},{...free,end:1,n:1000}).data,ea=Math.max(...a.map(q=>Math.abs(q.y-.9*(1-Math.exp(-10*q.t)))));
+ const b=simulateLoop(p,{kp:1,ki:1,kd:0},{...free,end:10,n:1000}).data,eb=Math.max(...b.map(q=>Math.abs(q.y-(1-Math.exp(-q.t)))));
+ const row=(n,ex,err)=>"<tr><td>"+n+"</td><td>"+ex+"</td><td>max error "+err.toExponential(1)+"</td><td class='"+(err<1e-4?"ok":"bad")+"'>"+(err<1e-4?"Pass":"Fail")+"</td></tr>";
+ $("val").innerHTML=row("P only, Kp = 9","y = 0.9·(1 − e<sup>−10t</sup>)",ea)+row("PI, Kp = Ki = 1","y = 1 − e<sup>−t</sup>",eb);
+}
+
+// Predict, then check
+const QUIZ=[
+ {q:"Your run passes overshoot and settling time, but the steady-state error fails. Which gain do you raise?",opts:["Kp","Ki","Kd"],a:1,why:"Only the integral keeps pushing while any error is left, so the loop can only rest at e = 0. Kp alone makes the error smaller but never zero."},
+ {q:"First-order plant, PI with Ki = Kp/τ. You double Kp and Ki together. The settling time will…",opts:["roughly halve","stay the same","roughly double"],a:0,why:"With Ki = Kp/τ the loop acts like a first-order system with time constant τ/(K·Kp). Twice the Kp gives half the time constant, as long as u stays below its limit."},
+ {q:"The hidden plant is a spring with ζ = 0.2. It overshoots about 50 %. The quickest fix is to raise…",opts:["Kp","Ki","Kd"],a:2,why:"Kd acts against the speed of y, which is extra damping. More Kp makes it faster but does not stop the overshoot, and more Ki makes it worse."},
+ {q:"You keep raising Kp, but past some point the settling time stops getting shorter. Why?",opts:["The plant gets slower","u is stuck at its limit of 5","The integral is too big"],a:1,why:"Once u is pinned at 5, a bigger Kp asks for more than the actuator can give, so the output cannot rise any faster. Watch the control signal plot."}
+];
+let qi=0;
+function ask(){const q=QUIZ[qi];$("q").textContent=q.q;$("opts").innerHTML=q.opts.map((o,i)=>'<button class="opt" type="button" data-i="'+i+'">'+o+'</button>').join("");$("why").textContent="";$("count").textContent=(qi+1)+" of "+QUIZ.length}
+$("opts").addEventListener("click",e=>{const b=e.target.closest(".opt");if(!b||b.disabled)return;const q=QUIZ[qi],right=+b.dataset.i===q.a;for(const o of $("opts").children){o.disabled=true;if(+o.dataset.i===q.a)o.classList.add("right")}if(!right)b.classList.add("wrong");$("why").innerHTML='<span class="'+(right?"ok":"bad")+'">'+(right?"Right.":"Not quite.")+'</span> '+q.why});
+$("nextQ").addEventListener("click",()=>{qi=(qi+1)%QUIZ.length;ask()});
+
+newRound();validate();ask();
+</script></body></html>
